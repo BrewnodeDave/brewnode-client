@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const host = 'localhost';
-const port = 8080;
+const host = process.env.REACT_APP_HOST;
+const port = process.env.REACT_APP_PORT;
 const auth = {
     username : process.env.REACT_APP_BREWFATHER_USERNAME, 
     password : process.env.REACT_APP_BREWFATHER_PASSWORD
