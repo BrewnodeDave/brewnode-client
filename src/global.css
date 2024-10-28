@@ -1,0 +1,22 @@
+
+.Mui-FromControlLable-label{
+    color:blueviolet;
+}
+
+.MuiSlider-thumb {
+    color:#49494d;
+}
+
+.MuiSlider-valueLabelOpen{
+    background-color: #49494d;
+}
+
+.MuiSlider-valueLabelLabel {
+    font-size: 1.5rem;
+}
+
+/* .MuiSlider-markLabel {
+    background-color: #00ffff;
+} */
+
+
