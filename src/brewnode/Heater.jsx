@@ -1,46 +1,53 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
+import ToggleButton from "@mui/material/ToggleButton";
 
-import ToggleButton from '@mui/material/ToggleButton';
+import { addSocketListener, removeSocketListener } from "./socketListener.js";
 
-import SocketListener from './socketListener.js';
-
-const server = require('../common/server-api');
+const server = require("../common/server-api");
 
 function Heater() {
-
-  const [on, setOn] = useState(false);
+  const [on, setOn] = useState(false);  
+  const [power, setPower] = useState(0);  
 
   useEffect(() => {
-    SocketListener('heater', x => {
-      setOn(x.value === 1 ? true : false);
-    });
+    const handleHeaterStatus = (x) => setOn(x.value);
+    addSocketListener("heater", handleHeaterStatus);
+    const handlePowerStatus = (x) => setPower(x.value);
+    addSocketListener("power", handlePowerStatus);
 
-    return function cleanup() {
-      console.log("temp stop")
-    }
+    // Cleanup function to remove the listener
+    return () => {
+      removeSocketListener('power', handlePowerStatus);
+      removeSocketListener('heater', handleHeaterStatus);
+    };  
   });
 
   return (
     <div>
       <ToggleButton
-        style={{ backgroundColor: on ? "#ff2020" : "#8bc34a", color: "#000000", fontSize: "30px", width: "100%", height: "100%" }}
-        size='large'
+        style={{
+          backgroundColor: on ? "#ff2020" : "#8bc34a",
+          color: "#000000",
+          fontSize: "30px",
+          width: "100%",
+          height: "100%",
+        }}
+        size="large"
         value="check"
         selected={on}
         onChange={heat}
-      > Heat
+      >
+        {" "}
+        Heat ({power}W)
       </ToggleButton>
     </div>
   );
 
   async function heat() {
     try {
-      // setOn(!on);        
-
-      const response = await server.heat({ on: !on });
-
-      return response.data;
+      const response = await server.heat(!on);
+      return response;
     } catch (error) {
       console.error(error);
     }

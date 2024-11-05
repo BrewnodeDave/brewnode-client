@@ -8,9 +8,11 @@ import {createContext, useEffect, useState} from 'react';
 import { responsiveFontSizes, createTheme, ThemeProvider } from '@mui/material/styles';
 import {lightGreen} from '@mui/material/colors';
 
-import SocketListener from './brewnode/socketListener.js';
+import {addSocketListener} from './brewnode/socketListener.js';
 
 import {getBatch, getInventory}  from './common/server-api';
+
+import {socket} from './socket.js';
 
 import './global.css';
 import React from 'react';
@@ -26,10 +28,13 @@ const theme = responsiveFontSizes(createTheme({
 function App() {
   const [inProgress, setInProgress] = useState('');
   
+  // const [isConnected, setIsConnected] = useState(socket.connected);
+  // const [fooEvents, setFooEvents] = useState([]);
+
   const [batch, setBatch] = useState({});
   const [inventory, setInventory] = useState({});
 
-  SocketListener('progress', ({value}) => setInProgress(value));
+  addSocketListener('progress', ({value}) => setInProgress(value));
 
   useEffect(() => {
     // setInProgress(r.name);
@@ -45,6 +50,23 @@ function App() {
     }).catch(e => {
       console.error(e);
     });
+
+    function onConnect() {
+      // setIsConnected(true);
+    }
+
+    function onDisconnect() {
+      // setIsConnected(false);
+    }
+
+
+    socket.on('connect', onConnect);
+    socket.on('disconnect', onDisconnect);
+
+    return () => {
+      socket.off('connect', onConnect);
+      socket.off('disconnect', onDisconnect);
+    };
   }, [setInProgress]);
 
   return (
