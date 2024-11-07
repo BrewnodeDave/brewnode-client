@@ -5,6 +5,8 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
+import ErrorDialog from "./Error.jsx";
+
 import {getBatch, getInventory}  from './common/server-api';
 
 import {useEffect} from 'react';
@@ -59,22 +61,32 @@ export default function BasicTabs(props) {
   const [batch, setBatch] = useState({});
   const [inventory, setInventory] = useState({});
   const [value, setValue] = useState(0);
+  const [error, setError] = useState(null);
+  const [open, setOpen] = useState(false);
+
 
   useEffect(() => {
     getBatch().then(batch => {
       setBatch(batch);
-    });
+    },handleError);
     return () => {};
   }, []);
 
   useEffect(() => {
     getInventory().then(i => {
       setInventory(rename(i));
-    });
+    },handleError);
     return () => {};
   }, []);
 
   const handleChange = (event, newValue) => setValue(newValue);
+  const handleError = (error) => {
+    setError(error.message || error);
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -85,7 +97,12 @@ export default function BasicTabs(props) {
           <Tab label="Ingredients" {...a11yProps(2)} sx={{fontSize: 36}}/>
           <Tab label="Inventory" {...a11yProps(2)} sx={{fontSize: 36}}/>
         </Tabs>
-
+        <ErrorDialog
+          open={open}
+          handleClose={handleClose}
+          title="Error"
+          message={error}
+        />
       </Box>
       
       <TabPanel value={value} index={0}>

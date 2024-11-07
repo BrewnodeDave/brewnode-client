@@ -14,7 +14,7 @@ function setSocket(newHost, newPort) {
 
     // Update host and port
     host = newHost;
-    port = src/socket.jsnewPort;
+    port = newPort;
 
     // Create a new socket connection
     socket = io(`http://${host}:${port}`);
