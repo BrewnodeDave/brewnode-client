@@ -1,24 +1,40 @@
+const io = require('socket.io-client');
+let host;// = 'localhost';
+let port;// = 4000;
+let socket = io(`http://${host}:${port}`);
 
-const host = 'localhost';
-const port = 4000;
+// Map to store listeners
+const listeners = new Map();
 
-const io = require ('socket.io-client');
-const socket = io(`http://${host}:${port}`); 
+function setSocket(newHost, newPort) {
+    // Close the existing socket connection
+    if (socket) { 
+        socket.disconnect();
+    }
 
-function addSocketListener (name, cb) {
-    socket.on(name, cb);  
-};
+    // Update host and port
+    host = newHost;
+    port = src/socket.jsnewPort;
+
+    // Create a new socket connection
+    socket = io(`http://${host}:${port}`);
+
+    // Reattach existing listeners
+    listeners.forEach((cb, name) => {
+        socket.on(name, cb);
+    });
+
+    return socket;
+}
+
+function addSocketListener(name, cb) {
+    socket.on(name, cb);
+    listeners.set(name, cb); // Store the listener in the map
+}
 
 function removeSocketListener(name, cb) {
     socket.off(name, cb);
+    listeners.delete(name); // Remove the listener from the map
 }
 
-socket.on('connect', () => {
-    // console.log('Connected to server');
-});
-
-socket.on('disconnect', () => {
-    // console.log('Disconnected from server');
-});
-
-export {addSocketListener, removeSocketListener};
+module.exports = { setSocket, addSocketListener, removeSocketListener };

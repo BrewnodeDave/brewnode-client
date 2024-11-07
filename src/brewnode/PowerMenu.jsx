@@ -16,18 +16,21 @@ function PowerMenu() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogType, setDialogType] = useState('');
   const [ipAddress, setIpAddress] = useState('');
-  const [port, setPort] = useState('');
+  const [ipPort, setIpPort] = useState('');
+  const [wsPort, setWsPort] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   useEffect(() => {
     // Load saved IP address, port, username, and password from localStorage
     const savedIpAddress = localStorage.getItem('ipAddress');
-    const savedPort = localStorage.getItem('port');
+    const savedIpPort = localStorage.getItem('ipPort');
+    const savedWsPort = localStorage.getItem('wsPort');
     const savedUsername = localStorage.getItem('username');
     const savedPassword = localStorage.getItem('password');
     if (savedIpAddress) setIpAddress(savedIpAddress);
-    if (savedPort) setPort(savedPort);
+    if (savedIpPort) setIpPort(savedIpPort);
+    if (savedWsPort) setWsPort(savedWsPort);
     if (savedUsername) setUsername(savedUsername);
     if (savedPassword) setPassword(savedPassword);
   }, []);
@@ -54,10 +57,10 @@ function PowerMenu() {
 
   const handleDialogSubmit = () => {
     if (dialogType === 'Server') {
-      console.log(`IP Address: ${ipAddress}, Port: ${port}`);
       // Save IP address and port to localStorage
       localStorage.setItem('ipAddress', ipAddress);
-      localStorage.setItem('port', port);
+      localStorage.setItem('ipPort', ipPort);            
+      localStorage.setItem('wsPort', wsPort);            
     } else if (dialogType === 'Login') {
       console.log(`Username: ${username}, Password: ${password}`);
       // Save username and password to localStorage
@@ -95,7 +98,6 @@ function PowerMenu() {
         <MenuItem onClick={() => handleMenuItemClick('Server')}>Server</MenuItem>
         <MenuItem onClick={() => handleMenuItemClick('Login')}>Login</MenuItem>
         <MenuItem onClick={() => handleMenuItemClick('Logout')}>Logout</MenuItem>
-        <MenuItem onClick={() => handleMenuItemClick('Reboot')}>Reboot</MenuItem>
       </Menu>
       <Dialog open={dialogOpen} onClose={handleDialogClose}>
         <DialogTitle>
@@ -103,7 +105,7 @@ function PowerMenu() {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            {dialogType === 'Server' ? 'Please enter the IP address and port of the server.' : dialogType === 'Login' ? 'Please enter your username and password.' : dialogType === 'Logout' ? 'Are you sure you want to logout?' : 'Are you sure you want to reboot?'}
+            {dialogType === 'Server' ? 'Please enter the IP address and port of the server.\n This will require a refresh.' : dialogType === 'Login' ? 'Please enter your username and password.' : dialogType === 'Logout' ? 'Are you sure you want to logout?' : 'Are you sure you want to reboot?'}
           </DialogContentText>
           {dialogType === 'Server' ? (
             <>
@@ -119,12 +121,21 @@ function PowerMenu() {
               />
               <TextField
                 margin="dense"
-                label="Port"
+                label="IP Port"
                 type="text"
                 fullWidth
                 variant="standard"
-                value={port}
-                onChange={(e) => setPort(e.target.value)}
+                value={ipPort}
+                onChange={(e) => setIpPort(e.target.value)}
+              />
+              <TextField
+                margin="dense"
+                label="Websocket Port"
+                type="text"
+                fullWidth
+                variant="standard"
+                value={wsPort}
+                onChange={(e) => setWsPort(e.target.value)}
               />
             </>
           ) : dialogType === 'Login' ? (

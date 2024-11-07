@@ -5,6 +5,9 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
+import {getBatch, getInventory}  from './common/server-api';
+
+import {useEffect} from 'react';
 
 import AutomaticTab from './AutomaticTab.jsx';
 import ManualTab from './ManualTab.jsx';
@@ -43,20 +46,35 @@ function a11yProps(index) {
   };
 }
 
+const setAmount = o => o.amount = o.inventory;
+
+function rename(amount){
+  amount?.fermentables?.forEach(setAmount);
+  amount?.hops?.forEach(setAmount);
+  amount?.yeasts?.forEach(setAmount);
+  return amount;
+}
+
 export default function BasicTabs(props) {
+  const [batch, setBatch] = useState({});
+  const [inventory, setInventory] = useState({});
   const [value, setValue] = useState(0);
-  const batch = props.batch;
-  const setAmount = o => o.amount = o.inventory;
-  const inventory = renameAmount(props.inventory);
+
+  useEffect(() => {
+    getBatch().then(batch => {
+      setBatch(batch);
+    });
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    getInventory().then(i => {
+      setInventory(rename(i));
+    });
+    return () => {};
+  }, []);
 
   const handleChange = (event, newValue) => setValue(newValue);
-
-  function renameAmount(o){
-    o?.fermentables?.forEach(setAmount);
-    o?.hops?.forEach(setAmount);
-    o?.yeasts?.forEach(setAmount);
-    return o;
-  }
 
   return (
     <Box sx={{ width: '100%' }}>
