@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-const host = process.env.REACT_APP_HOST;
-const port = process.env.REACT_APP_PORT;
 
 // Retrieve username and password from localStorage
 const username = localStorage.getItem('username');
 const password = localStorage.getItem('password');
+const host = localStorage.getItem('ipAddress');
+const port = localStorage.getItem('ipPort');
 
 const auth = {
     username: username || process.env.REACT_APP_BREWFATHER_USERNAME, 

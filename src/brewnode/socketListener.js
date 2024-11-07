@@ -1,31 +1,10 @@
 const io = require('socket.io-client');
-let host;// = 'localhost';
-let port;// = 4000;
-let socket = io(`http://${host}:${port}`);
+const host = localStorage.getItem('ipAddress');
+const port = localStorage.getItem('wsPort');
+const socket = io(`http://${host}:${port}`);
 
 // Map to store listeners
 const listeners = new Map();
-
-function setSocket(newHost, newPort) {
-    // Close the existing socket connection
-    if (socket) { 
-        socket.disconnect();
-    }
-
-    // Update host and port
-    host = newHost;
-    port = newPort;
-
-    // Create a new socket connection
-    socket = io(`http://${host}:${port}`);
-
-    // Reattach existing listeners
-    listeners.forEach((cb, name) => {
-        socket.on(name, cb);
-    });
-
-    return socket;
-}
 
 function addSocketListener(name, cb) {
     socket.on(name, cb);
@@ -37,4 +16,4 @@ function removeSocketListener(name, cb) {
     listeners.delete(name); // Remove the listener from the map
 }
 
-module.exports = { setSocket, addSocketListener, removeSocketListener };
+module.exports = { addSocketListener, removeSocketListener };

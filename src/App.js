@@ -8,12 +8,10 @@ import {createContext, useState} from 'react';
 import { responsiveFontSizes, createTheme, ThemeProvider } from '@mui/material/styles';
 import {lightGreen} from '@mui/material/colors';
 
-import {addSocketListener, setSocket} from './brewnode/socketListener.js';
+import {addSocketListener} from './brewnode/socketListener.js';
 
 import './global.css';
 import React from 'react';
-
-const wsPort = 4000;
 
 const MyContext = createContext({defaultValue:{}});
 
@@ -25,8 +23,6 @@ const theme = responsiveFontSizes(createTheme({
 
 function App() {
   const [inProgress, setInProgress] = useState('');
-
-  setSocket('localhost', wsPort);
 
   addSocketListener('progress', ({value}) => setInProgress(value));
 
