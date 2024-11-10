@@ -28,7 +28,7 @@ const minMarks = [
 ];
 
 function KettleTemp() {
-    const {inProgress, setInProgress} = useContext(MyContext);
+    const {inProgress} = useContext(MyContext);
     const defaultKettle = {temp:60, mins:10}
     const [temp, setTemp] = useState(defaultKettle.temp);
     const [mins, setMins] = useState(defaultKettle.mins);
