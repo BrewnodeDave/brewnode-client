@@ -83,25 +83,25 @@ function Ferment() {
 
   async function ferment(stepTemp, stepTime) {
     try {
-        setInProgress('fermenting ...');   
         const steps = [{stepTemp, stepTime}];
         const response = await server.ferment(steps);
-        setInProgress('');   
         return response.data;
     } catch (error) {
+      setInProgress(error);   
       console.error(error);
+      return error;    
     } 
   }
 
   async function chill(stepTemp, stepTime) {
     try {
-        setInProgress('chilling ...');   
         const steps = [{stepTemp, stepTime}];
         const response = await server.chill(steps);
-        setInProgress('');   
         return response.data;
     } catch (error) {
+      setInProgress(error);   
       console.error(error);
+      return error;    
     } 
   }
 

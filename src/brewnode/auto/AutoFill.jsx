@@ -14,14 +14,14 @@ function AutoFill(props) {
 
   async function fill() {
     try {
-      setInProgress(`Filling Kettle with ${props.strikeLitres}L ...`);   
       const response = await server.fill(props.strikeLitres);
-      setInProgress('');   
-  
       return response.data;
     } catch (error) {
+      setInProgress(error);   
       console.error(error);
+      return error;    
     } 
+
   }
   
   return (

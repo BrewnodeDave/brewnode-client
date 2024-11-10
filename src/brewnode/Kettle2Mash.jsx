@@ -22,14 +22,13 @@ function Kettle2Mash() {
 
     async function k2m() {
         try {
-            setInProgress("Transferring Kettle to Mash Tun...");   
-       
             const response = await server.k2m();
-            setInProgress('');   
             return response.data;
         } catch (error) {
+            setInProgress(error);   
             console.error(error);
-        } 
+            return error;    
+              } 
   }
 }
 

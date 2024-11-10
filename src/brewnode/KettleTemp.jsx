@@ -28,7 +28,7 @@ const minMarks = [
 ];
 
 function KettleTemp() {
-    const {inProgress/*, setInProgress*/} = useContext(MyContext);
+    const {inProgress, setInProgress} = useContext(MyContext);
     const defaultKettle = {temp:60, mins:10}
     const [temp, setTemp] = useState(defaultKettle.temp);
     const [mins, setMins] = useState(defaultKettle.mins);
@@ -66,8 +66,8 @@ function KettleTemp() {
               style={{ fontSize:"30px",width: "100%", height: "100%" }}
               disabled={inProgress!==''}
               size='large'
-              onClick={() => {
-                  server.kettleTemp(temp, mins);
+              onClick={async () => {
+                await server.kettleTemp(temp, mins);
           }}>Kettle</Button>
       </Box>
     );

@@ -6,7 +6,7 @@ const username = localStorage.getItem('username');
 const password = localStorage.getItem('password');
 const host = localStorage.getItem('ipAddress');
 const port = localStorage.getItem('ipPort');
-
+    
 const auth = {
     username: username || process.env.REACT_APP_BREWFATHER_USERNAME, 
     password: password || process.env.REACT_APP_BREWFATHER_PASSWORD

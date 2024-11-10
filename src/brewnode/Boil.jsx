@@ -25,13 +25,12 @@ function Boil() {
 
   async function boil(mins) {
     try {
-      setInProgress(`Boiling for ${mins} mins...`);        
       const response = await server.boil(mins);
-      setInProgress(false);   
-         
       return response.data;
     } catch (error) {
+      setInProgress(error);   
       console.error(error);
+      return error;    
     } 
   }
 

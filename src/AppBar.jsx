@@ -11,6 +11,7 @@ import DangerousTwoToneIcon from '@mui/icons-material/DangerousTwoTone';
 import {MyContext } from './App';
 
 import * as server from './common/server-api';
+import { AddLink } from '@mui/icons-material';
 
 export default function MyAppBar() {
 
@@ -18,9 +19,7 @@ export default function MyAppBar() {
   
   async function restart() {
       try {
-          setInProgress("Restarting...");   
           const response = await server.restart(); 
-          setInProgress('');   
           return response.data;
       } catch (error) {
         setInProgress(error);   

@@ -13,7 +13,9 @@ function Heater() {
   useEffect(() => {
     const handleHeaterStatus = (x) => setOn(x.value);
     addSocketListener("heater", handleHeaterStatus);
-    const handlePowerStatus = (x) => setPower(x.value);
+    const handlePowerStatus = (x) => {
+      setPower(x.value);
+    }
     addSocketListener("power", handlePowerStatus);
 
     // Cleanup function to remove the listener

@@ -17,14 +17,18 @@ function Temperature(props) {
   }, [props.sensor]); 
 
   return (
+
+    <div>
+      <div>{props.name}</div>
         <GaugeChart 
           animate={false}
           id={props.name}
           nrOfLevels={20}
           textColor={"black"}
           percent={percent}
-          formatTextValue={v=>`${props.name} ${Math.trunc(v)}\xB0C`}
+          formatTextValue={v=>`${Math.trunc(v)}°C`}
         />
+    </div>
   )
 }
 

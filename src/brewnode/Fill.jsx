@@ -27,14 +27,12 @@ function Fill() {
    */
   async function fill(litres) {
     try {
-      setInProgress(`Filling Kettle with ${litres}L ...`);   
-
       const response = await server.fill(litres);
-      setInProgress('');   
-
       return response.data;
     } catch (error) {
+      setInProgress(error);   
       console.error(error);
+      return error;    
     } 
   }
   

@@ -20,13 +20,13 @@ function Kettle2Ferment() {
 
     async function k2f() {
         try {
-            setInProgress(`Transfering Kettle to Fermenter ...`);         
             const response = await server.k2f();
-            setInProgress('');         
             return response.data;
         } catch (error) {
+            setInProgress(error);   
             console.error(error);
-        } 
+            return error;    
+              } 
   }
 }
 
