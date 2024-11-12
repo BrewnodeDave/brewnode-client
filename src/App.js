@@ -24,7 +24,7 @@ function App() {
   const [inProgress, setInProgress] = useState('');
 
   addSocketListener('progress', ({value}) => setInProgress(value));
-
+  
   clearDatabase();
 
   return (

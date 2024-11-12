@@ -5,6 +5,8 @@ import Button from '@mui/material/Button';
 
 import {MyContext } from '../App';
 
+import {addSocketListener} from './socketListener.js';
+
 import * as server from '../common/server-api';
 
 const marks = [
@@ -22,6 +24,10 @@ function Boil() {
   }
 
   const [mins, setMins] = useState(defaults.mins);
+
+  addSocketListener('remainingBoilMinutes', ({value}) => {
+    return setMins(value);
+  });
 
   async function boil(mins) {
     try {
@@ -47,6 +53,7 @@ function Boil() {
         disabled={inProgress!==''}
         onChange={v=>setMins(v.target.value)}
         max={90}
+        value={mins}
       />
       <Button variant="contained"
         style={{ fontSize:"30px",width: "100%", height: "100%" }}

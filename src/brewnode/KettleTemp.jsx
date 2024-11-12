@@ -6,6 +6,8 @@ import Button from '@mui/material/Button';
 
 import * as server from '../common/server-api';
 
+import {addSocketListener} from './socketListener.js';
+
 import {MyContext } from '../App';
   
 const tempMarks = [
@@ -35,6 +37,11 @@ function KettleTemp() {
   
     const valuetext = (value) => `${value}°C`;  
 
+    addSocketListener('remainingKettleMinutes', ({value}) => {
+      return setMins(value)
+    });
+    
+    
     return (
       <Box sx={{ border: 1, padding:2}}>
           <Slider
@@ -61,6 +68,7 @@ function KettleTemp() {
               step={1}
               min={0}
               max={60}
+              value={mins}
           />
           <Button variant="contained"
               style={{ fontSize:"30px",width: "100%", height: "100%" }}

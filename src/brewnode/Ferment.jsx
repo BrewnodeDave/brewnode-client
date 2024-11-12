@@ -8,6 +8,8 @@ import * as server from '../common/server-api';
 
 import {MyContext } from '../App';
 
+import {addSocketListener} from './socketListener.js';
+
 const tempMarks = [
   {value: 0, label: '0°C'},
   {value: 10,label: '10°C'},
@@ -25,15 +27,19 @@ const dayMarks = [
 ];
 
 function Ferment() {
-    const {inProgress, setInProgress} = useContext(MyContext);
-    const defaults = {
-      stepTemp:19,
-      stepTime:7
-    }
+  const {inProgress, setInProgress} = useContext(MyContext);
+  const defaults = {
+    stepTemp:19,
+    stepTime:7
+  }
 
-    const [stepTemp, setTemp] = useState(defaults.stepTemp);
-    const [stepTime, setTime] = useState(defaults.stepTime);
+  const [stepTemp, setTemp] = useState(defaults.stepTemp);
+  const [stepTime, setTime] = useState(defaults.stepTime);
   
+  addSocketListener('remainingFermentDays', ({value}) => {
+    return setTime(value);
+  });
+
   return (
     <Box sx={{ border: 1, padding:2}}>
         <Slider
@@ -59,6 +65,7 @@ function Ferment() {
             step={1}
             min={0}
             max={15}
+            value={stepTime}
         />
         <Box>
           <Button variant="contained"

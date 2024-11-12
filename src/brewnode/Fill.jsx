@@ -6,6 +6,8 @@ import Button from '@mui/material/Button';
 import {MyContext } from '../App';
 import * as server from '../common/server-api';
 
+import {addSocketListener} from './socketListener.js';
+
 const marks = [
   {value: 0,label: '0L'},
   {value: 10,label: '10L'},
@@ -18,9 +20,11 @@ const marks = [
 
 function Fill() {
   const {inProgress, setInProgress } = useContext(MyContext);
-
   const defaults = {litres:19}
   const [litres, setLitres] = useState(defaults.litres);
+
+  addSocketListener('remainingFillLitres', ({value}) => setLitres(value));
+
 
   /**
    * @param {number} litres
@@ -47,6 +51,7 @@ function Fill() {
         step={1}
         marks={marks}
         max={50}
+        value={litres}
       />
       <Button variant="contained"
         style={{ fontSize:"30px",width: "100%", height: "100%" }}
