@@ -5,7 +5,9 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-import {RealTimeGraph} from './RealTimeGraph'; 
+import {RealTimeGraph} from './RealTimeGraph';
+
+import {Devices} from './Devices'; 
  
 import ErrorDialog from "./Error.jsx";
 
@@ -99,6 +101,7 @@ export default function BasicTabs(props) {
           <Tab label="Ingredients" {...a11yProps(2)} sx={{fontSize: 28}}/>
           <Tab label="Inventory" {...a11yProps(3)} sx={{fontSize: 28}}/>
           <Tab label="Graphs" {...a11yProps(4)} sx={{fontSize: 28}}/>
+          <Tab label="Devices" {...a11yProps(4)} sx={{fontSize: 28}}/>
         </Tabs>
         <ErrorDialog
           open={open}
@@ -127,6 +130,11 @@ export default function BasicTabs(props) {
 
       <TabPanel value={value} index={4}>
         <RealTimeGraph />
+      </TabPanel>
+
+
+      <TabPanel value={value} index={5}>
+        <Devices />
       </TabPanel>
     </Box>
   );

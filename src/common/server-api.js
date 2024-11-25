@@ -82,3 +82,13 @@ export async function mash(steps) {
     const response = await axios.put(`http://${host}:${port}/mash/${JSON.stringify({steps})}`, {});
     return response.data;
 }
+
+export async function sensorStatus() {
+    try {
+        const response = await axios.get(`http://${host}:${port}/sensorStatus`);
+        return response.data;
+    }catch(error){
+        return {error: error.message || error};
+    }
+}
+

@@ -4,24 +4,21 @@ import ToggleButton from "@mui/material/ToggleButton";
 
 import { addSocketListener, removeSocketListener } from "./socketListener.js";
 
+import Sensor from '../sensors/sensor.jsx';
+
 const server = require("../common/server-api");
+
 
 function Heater() {
   const [on, setOn] = useState(false);  
-  const [power, setPower] = useState(0);  
 
   useEffect(() => {
     const handleHeaterStatus = (x) => setOn(x.value);
-    addSocketListener("heater", handleHeaterStatus);
-    const handlePowerStatus = (x) => {
-      setPower(x.value);
-    }
-    addSocketListener("power", handlePowerStatus);
+    addSocketListener("Heater", handleHeaterStatus);
 
     // Cleanup function to remove the listener
     return () => {
-      removeSocketListener('power', handlePowerStatus);
-      removeSocketListener('heater', handleHeaterStatus);
+      removeSocketListener('Heater', handleHeaterStatus);
     };  
   });
 
@@ -41,7 +38,7 @@ function Heater() {
         onChange={heat}
       >
         {" "}
-        Heat ({power}W)
+        Heat (<Sensor name="Power"></Sensor>W)
       </ToggleButton>
     </div>
   );
