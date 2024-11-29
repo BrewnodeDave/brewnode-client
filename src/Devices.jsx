@@ -4,7 +4,15 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import Sensor from './sensors/sensor.jsx';
+import Temperature from './brewnode/Temperature.jsx';
+import Power from './brewnode/Power.jsx';
+
+import Heater from './brewnode/Heater';
+import Toggle from './sensors/Toggle.jsx';
+
+import pumpOn from './img/pump-on.jpg'; 
+import pumpOff from './img/pump-off.jpg'; 
+
 
 const numPages = 3;
 
@@ -37,20 +45,22 @@ const Devices = () => {
             <Grid sx={{ border: 0, padding:3, bgcolor:'blue'}} xs={6}>
               <Box sx={{ border: 2, padding: 0, bgcolor: 'green', marginBottom: 2 }}>
                 <h1>Kettle</h1>
-                <div>Temp<Sensor name="TempKettle"></Sensor></div>
-                <div>Valve<Sensor name="ValveKettleIn"></Sensor></div>
-                <div>Pump<Sensor name="PumpKettle"></Sensor></div>
-                <div>Power<Sensor name="Power"></Sensor></div>
-                <div>Fan<Sensor name="Fan"></Sensor></div>
+                <Temperature name="Kettle" sensor='TempKettle' min={3} max={17}/>
+                <Toggle sensorName="ValveKettleIn"/>
+                <Toggle sensorName="PumpKettle" imageOn={pumpOn} imageOff={pumpOff}/>
+                <Toggle sensorName="Fan"/>
+                <Heater/>
+                <Power min={0} max={3000}/>
               </Box>
             </Grid>
+
 
             <Grid sx={{ border: 0, padding:3, bgcolor:'blue'}} xs={6}>
               <Box sx={{ border: 2, padding: 0, bgcolor: 'green', marginBottom: 2 }}>
                 <h1>Mash Tun</h1>
-                <div>Temp<Sensor name="TempMash"></Sensor></div>
-                <div>Valve<Sensor name="ValveMashIn"></Sensor></div>
-                <div>Pump<Sensor name="PumpMash"></Sensor></div>
+                <Temperature name="Mash" sensor='TempMash' min={50} max={80}/>
+                <Toggle sensorName="ValveMashIn"/>
+                <Toggle sensorName="PumpMash"/>
               </Box>
             </Grid>
           </Grid>
@@ -60,15 +70,15 @@ const Devices = () => {
             <Grid sx={{ border: 0, padding:3, bgcolor:'blue'}} xs={6}>
               <Box sx={{ border: 2, padding: 0, bgcolor: 'green', marginBottom: 2 }}>
                 <h1>Fermenter</h1>
-                Temp<Sensor name="TempFermenter"></Sensor>
+                <Temperature name='Ferment' sensor='TempFermenter' min={10} max={30}/>
               </Box>
             </Grid>
 
             <Grid sx={{ border: 0, padding:3, bgcolor:'blue'}} xs={6}>
               <Box sx={{ border: 2, padding: 0, bgcolor: 'green', marginBottom: 2 }}>
                 <h1>Glycol</h1>
-                <div>Temp<Sensor name="TempGlycol"></Sensor></div>
-                <div>Pump<Sensor name="PumpGlycol"></Sensor></div>
+                <Temperature name='Glycol' sensor='TempGlycol' min={-30} max={30}/>
+                <Toggle sensorName="PumpGlycol"/>
               </Box>
             </Grid>
           </Grid>
@@ -78,8 +88,8 @@ const Devices = () => {
             <Grid sx={{ border: 0, padding:3, bgcolor:'blue'}} xs={12}>
               <Box sx={{ border: 1, padding: 0, bgcolor: 'red', marginBottom: 2 }}>
                 <h1>Chiller</h1>
-                <div>Wort Input Valve<Sensor name="ValveChillWortIn"></Sensor></div>
-                <div>Wort Output Valve<Sensor name="ValveFermentIn"></Sensor></div>
+                <Toggle sensorName="ValveChillWortIn"/>
+                <Toggle sensorName="ValveFermentIn" />
               </Box>
             </Grid>
           </Grid>

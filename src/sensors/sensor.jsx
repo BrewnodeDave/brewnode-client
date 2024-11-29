@@ -10,12 +10,15 @@ import {
 } from "../brewnode/socketListener.js";
 
 function Sensor(props) {
+  const {name} = props;
+
   const [value, setValue] = useState("?");
 
   useEffect(() => {
+    //get current status on load
     async function fetchData() {
         const status = await sensorStatus();
-        const x = status.find((s) => s.name === props.name);
+        const x = status.find((s) => s.name === name);
         if (x.value !== undefined) {
             setValue(x.value);
         }
@@ -23,11 +26,13 @@ function Sensor(props) {
     
     fetchData();
     
-    const handler = (x) => setValue(x.value);
-    addSocketListener(props.name, handler);
-    return () => removeSocketListener(props.name, handler); 
+    const handler = (x) => {
+      setValue(x.value);
+    };
+    addSocketListener(name, handler);
+    return () => removeSocketListener(name, handler); 
 
-  }, [props.name]);
+  }, [name]);
 
   return <span>{value}</span>;
 }
