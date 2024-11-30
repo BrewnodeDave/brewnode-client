@@ -5,8 +5,9 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import PowerMenu from './brewnode/PowerMenu';
 import DangerousTwoToneIcon from '@mui/icons-material/DangerousTwoTone';
+
+import PowerMenu from './brewnode/PowerMenu';
 
 import {MyContext } from './App';
 

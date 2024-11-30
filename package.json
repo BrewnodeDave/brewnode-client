@@ -23,10 +23,14 @@
     "react-countdown-circle-timer": "^3.2.1",
     "react-dom": "^18.2.0",
     "react-gauge-chart": "^0.4.1",
+    "react-gauge-component": "^1.2.62",
     "react-scripts": "5.0.1",
     "socket.io": "4.7.5",
     "socket.io-client": "4.7.5",
     "web-vitals": "^2.1.4"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.16.7"
   },
   "scripts": {
     "start": "react-scripts start",

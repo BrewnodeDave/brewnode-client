@@ -37,7 +37,7 @@ export async function boil(mins) {
     return response.data;
 }
 
-export async function heat(on) {
+export async function Heater(on) {
     const onOff = on ? 'On' : 'Off';
     const response = await axios.put(`http://${host}:${port}/heat?onOff=${onOff}`, {});
     return response.data === "Off" ? false : true;

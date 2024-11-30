@@ -1,23 +1,21 @@
-import {React, useState} from 'react';
+import {React, useEffect, useState} from 'react';
+
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-import {RealTimeGraph} from './RealTimeGraph';
-
+import {RealTimeGraph} from './RealTimeGraph.jsx';
 import {Devices} from './Devices'; 
- 
-import ErrorDialog from "./Error.jsx";
-
-import {getBatch, getInventory}  from './common/server-api';
-
-import {useEffect} from 'react';
-
 import AutomaticTab from './AutomaticTab.jsx';
 import ManualTab from './ManualTab.jsx';
-import Ingredients from './brewnode/Ingredients.jsx';
+
+import ErrorDialog from "../Error.jsx";
+
+import {getBatch, getInventory}  from '../common/server-api';
+
+import Ingredients from '../brewnode/Ingredients.jsx';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;

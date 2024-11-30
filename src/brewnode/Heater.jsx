@@ -4,13 +4,20 @@ import ToggleButton from "@mui/material/ToggleButton";
 
 import { addSocketListener, removeSocketListener } from "./socketListener.js";
 
-import Sensor from '../sensors/sensor.jsx';
+import Sensor from '../common/Sensor.jsx';
 
 const server = require("../common/server-api");
 
-
 function Heater() {
-  const [on, setOn] = useState(false);  
+  const [selected, setOn] = useState(false);  
+
+  async function toggle() {
+    try {
+      await server['Heater'](!selected);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   useEffect(() => {
     const handleHeaterStatus = (x) => setOn(x.value);
@@ -26,7 +33,7 @@ function Heater() {
     <div>
       <ToggleButton
         style={{
-          backgroundColor: on ? "#ff2020" : "#8bc34a",
+          backgroundColor: selected ? "#ff2020" : "#8bc34a",
           color: "#000000",
           fontSize: "30px",
           width: "100%",
@@ -34,23 +41,14 @@ function Heater() {
         }}
         size="large"
         value="check"
-        selected={on}
-        onChange={heat}
+        selected={selected}
+        onChange={toggle}
       >
         {" "}
         Heat (<Sensor name="Power"></Sensor>W)
       </ToggleButton>
     </div>
   );
-
-  async function heat() {
-    try {
-      const response = await server.heat(!on);
-      return response;
-    } catch (error) {
-      console.error(error);
-    }
-  }
 }
 
 export default Heater;
