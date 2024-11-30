@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-import { sensorStatus } from "../common/server-api";
+import { sensorStatus } from "./server-api.js";
 
-import "../App.css";
+import "../common/App.css";
 
 import {
   addSocketListener,
@@ -26,9 +26,8 @@ function Sensor(props) {
     
     fetchData();
     
-    const handler = (x) => {
-      setValue(x.value);
-    };
+    const handler = (x) => setValue(x.value);
+  
     addSocketListener(name, handler);
     return () => removeSocketListener(name, handler); 
 

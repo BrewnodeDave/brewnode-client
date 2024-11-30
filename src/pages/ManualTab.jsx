@@ -1,19 +1,17 @@
-import './App.css';
 import Stack from '@mui/material/Stack';
-
-import Heater from './brewnode/Heater';
-
-import Fill from './brewnode/Fill'
-import Kettle2Mash from './brewnode/Kettle2Mash'
-import Mash2Kettle from './brewnode/Mash2Kettle'
-import KettleTemp from './brewnode/KettleTemp'
-import Boil from './brewnode/Boil'
-import Ferment from './brewnode/Ferment'
-import Kettle2Ferment from './brewnode/Kettle2Ferment'
-
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 
-import './global.css';
+import '../common/App.css';
+import '../common/global.css';
+
+import Heater from '../brewnode/Heater';
+import Fill from '../brewnode/Fill'
+import Kettle2Mash from '../brewnode/Kettle2Mash'
+import Mash2Kettle from '../brewnode/Mash2Kettle'
+import KettleTemp from '../brewnode/KettleTemp'
+import Boil from '../brewnode/Boil'
+import Ferment from '../brewnode/Ferment'
+import Kettle2Ferment from '../brewnode/Kettle2Ferment'
 
 function ManualTab() {  
   return (

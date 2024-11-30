@@ -4,7 +4,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 
 import { addSocketListener, removeSocketListener } from "./socketListener.js";
 
-import Sensor from '../sensors/sensor.jsx';
+import Sensor from '../common/sensor.jsx';
 
 const server = require("../common/server-api");
 

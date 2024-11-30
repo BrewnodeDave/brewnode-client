@@ -1,22 +1,21 @@
 import './App.css';
+
 import Stack from '@mui/material/Stack';
 
-import Heater from './brewnode/Heater';
-
-import Temperature from './brewnode/Temperature'
-import Fill from './brewnode/Fill'
-import Kettle2Mash from './brewnode/Kettle2Mash'
-import Mash2Kettle from './brewnode/Mash2Kettle'
-import KettleTemp from './brewnode/KettleTemp'
-import Boil from './brewnode/Boil'
-import Ferment from './brewnode/Ferment'
-import Kettle2Ferment from './brewnode/Kettle2Ferment'
-
+import Heater from '../brewnode/Heater';
 //import Grid from '@mui/material/Grid'; 
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 
-export default function Controls() {
+import Temperature from '../brewnode/Temperature'
+import Fill from '../brewnode/Fill'
+import Kettle2Mash from '../brewnode/Kettle2Mash'
+import Mash2Kettle from '../brewnode/Mash2Kettle'
+import KettleTemp from '../brewnode/KettleTemp'
+import Boil from '../brewnode/Boil'
+import Ferment from '../brewnode/Ferment'
+import Kettle2Ferment from '../brewnode/Kettle2Ferment'
 
+export default function Controls() {
   return (      
       <Grid container>
         <Grid container spacing={2}  margin={2}>

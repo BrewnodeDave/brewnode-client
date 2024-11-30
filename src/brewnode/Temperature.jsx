@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import '../App.css';
+import '../common/App.css';
 
 import {addSocketListener, removeSocketListener} from './socketListener.js';
 
@@ -17,11 +17,12 @@ function Temperature(props) {
   }); 
 
   return (
-    <div>
-      <div>{props.name}</div>
-      <p style={{ fontSize: '24px', color:'black' }}>{temp}°C</p>
-    </div>
+      <div style={{ fontFamily: 'Arial, sans-serif', fontSize: '70px', fontWeight: 'bold' }}>
+        {temp}°C
+      </div>    
   )
 }
 
 export default Temperature;
+
+

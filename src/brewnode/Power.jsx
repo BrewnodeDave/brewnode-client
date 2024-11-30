@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import '../App.css';
+import '../common/App.css';
 import GaugeChart from 'react-gauge-chart';
 
 import {addSocketListener, removeSocketListener} from './socketListener.js';

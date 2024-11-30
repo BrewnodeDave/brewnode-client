@@ -1,19 +1,16 @@
 import {React/*, useContext, useEffect, useState*/} from 'react';
-
-import './App.css';
 import Stack from '@mui/material/Stack';
-
-import AutoBrew from './brewnode/auto/AutoBrew';
-import AutoFill from './brewnode/auto/AutoFill';
-import AutoKettleTemp from './brewnode/auto/AutoKettleTemp';
-import AutoFerment from './brewnode/auto/AutoFerment';
-import AutoMash from './brewnode/auto/AutoMash';
-import Process from './brewnode/auto/Process';
-
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 
-import './global.css';
+import '../common/App.css';
+import '../common/global.css';
 
+import AutoBrew from './auto/AutoBrew';
+import AutoFill from './auto/AutoFill';
+import AutoKettleTemp from './auto/AutoKettleTemp';
+import AutoFerment from './auto/AutoFerment';
+import AutoMash from './auto/AutoMash';
+import Process from './auto/Process';
 
 function AutomaticTab(props) {  
 
