@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import { io } from 'socket.io-client';
 import { openDB } from 'idb';
 
-const DB_VERSION = 3;
+import {addSocketListener, removeSocketListener} from '../brewnode/socketListener.js';
 
-const host = localStorage.getItem('ipAddress');
-const port = localStorage.getItem('wsPort');
-const socket = io(`http://${host}:${port}`);
+const DB_VERSION = 3;
 
 // Register the required components
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -105,25 +102,29 @@ const RealTimeGraph = () => {
       setTempMash(tempMashData);
     };
 
-    socket.on('TempKettle', async ({ value }) => {
+    async function handleTempKettle ({ value }) {
       await addTempKettleToDB(value);
       fetchDataFromDB();
-    });
-    socket.on('TempFermenter', async ({ value }) => {
+    }
+    async function handleTempFermenter ({ value }) {
       await addTempFermenterToDB(value);
       fetchDataFromDB();
-    }); 
-    socket.on('TempMash', async ({ value }) => {
+    }
+    async function handleTempMash ({ value }) {
       await addTempMashToDB(value);
       fetchDataFromDB();
-    });
+    }
+
+    addSocketListener('TempKettle', handleTempKettle);
+    addSocketListener('TempKettle', handleTempFermenter);
+    addSocketListener('TempKettle', handleTempMash);
 
     fetchDataFromDB();
 
     return () => {
-      socket.off('TempKettle');
-      socket.off('TemFermenter');
-      socket.off('TempMash');
+      removeSocketListener('TempKettle', handleTempKettle);
+      removeSocketListener('TemFermenter', handleTempFermenter);
+      removeSocketListener('TempMash', handleTempMash);
     };
   }, []);
 
