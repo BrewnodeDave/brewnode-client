@@ -13,9 +13,6 @@ import Toggle from '../common/Toggle.jsx';
 
 import { PumpKettle, ValveMashIn } from '../common/server-api.js';
 
-import pumpOn from '../static/buttons/pump-on.jpg'; 
-import pumpOff from '../static/buttons/pump-off.jpg'; 
-
 const numPages = 3;
 
 const Devices = (props) => {  
@@ -56,7 +53,7 @@ const Devices = (props) => {
                 <h1>Kettle</h1> 
                 <Temperature name='Kettle' sensor='TempKettle' min={0} max={100} tooLow={30} low={40} ok={75}/>
                 <Toggle sensorName="ValveKettleIn" displayName="Valve"/>
-                <Toggle sensorName="PumpKettle" displayName="Pump" imageOn={pumpOn} imageOff={pumpOff}/>
+                <Toggle sensorName="PumpKettle" displayName="Pump"/>
                 <Toggle sensorName="Fan" displayName="Fan"/>
                 <Toggle sensorName="Heater" displayName="Heater" sensor="Power"/>
                 </Box>
