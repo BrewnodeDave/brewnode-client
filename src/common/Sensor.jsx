@@ -10,7 +10,7 @@ import {
 } from "../brewnode/socketListener.js";
 
 function Sensor(props) {
-  const {name} = props;
+  const {name, cb} = props;
 
   const [value, setValue] = useState("?");
 
@@ -26,12 +26,15 @@ function Sensor(props) {
     
     fetchData();
     
-    const handler = (x) => setValue(x.value);
+    const handler = (x) => {
+      setValue(x.value);
+      if (cb) cb(x.value);
+    }
   
     addSocketListener(name, handler);
     return () => removeSocketListener(name, handler); 
 
-  }, [name]);
+  }, [name, cb]);
 
   return <span>{value}</span>;
 }
