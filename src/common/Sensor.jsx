@@ -18,9 +18,13 @@ function Sensor(props) {
     //get current status on load
     async function fetchData() {
         const status = await sensorStatus();
-        const x = status.find((s) => s.name === name);
-        if (x.value !== undefined) {
-            setValue(x.value);
+        if (status.error) {
+            console.error(status.error);  
+        }else{
+            const x = status.find((s) => s.name === name);
+            if (x.value !== undefined) {
+                setValue(x.value);
+            }
         }
     }
     

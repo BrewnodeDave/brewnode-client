@@ -27,10 +27,14 @@ function Toggle(props) {
   useEffect(() => {
     async function fetchData() {
       const status = await sensorStatus();
-      const x = status.find((s) => s.name === sensorName);
-      if (x?.value !== undefined) {
-          setValue(x.value);
-          setSelected(x.value === "Opened" || x.value === "ON");
+      if (status.error) {
+          console.error(status.error);  
+      } else { 
+        const x = status.find((s) => s.name === sensorName);
+        if (x?.value !== undefined) {
+            setValue(x.value);
+            setSelected(x.value === "Opened" || x.value === "ON");
+        }
       }
     }
     fetchData();
