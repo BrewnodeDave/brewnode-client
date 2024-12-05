@@ -31,6 +31,32 @@ const clearDatabase = async () => {
 };
 
 
+/**
+ * RealTimeGraph component fetches and displays real-time temperature data for Kettle, Fermenter, and Mash.
+ * 
+ * @component
+ * @example
+ * return (
+ *   <RealTimeGraph />
+ * )
+ * 
+ * @returns {JSX.Element} A line chart displaying real-time temperature data.
+ * 
+ * @description
+ * This component initializes a database to store temperature data for Kettle, Fermenter, and Mash.
+ * It sets up socket listeners to receive temperature data and updates the database accordingly.
+ * The data is then fetched from the database and displayed in a line chart.
+ * 
+ * @function
+ * @name RealTimeGraph
+ * 
+ * @requires useState
+ * @requires useEffect
+ * @requires openDB
+ * @requires addSocketListener
+ * @requires removeSocketListener
+ * @requires Line
+ */
 const RealTimeGraph = () => {
   const [tempKettleData, setTempKettle] = useState([]);
   const [tempFermenterData, setTempFermenter] = useState([]);
