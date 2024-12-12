@@ -51,13 +51,19 @@ const Devices = (props) => {
           <Grid container xs={12} sx={{ border: 0, padding:0}}>    
             <Grid sx={{ border: 0, padding:2}} xs={6}>
               <Box sx={{ border: 2, padding: 2, bgcolor: '#8bb34a', marginBottom: 2 }}>
-                <h1>Kettle</h1> 
+                <h1>Kettle</h1>
                 <Temperature name='Kettle' sensor='TempKettle' min={0} max={100} tooLow={30} low={40} ok={75}/>
-                <Toggle sensorName="ValveKettleIn" displayName="Valve"/>
-                <Toggle sensorName="PumpKettle" displayName="Pump"/>
-                <Toggle sensorName="Fan" displayName="Fan"/>
-                <Toggle sensorName="Heater" displayName="Heater" sensor="Power"/>
-                </Box>
+                <Grid container xs={12} sx={{ border: 0, padding:0}}>    
+                  <Grid sx={{ border: 0, padding:2}} xs={6}>
+                    <Toggle sensorName="ValveKettleIn" displayName="Valve"/>
+                    <Toggle sensorName="Fan" displayName="Fan"/>
+                    </Grid>
+                  <Grid sx={{ border: 0, padding:2}} xs={6}>
+                    <Toggle sensorName="PumpKettle" displayName="Pump"/>
+                    <Toggle sensorName="Heater" displayName="Heater" sensor="Power"/>
+                  </Grid>
+                </Grid>
+              </Box>
             </Grid>
 
 
@@ -65,8 +71,14 @@ const Devices = (props) => {
               <Box sx={{ border: 2, padding: 2, bgcolor: '#8bb34a', marginBottom: 2 }}>
                 <h1>Mash Tun</h1>
                 <Temperature name="Mash" sensor='TempMash' min={50} max={80} tooLow={55} low={60} ok={70} high={75}/>
-                <Toggle sensorName="ValveMashIn" displayName="Valve"/>
-                <Toggle sensorName="PumpMash" displayName="Pump"/>
+                <Grid container xs={12} sx={{ border: 0, padding:0}}>    
+                  <Grid sx={{ border: 0, padding:2}} xs={6}>
+                    <Toggle sensorName="ValveMashIn" displayName="Valve"/>
+                  </Grid>
+                  <Grid sx={{ border: 0, padding:2}} xs={6}>
+                    <Toggle sensorName="PumpMash" displayName="Pump"/>
+                  </Grid>
+                </Grid>
               </Box>
 
               <Box sx={{ border: 2, padding: 2, bgcolor: '#8bb34a', marginBottom: 0 }}>
@@ -115,8 +127,14 @@ const Devices = (props) => {
             <Grid sx={{ border: 0, padding:2}} xs={12}>
               <Box sx={{ border: 1, padding: 2, bgcolor: '#8bb34a', marginBottom: 2 }}>
                 <h1>Chiller</h1>
-                <Toggle sensorName="ValveChillWortIn" displayName="Input Valve"/>
-                <Toggle sensorName="ValveFermentIn" displayName="Output Valve"/>
+                <Grid container xs={12} sx={{ border: 0, padding:0}}>    
+                  <Grid sx={{ border: 0, padding:2}} xs={6}>
+                    <Toggle sensorName="ValveChillWortIn" displayName="Input Valve"/>
+                  </Grid>
+                  <Grid sx={{ border: 0, padding:2}} xs={6}>
+                    <Toggle sensorName="ValveFermentIn" displayName="Output Valve"/>
+                  </Grid>
+                </Grid>
               </Box>
             </Grid>
           </Grid>

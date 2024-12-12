@@ -51,38 +51,29 @@ function Toggle(props) {
   return (
     <div>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div style={{ 
-              flex: 1, 
-              marginRight: '10px',
-              fontSize: "25px",
-              fontWeight: "bold", // Make text bold
-              display: 'flex',
-              alignItems: 'center', // Center text vertically
-              justifyContent: 'center', // Center text horizontally
-           }}>
-            {props.displayName}
-          </div>
+          
           <div style={{ flex: 3, marginLeft: '10px' }}>
             <ToggleButton
               style={{
-                backgroundColor: selected ? "#fbc34a" : "#8bc34a",
-                color: "#000000",
+                margin: "10px",
+                borderRadius: "50%", // Make the button circular
+                border: selected ? "5px solid red" : "5px solid blue",
+                backgroundColor: selected ? "#080808" : "#484848",
+                color: "#FFFFFF",
                 fontSize: "20px",
                 fontWeight: "bold",
-                width: "100%",
-                height: "100%", 
+                width: "100px",
+                height: "100px",
                 backgroundImage: `url(${selected ? props.imageOn : props.imageOff})`,
                 backgroundSize: 'contain', // Ensure the image covers the entire button
                 backgroundRepeat: 'no-repeat', // No repeating the image
                 backgroundPosition: 'center', // Center the image
               }}
-              size="large"
+      
               value="check"
               selected={selected}
               onChange={toggle}
-            >
-              {sensorValue}
-            </ToggleButton>
+            >{props.displayName}</ToggleButton>
           </div>
         </div>
     </div>
