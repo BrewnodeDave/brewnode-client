@@ -71,7 +71,7 @@ function Toggle(props) {
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <div style={{ flex: 3, marginLeft: "10px" }}>
+        <div style={{ flex: 3, marginLeft: "0px" }}>
           <ToggleButton
             style={{
               margin: "10px",

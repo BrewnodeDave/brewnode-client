@@ -5,10 +5,8 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Temperature from '../brewnode/Temperature.jsx';
+import Fill2 from '../common/Fill2.jsx';
 
-import { ToggleButton } from '@mui/material';
-
-// import Sensor from '../common/Sensor.jsx';
 import Toggle from '../common/Toggle.jsx';
 
 import { PumpKettle, ValveMashIn } from '../common/server-api.js';
@@ -48,87 +46,95 @@ const Devices = (props) => {
 
       <Container>
         {page === 1 && (
-          <Grid container xs={12} sx={{ border: 0, padding:0}}>    
-            <Grid sx={{ border: 0, padding:2}} xs={6}>
-              <Box sx={{ border: 2, padding: 2, bgcolor: '#8bb34a', marginBottom: 2 }}>
-                <h1>Kettle</h1>
+          <Grid container xs={12}>    
+              <Grid xs={8} sx={{ border: 0, padding:2}}>
+                <Box sx={{ border: 2, padding: 2, bgcolor: '#8bb34a' }}>
+                <h1>Kettle</h1> 
                 <Temperature name='Kettle' sensor='TempKettle' min={0} max={100} tooLow={30} low={40} ok={75}/>
-                <Grid container xs={12} sx={{ border: 0, padding:0}}>    
-                  <Grid sx={{ border: 0, padding:2}} xs={6}>
-                    <Toggle sensorName="ValveKettleIn" displayName="Valve"/>
-                    <Toggle sensorName="Fan" displayName="Fan"/>
+                  <Grid container xs={12} >
+                    <Grid xs={12} >    
+                      <Grid container xs={12}>    
+                        <Grid xs={3}>    
+                          <Toggle sensorName="ValveKettleIn" displayName="Valve"/>
+                        </Grid>
+                        <Grid xs={3}>    
+                          <Toggle sensorName="Fan" displayName="Fan"/>
+                        </Grid>
+                        <Grid xs={3}>    
+                          <Toggle sensorName="PumpKettle" displayName="Pump"/>
+                        </Grid>
+                        <Grid xs={3}>    
+                          <Toggle sensorName="Heater" displayName="Heater"/>
+                        </Grid>
+                      </Grid>
                     </Grid>
-                  <Grid sx={{ border: 0, padding:2}} xs={6}>
-                    <Toggle sensorName="PumpKettle" displayName="Pump"/>
-                    <Toggle sensorName="Heater" displayName="Heater">xxxx</Toggle>
                   </Grid>
-                </Grid>
-              </Box>
-            </Grid>
+                </Box>  
+              </Grid>  
 
-
-            <Grid sx={{ border: 0, padding:2}} xs={6}>
-              <Box sx={{ border: 2, padding: 2, bgcolor: '#8bb34a', marginBottom: 2 }}>
-                <h1>Mash Tun</h1>
-                <Temperature name="Mash" sensor='TempMash' min={50} max={80} tooLow={55} low={60} ok={70} high={75}/>
-                <Grid container xs={12} sx={{ border: 0, padding:0}}>    
-                  <Grid sx={{ border: 0, padding:2}} xs={6}>
-                    <Toggle sensorName="ValveMashIn" displayName="Valve"/>
-                  </Grid>
-                  <Grid sx={{ border: 0, padding:2}} xs={6}>
-                    <Toggle sensorName="PumpMash" displayName="Pump"/>
-                  </Grid>
-                </Grid>
-              </Box>
-
-              <Box sx={{ border: 2, padding: 2, bgcolor: '#8bb34a', marginBottom: 0 }}>
-                  <ToggleButton
-                    style={{
-                      margin: "11px",
-                      borderRadius: "10%", // Circular button.
-                      border: k2m ? "5px solid red" : "5px solid blue",
-                      backgroundColor: k2m ? "#080808" : "#484848",
-                      color: "#FFFFFF",
-                      fontSize: "20px",
-                      fontWeight: "bold",
-                      backgroundImage: `url(${k2m ? props.imageOn : props.imageOff})`,
-                      backgroundSize: "contain", // Ensure the image covers the button.
-                      backgroundRepeat: "no-repeat",
-                      backgroundPosition: "center"
-                    }}
-                    size="large"
-                    value="check"
-                    selected={k2m}
-                    onChange={toggleK2M}
-                  >Kettle  =>  Mash</ToggleButton> 
-              </Box>
-
-            </Grid>
+              <Grid xs={4} sx={{ border: 0, padding:0, borderColor:'yellow'}}>    
+                <Box sx={{ border: 2, padding: 2, bgcolor: '#8bb34a', marginBottom: 2 }}>          
+                  <h1>Fill</h1> 
+                  <Fill2/>
+                </Box>
+              </Grid>
           </Grid>
         )}
         {page === 2 && (
-          <Grid container xs={12} sx={{ border: 0, padding:0}}>    
-            <Grid sx={{ border: 0, padding:2}} xs={6}>
-              <Box sx={{ border: 2, padding: 2, bgcolor: '#8bb34a', marginBottom: 2 }}>
-                <h1>Fermenter</h1>
-                <Temperature name='Ferment' sensor='TempFermenter' min={5} max={40} tooLow={10} low={15} ok={21} high={25}/>
+          <Grid container xs={12}>    
+            <Grid xs={6} sx={{padding:2}} >
+              <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 2 }}>
+              <Grid container xs={12}>    
+                  <Grid xs={6}>
+                    <h1>Fermenter</h1>
+                  </Grid>
+                  <Grid xs={6}>
+                    <Temperature name='Ferment' sensor='TempFermenter' min={5} max={40} tooLow={10} low={15} ok={21} high={25}/>
+                  </Grid>
+                </Grid>
               </Box>
             
-              <Box sx={{ border: 2, padding: 2, bgcolor: '#8bb34a', marginBottom: 2 }}>
-                <h1>Glycol</h1>
-                <Temperature name='Glycol' sensor='TempGlycol' min={-10} max={40} tooLow={-10} low={0} ok={10} high={30}/>
+              <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 2 }}>
+                <Grid container xs={12}>    
+                  <Grid xs={6}>
+                    <h1>Glycol</h1>
+                  </Grid>
+                  <Grid xs={6}>
+                    <Temperature name='Glycol' sensor='TempGlycol' min={-10} max={40} tooLow={-10} low={0} ok={10} high={30}/>
+                  </Grid>
+                </Grid>
                 <Toggle sensorName="PumpGlycol" displayName="Pump"/>
               </Box>
             </Grid>
 
-            <Grid sx={{ border: 0, padding:2}} xs={6}>
-              <Box sx={{ border: 2, padding: 2, bgcolor: '#8bb34a', marginBottom: 2 }}>
+            <Grid sx={{padding:2}} xs={6}>
+              <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 2 }}>
+                <Grid container xs={12}>    
+                  <Grid xs={6}>
+                    <h1>Mash Tun</h1>
+                  </Grid>
+                  <Grid xs={6}>
+                    <Temperature name="Mash" sensor='TempMash' min={50} max={80} tooLow={55} low={60} ok={70} high={75}/>
+                  </Grid>
+                </Grid>
+                <Grid container xs={12}>    
+                   <Grid xs={6}>
+                    <Toggle sensorName="ValveMashIn" displayName="Valve"/>
+                  </Grid>
+                  <Grid xs={6}>
+                    <Toggle sensorName="PumpMash" displayName="Pump"/>
+                  </Grid>
+                 </Grid>
+               </Box>
+
+
+              <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 2 }}>
                 <h1>Chiller</h1>
-                <Grid container xs={12} sx={{ border: 0, padding:0}}>    
-                  <Grid sx={{ border: 0, padding:2}} xs={6}>
+                <Grid container xs={12} >    
+                  <Grid xs={6}>
                     <Toggle sensorName="ValveChillWortIn" displayName="Input Valve"/>
                   </Grid>
-                  <Grid sx={{ border: 0, padding:2}} xs={6}>
+                  <Grid xs={6}>
                     <Toggle sensorName="ValveFermentIn" displayName="Output Valve"/>
                   </Grid>
                 </Grid>
