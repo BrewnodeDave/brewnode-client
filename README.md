@@ -1,3 +1,15 @@
+# Autostart
+Start Client automatically by adding
+`/home/dave/.nvm/versions/node/v18.20.5/bin/http-server -p 3000 /home/dave/git/brewnode-client/build &` 
+to
+`/etc/rc.local`
+
+Load Chromium full screen on load by adding
+`@chromium-browser --kiosk http://google.com/` 
+to
+`~/.config/lxsession/LXDE-pi/autostart`
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
