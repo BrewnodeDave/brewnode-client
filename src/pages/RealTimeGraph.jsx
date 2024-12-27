@@ -5,7 +5,7 @@ import { openDB } from 'idb';
 
 import {addSocketListener, removeSocketListener} from '../brewnode/socketListener.js';
 
-const DB_VERSION = 3;
+const DB_VERSION = 4;
 
 // Register the required components
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
