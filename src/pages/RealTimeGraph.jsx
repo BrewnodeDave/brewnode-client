@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { openDB } from 'idb';
@@ -85,25 +85,41 @@ const RealTimeGraph = () => {
     ],
   });
 
-  useEffect(() => {
-    const initDB = async () => {
-      const db = await openDB('RealTimeDB', DB_VERSION, {
-        upgrade: function(db) {
-          if (!db.objectStoreNames.contains('tempKettleData')) {
-            db.createObjectStore('tempKettleData', { keyPath: 'timestamp' });
-          }
-          if (!db.objectStoreNames.contains('tempFermenterData')) {
-            db.createObjectStore('tempFermenterData', { keyPath: 'timestamp' });
-          }
-          if (!db.objectStoreNames.contains('tempMashData')) {
-            db.createObjectStore('tempMashData', { keyPath: 'timestamp' });
-          }
-        },
-      });
-      return db;
-    };
+  const dbPromise = useMemo(() => {
+    return openDB('RealTimeDB', DB_VERSION, {
+      upgrade: function(db) {
+        if (!db.objectStoreNames.contains('tempKettleData')) {
+          db.createObjectStore('tempKettleData', { keyPath: 'timestamp' });
+        }
+        if (!db.objectStoreNames.contains('tempFermenterData')) {
+          db.createObjectStore('tempFermenterData', { keyPath: 'timestamp' });
+        }
+        if (!db.objectStoreNames.contains('tempMashData')) {
+          db.createObjectStore('tempMashData', { keyPath: 'timestamp' });
+        }
+      },
+    });
+  }, []);
 
-    const dbPromise = initDB();
+  useEffect(() => {
+    // const initDB = async () => {
+      // const db = await openDB('RealTimeDB', DB_VERSION, {
+      //   upgrade: function(db) {
+      //     if (!db.objectStoreNames.contains('tempKettleData')) {
+      //       db.createObjectStore('tempKettleData', { keyPath: 'timestamp' });
+      //     }
+      //     if (!db.objectStoreNames.contains('tempFermenterData')) {
+      //       db.createObjectStore('tempFermenterData', { keyPath: 'timestamp' });
+      //     }
+      //     if (!db.objectStoreNames.contains('tempMashData')) {
+      //       db.createObjectStore('tempMashData', { keyPath: 'timestamp' });
+      //     }
+      //   },
+      // });
+      // return db;
+    // };
+
+    // const dbPromise = initDB();
 
     const addTempKettleToDB = async (value) => {
       const db = await dbPromise;
@@ -152,7 +168,7 @@ const RealTimeGraph = () => {
       removeSocketListener('TemFermenter', handleTempFermenter);
       removeSocketListener('TempMash', handleTempMash);
     };
-  }, []);
+  }, [dbPromise]);
 
   useEffect(() => {
     const labels = tempKettleData.map((d) => new Date(d.timestamp).toLocaleTimeString());
