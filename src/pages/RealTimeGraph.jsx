@@ -5,7 +5,7 @@ import { openDB } from 'idb';
 
 import {addSocketListener, removeSocketListener} from '../brewnode/socketListener.js';
 
-const DB_VERSION = 4;
+const DB_VERSION = 3;
 
 // Register the required components
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -102,36 +102,17 @@ const RealTimeGraph = () => {
   }, []);
 
   useEffect(() => {
-    // const initDB = async () => {
-      // const db = await openDB('RealTimeDB', DB_VERSION, {
-      //   upgrade: function(db) {
-      //     if (!db.objectStoreNames.contains('tempKettleData')) {
-      //       db.createObjectStore('tempKettleData', { keyPath: 'timestamp' });
-      //     }
-      //     if (!db.objectStoreNames.contains('tempFermenterData')) {
-      //       db.createObjectStore('tempFermenterData', { keyPath: 'timestamp' });
-      //     }
-      //     if (!db.objectStoreNames.contains('tempMashData')) {
-      //       db.createObjectStore('tempMashData', { keyPath: 'timestamp' });
-      //     }
-      //   },
-      // });
-      // return db;
-    // };
-
-    // const dbPromise = initDB();
-
-    const addTempKettleToDB = async (value) => {
+    const addTempKettleToDB = async ({date, value}) => {
       const db = await dbPromise;
-      await db.put('tempKettleData', { timestamp: Date.now(), value });
+      await db.put('tempKettleData', { timestamp: date, value });
     };
-    const addTempFermenterToDB = async (value) => {
+    const addTempFermenterToDB = async ({date, value}) => {
       const db = await dbPromise;
-      await db.put('tempFermenterData', { timestamp: Date.now(), value });
+      await db.put('tempFermenterData', { timestamp: date, value });
     };
-    const addTempMashToDB = async (value) => {
+    const addTempMashToDB = async ({date, value}) => {
       const db = await dbPromise;
-      await db.put('tempMashData', { timestamp: Date.now(), value });
+      await db.put('tempMashData', { timestamp: date, value });
     };
 
     const fetchDataFromDB = async () => {
@@ -144,15 +125,15 @@ const RealTimeGraph = () => {
       setTempMash(tempMashData);
     };
 
-    async function handleTempKettle ({ value }) {
+    async function handleTempKettle ( value ) {
       await addTempKettleToDB(value);
       fetchDataFromDB();
     }
-    async function handleTempFermenter ({ value }) {
+    async function handleTempFermenter ( value ) {
       await addTempFermenterToDB(value);
       fetchDataFromDB();
     }
-    async function handleTempMash ({ value }) {
+    async function handleTempMash ( value ) {
       await addTempMashToDB(value);
       fetchDataFromDB();
     }
