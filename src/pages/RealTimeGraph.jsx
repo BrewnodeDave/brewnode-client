@@ -14,22 +14,6 @@ const tempKettleColour = [255,0,0];
 const tempFermenterColour = [0,255,0];
 const tempMashColour = [0,255,255];
 
-const clearDatabase = async () => {
-  const db = await openDB('RealTimeDB', DB_VERSION);
-
-  await db.clear('tempKettleData');
-  // const tempKettleValues = await db.getAll('tempKettleData');
-  // setTempKettle(tempKettleValues); // Refresh the data after clearing the database
-
-  await db.clear('tempFermenterData');
-  // const tempFermenterValues = await db.getAll('tempFermenterData');
-  // setTempFermenter(tempFermenterValues); // Refresh the data after clearing the database
-
-  await db.clear('tempMashData');
-  // const tempMashValues = await db.getAll('tempMashData');
-  // setTempMash(tempMashValues); // Refresh the data after clearing the database
-};
-
 
 /**
  * RealTimeGraph component fetches and displays real-time temperature data for Kettle, Fermenter, and Mash.
@@ -85,39 +69,60 @@ const RealTimeGraph = () => {
     ],
   });
 
- 
-  useEffect(() => {
-    const dbPromise = () => {
-      return openDB('RealTimeDB', DB_VERSION, {
-        upgrade: function(db) {
-          if (!db.objectStoreNames.contains('tempKettleData')) {
-            db.createObjectStore('tempKettleData', { keyPath: 'timestamp' });
-          }
-          if (!db.objectStoreNames.contains('tempFermenterData')) {
-            db.createObjectStore('tempFermenterData', { keyPath: 'timestamp' });
-          }
-          if (!db.objectStoreNames.contains('tempMashData')) {
-            db.createObjectStore('tempMashData', { keyPath: 'timestamp' });
-          }
-        },
-      }); 
-    }
+  const dbPromise = useMemo(() => {
+    return openDB('RealTimeDB', DB_VERSION, {
+      upgrade: function(db, oldVersion, newVersion, transaction, event) {
+        if (!db.objectStoreNames.contains('tempKettleData')) {
+          db.createObjectStore('tempKettleData', { keyPath: 'timestamp' });
+        }
+        if (!db.objectStoreNames.contains('tempFermenterData')) {
+          db.createObjectStore('tempFermenterData', { keyPath: 'timestamp' });
+        }
+        if (!db.objectStoreNames.contains('tempMashData')) {
+          db.createObjectStore('tempMashData', { keyPath: 'timestamp' });
+        }
+      },
+    }); 
+  }, []); 
   
-    const addTempKettleToDB = async ({date, value}) => {
-      const db = await dbPromise();
-      await db.put('tempKettleData', { timestamp: date, value });
+  // const clearDatabase = async () => {
+  //   const db = await dbPromise;
+  
+  //   await db.clear('tempKettleData');
+  //   // const tempKettleValues = await db.getAll('tempKettleData');
+  //   // setTempKettle(tempKettleValues); // Refresh the data after clearing the database
+  
+  //   await db.clear('tempFermenterData');
+  //   // const tempFermenterValues = await db.getAll('tempFermenterData');
+  //   // setTempFermenter(tempFermenterValues); // Refresh the data after clearing the database
+  
+  //   await db.clear('tempMashData');
+  //   // const tempMashValues = await db.getAll('tempMashData');
+  //   // setTempMash(tempMashValues); // Refresh the data after clearing the database
+  // };
+  
+  
+   
+  useEffect(() => {
+    const addDataToDB = async (storeName, value) => {
+      const db = await dbPromise;
+      await db.put(storeName, value);
     };
-    const addTempFermenterToDB = async ({date, value}) => {
-      const db = await dbPromise();
-      await db.put('tempFermenterData', { timestamp: date, value });
+    const handleTempKettle = async ({date, value}) => {
+      await addDataToDB('tempKettleData', { timestamp: date, value });
+      fetchDataFromDB();
     };
-    const addTempMashToDB = async ({date, value}) => {
-      const db = await dbPromise();
-      await db.put('tempMashData', { timestamp: date, value });
+    const handleTempFermenter = async ({date, value}) => {
+      await addDataToDB('tempFermenterData', { timestamp: date, value });
+      fetchDataFromDB();
+    };
+    const handleTempMash = async ({date, value}) => {
+      await addDataToDB('tempMashData', { timestamp: date, value });
+      fetchDataFromDB();
     };
 
     const fetchDataFromDB = async () => {
-      const db = await dbPromise();
+      const db = await dbPromise;
       const tempKettleData = await db.getAll('tempKettleData');
       setTempKettle(tempKettleData);
       const tempFermenterData = await db.getAll('tempFermenterData');
@@ -126,31 +131,18 @@ const RealTimeGraph = () => {
       setTempMash(tempMashData);
     };
 
-    async function handleTempKettle ( value ) {
-      await addTempKettleToDB(value);
-      fetchDataFromDB();
-    }
-    async function handleTempFermenter ( value ) {
-      await addTempFermenterToDB(value);
-      fetchDataFromDB();
-    }
-    async function handleTempMash ( value ) {
-      await addTempMashToDB(value);
-      fetchDataFromDB();
-    }
-
     addSocketListener('TempKettle', handleTempKettle);
-    addSocketListener('TemFermenter', handleTempFermenter);
+    addSocketListener('TempFermenter', handleTempFermenter);
     addSocketListener('TempMash', handleTempMash);
 
     fetchDataFromDB();
 
     return () => {
       removeSocketListener('TempKettle', handleTempKettle);
-      removeSocketListener('TemFermenter', handleTempFermenter);
+      removeSocketListener('TempFermenter', handleTempFermenter);
       removeSocketListener('TempMash', handleTempMash);
     };
-  }, []);
+  }, [dbPromise]);
 
   useEffect(() => {
     const labels = tempKettleData.map((d) => new Date(d.timestamp).toLocaleTimeString());
@@ -192,5 +184,5 @@ const RealTimeGraph = () => {
 
 export {
   RealTimeGraph, 
-  clearDatabase
-};
+  // clearDatabase
+  };
