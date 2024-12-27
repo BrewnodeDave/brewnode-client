@@ -142,8 +142,8 @@ const RealTimeGraph = () => {
     }
 
     addSocketListener('TempKettle', handleTempKettle);
-    addSocketListener('TempKettle', handleTempFermenter);
-    addSocketListener('TempKettle', handleTempMash);
+    addSocketListener('TemFermenter', handleTempFermenter);
+    addSocketListener('TempMash', handleTempMash);
 
     fetchDataFromDB();
 

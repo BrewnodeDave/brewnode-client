@@ -5,7 +5,7 @@ to
 `/etc/rc.local`
 
 Load Chromium full screen on load by adding
-`@chromium-browser --kiosk http://google.com/` 
+`@chromium-browser --kiosk http://localhost:3000/` 
 to
 `~/.config/lxsession/LXDE-pi/autostart`
 
