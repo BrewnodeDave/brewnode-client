@@ -27,7 +27,7 @@ function App() {
 
   addSocketListener('progress', ({value}) => setInProgress(value));
   
-  clearDatabase();
+  // clearDatabase();
 
   return (
     <div className="App">

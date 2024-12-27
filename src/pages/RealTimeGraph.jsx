@@ -17,16 +17,6 @@ const tempMashColour = [0,255,255];
 const clearDatabase = async () => {
   const db = await openDB('RealTimeDB', DB_VERSION);
 
-  if (!db.objectStoreNames.contains('tempKettleData')) {
-    db.createObjectStore('tempKettleData', { keyPath: 'timestamp' });
-  }
-  if (!db.objectStoreNames.contains('tempFermenterData')) {
-    db.createObjectStore('tempFermenterData', { keyPath: 'timestamp' });
-  }
-  if (!db.objectStoreNames.contains('tempMashData')) {
-    db.createObjectStore('tempMashData', { keyPath: 'timestamp' });
-  }
-
   await db.clear('tempKettleData');
   // const tempKettleValues = await db.getAll('tempKettleData');
   // setTempKettle(tempKettleValues); // Refresh the data after clearing the database
