@@ -44,7 +44,7 @@ function Ferment() {
     <Box sx={{ border: 1, padding:2}}>
         <Slider
             aria-label="Always visible"
-            style={{ width: "100%", height: "100%" }}
+            style={{ width: "100%", height: "50px"  }}
             defaultValue={defaults.stepTemp}
             valueLabelDisplay="on"
             disabled={inProgress!==''}
@@ -56,7 +56,7 @@ function Ferment() {
         />
         <Slider
             aria-label="Always visible"
-            style={{ width: "100%", height: "100%" }}
+            style={{ width: "100%", height: "50px"  }}
             defaultValue={defaults.stepTime}
             valueLabelDisplay="on"
             onChange={v=>setTime(v.target.value)}
@@ -69,7 +69,7 @@ function Ferment() {
         />
         <Box>
           <Button variant="contained"
-              style={{ fontSize:"30px",width: "50%", height: "100%" }}
+              style={{ marginRight: "10px", fontSize:"30px",width: "45%", height: "100%" }}
               disabled={inProgress!==''}
               size='large'
               onClick={() => {
@@ -77,7 +77,7 @@ function Ferment() {
           }}>Cold</Button>
 
           <Button variant="contained"
-              style={{ fontSize:"30px",width: "50%", height: "100%" }}
+              style={{ marginLeft: "10px", fontSize:"30px",width: "45%", height: "100%" }}
               disabled={inProgress!==''}
             size='large'
             onClick={() => {

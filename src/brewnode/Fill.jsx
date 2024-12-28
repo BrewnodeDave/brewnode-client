@@ -43,7 +43,7 @@ function Fill() {
   return (
     <Box sx={{ border: 1, padding:2 }}>
       <Slider
-        style={{ width: "100%", height: "100%" }}
+        style={{ width: "100%", height: "50px" }}
         defaultValue={defaults.litres}
         disabled={inProgress!==''}
         valueLabelDisplay="on"
