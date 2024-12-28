@@ -16,8 +16,8 @@ function Sensor(props) {
 
   useEffect(() => {
     //get current status on load
-    async function fetchData() {
-        const status = await sensorStatus();
+    async function fetchData(force) {
+        const status = await sensorStatus(force);
         if (status.error) {
             console.error(status.error);  
         }else{
@@ -28,7 +28,7 @@ function Sensor(props) {
         }
     }
     
-    fetchData();
+    fetchData(false);
     
     const handler = (x) => {
       setValue(x.value);
