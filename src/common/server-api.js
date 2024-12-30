@@ -137,9 +137,9 @@ export async function mash(steps) {
     return response.data;
 }
 
-export async function sensorStatus(force) {
+export async function sensorStatus(name, force = false) {
     try {
-        const response = await axios.get(`http://${host}:${port}/sensorStatus?force=${force}`);
+        const response = await axios.get(`http://${host}:${port}/sensorStatus?name=${name}&force=${force}`);
         return response.data;
     }catch(error){
         return {error: error.message || error};

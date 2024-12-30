@@ -10,7 +10,6 @@ import './common/global.css';
 import MyAppBar from './AppBar';
 
 import BasicTabs from './pages/BasicTabs';
-import {clearDatabase} from './pages/RealTimeGraph.jsx'
 
 import {addSocketListener} from './brewnode/socketListener.js';
 

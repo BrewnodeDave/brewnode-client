@@ -9,14 +9,10 @@ import Fill2 from '../common/Fill2.jsx';
 
 import Toggle from '../common/Toggle.jsx';
 
-import { PumpKettle, ValveMashIn } from '../common/server-api.js';
-
-
 const numPages = 2;
 
 const Devices = (props) => {  
   const [page, setPage] = useState(1);
-  const [k2m, setK2M] = useState(false);
     
   const handlePrev = () => {
     setPage((prevPage) => (prevPage > 1 ? prevPage - 1 : prevPage));
@@ -26,12 +22,6 @@ const Devices = (props) => {
     setPage((prevPage) => (prevPage < numPages ? prevPage + 1 : prevPage)); // Adjust the max page number as needed
   };
 
-  function toggleK2M(){
-    k2m ? PumpKettle(false) : PumpKettle(true);
-    k2m ? ValveMashIn(false) : ValveMashIn(true);
-    setK2M(!k2m);
-  }
-
   return (
     <div style={{ position: 'relative', width: '100%' }}>
       <Button
@@ -40,8 +30,7 @@ const Devices = (props) => {
         disabled={page === 1}
         sx={{ position: 'absolute', left: -30, top: '50%', transform: 'translateY(-50%)' }}
       >
-      <Typography sx={{ fontSize: 100 }}>&lt;</Typography>
-
+        <Typography sx={{ fontSize: 100 }}>&lt;</Typography>
       </Button>
 
       <Container>

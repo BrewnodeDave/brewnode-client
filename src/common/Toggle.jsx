@@ -44,22 +44,23 @@ function Toggle(props) {
    */
   useEffect(() => {
     async function fetchData() {
-      const status = await sensorStatus(true);
+      const status = await sensorStatus(sensorName, true);
       if (status.error) {
         console.error(status.error);
       } else {
-        const x = status.find((s) => s.name === sensorName);
-        if (x?.value !== undefined) {
-          setValue(x.value);
-          setSelected(x.value === "Opened" || x.value === "ON");
+        if (status !== undefined) {
+          setValue(status);
+          setSelected(status === "Opened" || status === "ON");
         }
       }
     }
+
+    console.log("Toggle useEffect", sensorName);
     fetchData();
 
     const handler = (x) => {
-      setValue(x.value);
-      setSelected(x.value === "Opened" || x.value === "ON");
+      setValue(x);
+      setSelected(x === "Opened" || x === "ON");
     };
 
     addSocketListener(sensorName, handler); // Subscribe to websocket updates for the sensor.

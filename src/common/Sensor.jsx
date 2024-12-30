@@ -10,35 +10,38 @@ import {
 } from "../brewnode/socketListener.js";
 
 function Sensor(props) {
-  const {name, cb} = props;
+  const {name, cb, noDisplay} = props;
 
   const [value, setValue] = useState("?");
 
   useEffect(() => {
     //get current status on load
     async function fetchData(force) {
-        const status = await sensorStatus(force);
+        const status = await sensorStatus(name, force);
         if (status.error) {
             console.error(status.error);  
         }else{
-            const x = status.find((s) => s.name === name);
-            if (x.value !== undefined) {
-                setValue(x.value);
+            if (status !== undefined) {
+                setValue(status);
             }
         }
     }
     
+    console.log("Sensor useEffect", name);
     fetchData(false);
     
     const handler = (x) => {
-      setValue(x.value);
-      if (cb) cb(x.value);
+      if (!noDisplay) {
+        setValue(x);
+      }
+      if (cb) cb(x);
+     
     }
   
     addSocketListener(name, handler);
     return () => removeSocketListener(name, handler); 
 
-  }, [name, cb]);
+  }, [name, cb, noDisplay]);
 
   return <span>{value}</span>;
 }

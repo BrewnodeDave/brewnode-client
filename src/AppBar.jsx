@@ -17,7 +17,6 @@ export default function MyAppBar() {
 
   const {inProgress, setInProgress} = useContext(MyContext);
 
-  const [wDogOn, setWDogOn] = useState(false);
   const [colour, setColour] = useState('#ffffff');
   
   async function restart() {
@@ -32,18 +31,7 @@ export default function MyAppBar() {
   }
 
   function toggleWdogColour(value) {
-    if (value === "") {
-      if (wDogOn) {
-        setColour("#00FF00");
-        setWDogOn(false);
-      }else{
-        setColour("#007f00");
-        setWDogOn(true);
-      }
-    }else{
-      setColour("#FF0000");
-      setWDogOn(false);
-    }
+    setColour(value ? "#00FF00" : "#007f00");
   }
 
   return (
@@ -69,7 +57,9 @@ export default function MyAppBar() {
               marginLeft: '10px',
               marginRight: '10px',
             }}
-          ><Sensor name="Watchdog" cb={toggleWdogColour}/></div>
+          >
+            <Sensor name="Watchdog" cb={toggleWdogColour} noDisplay={true}/>
+          </div>
 
         </Toolbar>
       </AppBar>
