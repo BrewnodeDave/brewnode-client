@@ -98,12 +98,16 @@ export async function ValveFermentIn(open) {
 }
 
 export async function ferment(steps) {
-    const response = await axios.put(`http://${host}:${port}/ferment/${JSON.stringify({steps})}`, {});
+    const string = steps.map(step => `step=${encodeURIComponent(JSON.stringify(step))}`).join('&');
+
+    const response = await axios.put(`http://${host}:${port}/ferment?${string}`, {});
     return response.data;
 }
 
 export async function chill(steps) {
-    const response = await axios.put(`http://${host}:${port}/chill/${JSON.stringify({steps})}`, {});
+    const string = steps.map(step => `step=${encodeURIComponent(JSON.stringify(step))}`).join('&');
+
+    const response = await axios.put(`http://${host}:${port}/chill/${string}`, {});
     return response.data;
 }
 
@@ -133,7 +137,9 @@ export async function kettleTemp(temp, mins) {
 }
 
 export async function mash(steps) {
-    const response = await axios.put(`http://${host}:${port}/mash/${JSON.stringify({steps})}`, {});
+    const string = steps.map(step => `step=${encodeURIComponent(JSON.stringify(step))}`).join('&');
+
+    const response = await axios.put(`http://${host}:${port}/mash/${string}`, {});
     return response.data;
 }
 

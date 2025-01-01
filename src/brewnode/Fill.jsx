@@ -23,7 +23,10 @@ function Fill() {
   const defaults = {litres:19}
   const [litres, setLitres] = useState(defaults.litres);
 
-  addSocketListener('remainingFillLitres', ({value}) => setLitres(value));
+  addSocketListener('remainingFillLitres', ({value}) => 
+    {
+      setLitres(value);
+    });
 
 
   /**

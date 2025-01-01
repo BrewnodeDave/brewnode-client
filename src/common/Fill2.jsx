@@ -12,7 +12,9 @@ function Fill2() {
   const [litres, setLitres] = useState(defaults.litres);
   const [selected, setSelected] = useState(false); // State for the toggle button (on/off).
 
-  addSocketListener('remainingFillLitres', ({value}) => setLitres(value));
+  addSocketListener('remainingFillLitres', (value) => {
+    setLitres(value);
+  });
 
   async function fill() {
     if (!selected){
