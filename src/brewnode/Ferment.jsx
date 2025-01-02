@@ -44,7 +44,7 @@ function Ferment() {
     <Box sx={{ border: 1, padding:2}}>
         <Slider
             aria-label="Always visible"
-            style={{ width: "100%", height: "100%" }}
+            style={{ width: "100%", height: "50px"  }}
             defaultValue={defaults.stepTemp}
             valueLabelDisplay="on"
             disabled={inProgress!==''}
@@ -56,7 +56,7 @@ function Ferment() {
         />
         <Slider
             aria-label="Always visible"
-            style={{ width: "100%", height: "100%" }}
+            style={{ width: "100%", height: "50px"  }}
             defaultValue={defaults.stepTime}
             valueLabelDisplay="on"
             onChange={v=>setTime(v.target.value)}
@@ -69,21 +69,12 @@ function Ferment() {
         />
         <Box>
           <Button variant="contained"
-              style={{ fontSize:"30px",width: "50%", height: "100%" }}
+              style={{ marginRight: "10px", fontSize:"30px",width: "100%", height: "100%" }}
               disabled={inProgress!==''}
               size='large'
               onClick={() => {
                 ferment(stepTemp, stepTime);
-          }}>Cold</Button>
-
-          <Button variant="contained"
-              style={{ fontSize:"30px",width: "50%", height: "100%" }}
-              disabled={inProgress!==''}
-            size='large'
-            onClick={() => {
-              chill(stepTemp, stepTime);
-          }}>Hot</Button>
-
+          }}>Ferment</Button>
         </Box>
     </Box>
   );
@@ -99,19 +90,6 @@ function Ferment() {
       return error;    
     } 
   }
-
-  async function chill(stepTemp, stepTime) {
-    try {
-        const steps = [{stepTemp, stepTime}];
-        const response = await server.chill(steps);
-        return response.data;
-    } catch (error) {
-      setInProgress(error);   
-      console.error(error);
-      return error;    
-    } 
-  }
-
 }
 
 export default Ferment;

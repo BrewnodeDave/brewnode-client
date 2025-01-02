@@ -12,14 +12,31 @@ import {MyContext } from '../../App';
 
 import * as server from '../../common/server-api';
 
-const step2string = ({stepTemp, stepTime}) => `${stepTemp}C for ${stepTime} mins`;
  
-function Mash(props) {
+function AutoMash(props) {
     const {inProgress, setInProgress} = useContext(MyContext);
 
     const steps = props.recipe?.mash?.steps 
         ? Object.entries(props.recipe.mash.steps).map(step => step[1]) 
         : [];
+
+    const step2string = ({stepTemp, stepTime}) => `${stepTemp}°C for ${stepTime} mins`;
+
+    const mySteps = steps.map(step => ({tempC:step.stepTemp, mins:step.stepTime}));
+
+    async function mash() {
+        if (steps.length === 0) return;
+        try {
+            setInProgress(`Mashing ...`);   
+
+            const response = server.mash(mySteps);
+            setInProgress('');   
+        
+            return response.data;
+        } catch (error) {
+            console.error(error);
+        } 
+    }
 
     return (
         <Box sx={{ border: 1, padding:2 }}>
@@ -36,31 +53,16 @@ function Mash(props) {
           </TableBody > 
         </Table>
    
-       <Button 
-        variant="contained"
-        style={{ fontSize:"30px", width: "100%", height: "100%" }}
-        size='large'
-        disabled={inProgress!==''}
-        onClick={() => {
-            mash();
-        }}>Mash</Button>
-
+        <Button 
+            variant="contained"
+            style={{ fontSize:"30px", width: "100%", height: "100%" }}
+            size='large'
+            disabled={inProgress!==''}
+            onClick={mash}
+              >Mash
+        </Button>
         </Box>
     );
-
-    async function mash() {
-        if (steps.length === 0) return;
-        try {
-            setInProgress(`Mashing ...`);   
-
-            const response = server.mash(steps);
-            setInProgress('');   
-        
-            return response.data;
-        } catch (error) {
-            console.error(error);
-        } 
-    }
 }
 
-export default Mash;
+export default AutoMash;

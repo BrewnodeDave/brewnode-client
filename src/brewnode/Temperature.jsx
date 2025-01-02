@@ -1,35 +1,38 @@
 import React, { useEffect, useState } from 'react';
 
-import '../App.css';
-import GaugeChart from 'react-gauge-chart';
+import { sensorStatus } from "../common/server-api.js";
+
+import '../common/App.css';
+
 
 import {addSocketListener, removeSocketListener} from './socketListener.js';
 
 function Temperature(props) {
-
-  const [percent, setPercent] = useState(0);
+  const {sensor} = props;
+  const [temp, setTemp] = useState(0);
 
   useEffect(() => {
-    const handleTemp = (x) => setPercent((x.value/100));
-    addSocketListener(props.sensor, handleTemp);
-    return () => removeSocketListener(props.sensor, handleTemp);
-  
-  }, [props.sensor]); 
+    async function fetchData() {
+      const status = await sensorStatus(sensor);
+      if (status.error) {
+          console.error(status.error);  
+      }else{
+          if (status !== undefined) {
+            setTemp(status);
+          }
+      }
+    }
+    fetchData(true);
+
+    addSocketListener(props.sensor, setTemp);
+    return () => removeSocketListener(props.sensor, setTemp);
+  }, [props.sensor, sensor]); 
 
   return (
-
-    <div>
-      <div>{props.name}</div>
-        <GaugeChart 
-          animate={false}
-          id={props.name}
-          nrOfLevels={20}
-          textColor={"black"}
-          percent={percent}
-          formatTextValue={v=>`${Math.trunc(v)}°C`}
-        />
-    </div>
+        <h1 style={{"margin":"0px","fontSize":"50px", "color":"#FF7C00"}}>{temp}°C</h1>
   )
 }
 
 export default Temperature;
+
+

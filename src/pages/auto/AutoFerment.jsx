@@ -14,16 +14,20 @@ import * as server from '../../common/server-api';
 function AutoFerment(props) {
   const {inProgress, setInProgress} = useContext(MyContext);
   
-  const steps = props.recipe?.fermentation?.steps ? Object.entries(props.recipe.fermentation.steps).map(step => step[1]) : [];
+  const steps = props.recipe?.fermentation?.steps 
+    ? Object.entries(props.recipe.fermentation.steps).map(step => step[1]) 
+    : [];
 
   const step2string = ({stepTemp, stepTime}) => `${stepTemp}°C for ${stepTime} days`;
   
+  const mySteps = steps.map(step => ({tempC:step.stepTemp, days:step.stepTime}));
+
   async function ferment() {
     if (steps.length === 0) return;
     try {
       setInProgress(`Fermenting ...`);   
 
-      const response = await server.ferment(steps);
+      const response = await server.ferment(mySteps);
       setInProgress('');   
   
       return response.data;

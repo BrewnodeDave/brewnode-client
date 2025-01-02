@@ -46,7 +46,7 @@ function KettleTemp() {
       <Box sx={{ border: 1, padding:2}}>
           <Slider
               aria-label="Always visible"
-              style={{ width: "100%", height: "100%" }}
+              style={{ width: "100%", height: "50px"  }}
               defaultValue={defaultKettle.temp}
               valueLabelDisplay="on"
               disabled={inProgress!==''}
@@ -59,7 +59,7 @@ function KettleTemp() {
           />
           <Slider
               aria-label="Always visible"
-              style={{ width: "100%", height: "100%" }}
+              style={{ width: "100%", height: "50px"  }}
               defaultValue={defaultKettle.mins}
               valueLabelDisplay="on"
               onChange={v=>setMins(v.target.value)}

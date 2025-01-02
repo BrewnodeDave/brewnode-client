@@ -44,7 +44,7 @@ function Boil() {
     <Box sx={{ border: 1, padding:2}}>
       <Slider
         size="medium"
-        style={{ width: "100%", height: "100%"}}
+        style={{ width: "100%", height: "50px" }}
         valueLabelDisplay="on" 
         aria-label="MY LABEL"
         defaultValue={defaults.mins}
