@@ -24,6 +24,11 @@ export async function getBatch() {
     return response.data;
 }
 
+export async function getBrewdata(name) {
+    const response = await axios.get(`http://${host}:${port}/brewdata?brewname=${name}`);
+    return response.data;
+}
+
 export async function getInventory() {
     const response = await axios.get(`http://${host}:${port}/inventory`, {
         auth,
