@@ -11,6 +11,7 @@ import AutomaticTab from './AutomaticTab.jsx';
 import ManualTab from './ManualTab.jsx';
 
 import ErrorDialog from "../Error.jsx";
+import { Graph } from './Graph.jsx';
 
 import {getBatch, getInventory}  from '../common/server-api';
 
@@ -98,6 +99,7 @@ export default function BasicTabs(props) {
           <Tab label="Ingredients" {...a11yProps(2)} sx={{fontSize: 28}}/>
           <Tab label="Inventory" {...a11yProps(3)} sx={{fontSize: 28}}/>
           <Tab label="Devices" {...a11yProps(4)} sx={{fontSize: 28}}/>
+          <Tab label="Graph" {...a11yProps(4)} sx={{fontSize: 28}}/>
         </Tabs>
         <ErrorDialog
           open={open}
@@ -126,6 +128,10 @@ export default function BasicTabs(props) {
 
       <TabPanel value={value} index={4}>
         <Devices />
+      </TabPanel>
+
+      <TabPanel value={value} index={5}>
+        <Graph brewname={batch.name}/>
       </TabPanel>
     </Box>
   );

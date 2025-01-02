@@ -5,7 +5,6 @@ import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import '../common/App.css';
 import '../common/global.css';
 
-import AutoBrew from './auto/AutoBrew';
 import AutoFill from './auto/AutoFill';
 import AutoKettleTemp from './auto/AutoKettleTemp';
 import AutoFerment from './auto/AutoFerment';
@@ -37,7 +36,6 @@ function AutomaticTab(props) {
               <Stack spacing={1}>
                 <AutoFill strikeLitres={strikeLitres}/>
                 <AutoKettleTemp temp={strikeTemp}/>
-                <AutoBrew recipe={recipe}/>
               </Stack>
             </Grid>
 
