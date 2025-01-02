@@ -44,7 +44,7 @@ function Toggle(props) {
    */
   useEffect(() => {
     async function fetchData() {
-      const status = await sensorStatus(sensorName, true);
+      const status = await sensorStatus(sensorName);
       if (status.error) {
         console.error(status.error);
       } else {

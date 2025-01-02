@@ -20,9 +20,9 @@ function AutoMash(props) {
         ? Object.entries(props.recipe.mash.steps).map(step => step[1]) 
         : [];
 
-    const step2string = ({stepTemp, stepTime}) => `${stepTemp}C for ${stepTime} mins`;
+    const step2string = ({stepTemp, stepTime}) => `${stepTemp}°C for ${stepTime} mins`;
 
-    const mySteps = steps.map(step => ({tempC:step.stepTemp, days:step.stepTime}));
+    const mySteps = steps.map(step => ({tempC:step.stepTemp, mins:step.stepTime}));
 
     async function mash() {
         if (steps.length === 0) return;

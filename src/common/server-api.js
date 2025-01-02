@@ -17,6 +17,10 @@ export async function getBatch() {
     const response = await axios.get(`http://${host}:${port}/brewing`, {
         auth,
         withCredentials: true});
+
+    const name = response.data.name;
+    await axios.put(`http://${host}:${port}/brewname?name=${name}`);
+    
     return response.data;
 }
 
@@ -143,9 +147,9 @@ export async function mash(steps) {
     return response.data;
 }
 
-export async function sensorStatus(name, force = false) {
+export async function sensorStatus(name) {
     try {
-        const response = await axios.get(`http://${host}:${port}/sensorStatus?name=${name}&force=${force}`);
+        const response = await axios.get(`http://${host}:${port}/sensorStatus?name=${name}`);
         return response.data;
     }catch(error){
         return {error: error.message || error};

@@ -12,8 +12,8 @@ function Temperature(props) {
   const [temp, setTemp] = useState(0);
 
   useEffect(() => {
-    async function fetchData(force) {
-      const status = await sensorStatus(sensor, force);
+    async function fetchData() {
+      const status = await sensorStatus(sensor);
       if (status.error) {
           console.error(status.error);  
       }else{

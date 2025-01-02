@@ -22,20 +22,18 @@ function AutomaticTab(props) {
     strikeTemp = recipe?.data?.strikeTemp;
   }
 
-
-  
   return (
       <Grid container>
         <Grid container spacing={2}  margin={2}>
           
           <Grid container  xs={12}>
-            <Grid xs={4}>
+            <Grid xs={3}>
               <Stack spacing={1}>
                 <Process recipe={recipe}/>
               </Stack>
             </Grid>
             
-            <Grid xs={4}>
+            <Grid xs={3}>
               <Stack spacing={1}>
                 <AutoFill strikeLitres={strikeLitres}/>
                 <AutoKettleTemp temp={strikeTemp}/>
@@ -43,12 +41,18 @@ function AutomaticTab(props) {
               </Stack>
             </Grid>
 
-            <Grid xs={4}>
+            <Grid xs={3}>
               <Stack spacing={1}>
-                 <AutoFerment recipe={recipe}/>
                  <AutoMash recipe={recipe}/>
               </Stack>
             </Grid>
+
+            <Grid xs={3}>
+              <Stack spacing={1}>
+                 <AutoFerment recipe={recipe}/>
+              </Stack>
+            </Grid>
+
           </Grid>  
         </Grid>
       </Grid>

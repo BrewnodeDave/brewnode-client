@@ -12,12 +12,12 @@ import {
 function Sensor(props) {
   const {name, cb, noDisplay} = props;
 
-  const [value, setValue] = useState("?");
+  const [value, setValue] = useState("");
 
   useEffect(() => {
     //get current status on load
-    async function fetchData(force) {
-        const status = await sensorStatus(name, force);
+    async function fetchData() {
+        const status = await sensorStatus(name);
         if (status.error) {
             console.error(status.error);  
         }else{
@@ -27,9 +27,10 @@ function Sensor(props) {
         }
     }
     
-    console.log("Sensor useEffect", name);
-    fetchData(false);
-    
+    if (!noDisplay){
+      fetchData();
+    }
+
     const handler = (x) => {
       if (!noDisplay) {
         setValue(x);
