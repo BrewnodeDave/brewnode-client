@@ -26,8 +26,6 @@ function App() {
 
   addSocketListener('progress', ({value}) => setInProgress(value));
   
-  // clearDatabase();
-
   return (
     <div className="App">
       <ThemeProvider theme={theme}> 
