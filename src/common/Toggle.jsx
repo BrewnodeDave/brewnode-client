@@ -44,13 +44,13 @@ function Toggle(props) {
    */
   useEffect(() => {
     async function fetchData() {
-      const status = await sensorStatus(sensorName);
-      if (status.error) {
-        console.error(status.error);
+      const watts = await sensorStatus(sensorName);
+      if (watts.error) {
+        console.error(watts.error);
       } else {
-        if (status !== undefined) {
-          setValue(status);
-          setSelected(status === "Opened" || status === "ON");
+        if (watts !== undefined) {
+          setValue(watts);
+          setSelected(watts > 0);
         }
       }
     }
@@ -60,7 +60,7 @@ function Toggle(props) {
 
     const handler = (x) => {
       setValue(x);
-      setSelected(x === "Opened" || x === "ON");
+      setSelected(x > 0 );
     };
 
     addSocketListener(sensorName, handler); // Subscribe to websocket updates for the sensor.
