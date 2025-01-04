@@ -15,7 +15,7 @@ import { Graphs } from "./Graphs.jsx";
 
 import {getBatch, getInventory}  from '../common/server-api';
 
-import Ingredients from '../brewnode/Ingredients.jsx';
+// import Ingredients from '../brewnode/Ingredients.jsx';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -79,7 +79,7 @@ export default function BasicTabs(props) {
       setInventory(rename(i));
     },handleError);
     return () => {};
-  }, []);
+  }, [inventory]);
 
   const handleChange = (event, newValue) => setValue(newValue);
   const handleError = (error) => {
@@ -96,8 +96,8 @@ export default function BasicTabs(props) {
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" variant="fullWidth">
           <Tab label="Manual" {...a11yProps(0)} sx={{fontSize: 28}}/>
           <Tab label="Automatic" {...a11yProps(1)} sx={{fontSize: 28}}/>
-          <Tab label="Ingredients" {...a11yProps(2)} sx={{fontSize: 28}}/>
-          <Tab label="Inventory" {...a11yProps(3)} sx={{fontSize: 28}}/>
+          {/* <Tab label="Ingredients" {...a11yProps(2)} sx={{fontSize: 28}}/> */}
+          {/* <Tab label="Inventory" {...a11yProps(3)} sx={{fontSize: 28}}/> */}
           <Tab label="Devices" {...a11yProps(4)} sx={{fontSize: 28}}/>
           <Tab label="Graphs" {...a11yProps(4)} sx={{fontSize: 28}}/>
         </Tabs>
@@ -117,20 +117,20 @@ export default function BasicTabs(props) {
         <AutomaticTab batch={batch}/>
       </TabPanel>
       
-      <TabPanel value={value} index={2}>
+      {/* <TabPanel value={value} index={2}>
         <Ingredients fermentables={batch.fermentables} hops={batch.hops} yeasts={batch.yeasts}/>
       </TabPanel>
       
       <TabPanel value={value} index={3}>
         <Ingredients fermentables={inventory.fermentables} hops={inventory.hops} yeasts={inventory.yeasts}/>
-      </TabPanel>
+      </TabPanel> */}
 
 
-      <TabPanel value={value} index={4}>
+      <TabPanel value={value} index={2}>
         <Devices />
       </TabPanel>
 
-      <TabPanel value={value} index={5}>
+      <TabPanel value={value} index={3}>
         <Graphs brewname={batch.name}/>
       </TabPanel>
     </Box>

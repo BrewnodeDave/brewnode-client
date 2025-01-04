@@ -9,7 +9,7 @@ const numPages = 2;
 
 const Graphs = (props) => {  
   const [page, setPage] = useState(1);
-  const [brewname, setBrewname] = useState(props.brewname);
+  const [brewname] = useState(props.brewname);
     
   const handlePrev = () => {
     setPage((prevPage) => (prevPage > 1 ? prevPage - 1 : prevPage));

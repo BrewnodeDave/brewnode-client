@@ -6,20 +6,17 @@ import {getBrewdata} from '../common/server-api';
 
 const EnergyGraph = (props) => {
   const seriesRef = useRef([]);
-
   const [chartOptions, setChartOptions] = useState({
-    chart: {
+        chart: {
             zooming: {
                 type: 'x'
             }
         },
         title: {
-            text: `${props.brewname} energy consumption`
+            text: `${props.brewname}`
         },
         subtitle: {
-            text: document.ontouchstart === undefined ?
-                'Click and drag in the plot area to zoom in' :
-                'Pinch the chart to zoom in'
+            text: ``
         },
         xAxis: {
             type: 'datetime'
@@ -62,8 +59,28 @@ const EnergyGraph = (props) => {
         series: seriesRef.current,
   });
 
+
   useEffect(() => {
+    function calcKWHr(series) {
+      let totalE = 0;  
+      series.reduce((prevSeries, currSeries) => {
+        return currSeries.data.reduce(([prevTimestamp, prevValue], [currTimestamp, currValue]) => {
+          
+          const prevms = (new Date(prevTimestamp)).getTime();
+          const currms = (new Date(currTimestamp)).getTime();
+
+          const deltaSecs = (currms - prevms) / 1000;
+          const deltaW = currValue - prevValue;
+          totalE += deltaW * deltaSecs;
+          return [currTimestamp, currValue];
+        }, currSeries.data[0]);
+      },seriesRef.current[0]);
+
+      return (totalE / 1000) / (60 * 60);
+    }
+
     const fetchData = async () => {
+      let KWHr = 0;
       try {
         const sensors = await getBrewdata(props.brewname);
         const sensorNames = [
@@ -77,14 +94,20 @@ const EnergyGraph = (props) => {
           "PumpGlycol",
           "Fan"];
         seriesRef.current = sensors.filter(({ name }) => sensorNames.includes(name));
-        seriesRef.current = seriesRef.current.map(series => ({type:'area', ...series}));
+
+        KWHr = calcKWHr(seriesRef.current);
+        
+        seriesRef.current = seriesRef.current.map(series => ({type:'area', ...series}));                
+
       }
       catch (error) {
         console.error(error);
       }
 
+
       setChartOptions((prevOptions) => ({
         ...prevOptions,
+        subtitle:{text:`Total energy consumption: ${KWHr.toFixed(2)} KWhr`},
         series: seriesRef.current,
       }));
     };
