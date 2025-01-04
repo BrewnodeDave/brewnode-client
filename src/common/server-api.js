@@ -49,7 +49,7 @@ export async function boil(mins) {
 export async function Heater(on) {
     const onOff = on ? 'On' : 'Off';
     const response = await axios.put(`http://${host}:${port}/heat?onOff=${onOff}`, {});
-    return response.data === "Off" ? false : true;
+    return response.data;
 }
 
 /**
@@ -61,49 +61,49 @@ export async function Heater(on) {
 export async function Fan(on) {
     const onOff = on ? 'On' : 'Off';
     const response = await axios.put(`http://${host}:${port}/fan?onOff=${onOff}`, {});
-    return response.data === "Off" ? false : true;
+    return response.data;
 }
 
 export async function PumpKettle(on) {
     const onOff = on ? 'On' : 'Off';
     const response = await axios.put(`http://${host}:${port}/pump/kettle?onOff=${onOff}`, {});
-    return response.data === "Off" ? false : true;
+    return response.data;
 }
 
 export async function PumpMash(on) {
     const onOff = on ? 'On' : 'Off';
     const response = await axios.put(`http://${host}:${port}/pump/mash?onOff=${onOff}`, {});
-    return response.data === "Off" ? false : true;
+    return response.data;
 }
 
 export async function PumpGlycol(on) {
     const onOff = on ? 'On' : 'Off';
     const response = await axios.put(`http://${host}:${port}/pump/glycol?onOff=${onOff}`, {});
-    return response.data === "Off" ? false : true;
+    return response.data;
 }
 
 export async function ValveKettleIn(open) {
     const state = open ? 'Open' : 'Close';
     const response = await axios.put(`http://${host}:${port}/valve/kettlein?onOff=${state}`, {});
-    return response.data === "Close" ? false : true;
+    return response.data;
 }
 
 export async function ValveMashIn(open) {
     const state = open ? 'Open' : 'Close';
     const response = await axios.put(`http://${host}:${port}/valve/mashin?onOff=${state}`, {});
-    return response.data === "Close" ? false : true;
+    return response.data;
 }
 
 export async function ValveChillWortIn(open) {
     const state = open ? 'Open' : 'Close';
     const response = await axios.put(`http://${host}:${port}/valve/chillWortIn?onOff=${state}`, {});
-    return response.data === "Close" ? false : true;
+    return response.data;
 }
 
 export async function ValveFermentIn(open) {
     const state = open ? 'Open' : 'Close';
     const response = await axios.put(`http://${host}:${port}/valve/fermentIn?onOff=${state}`, {});
-    return response.data === "Close" ? false : true;
+    return response.data;
 }
 
 export async function ferment(steps) {
