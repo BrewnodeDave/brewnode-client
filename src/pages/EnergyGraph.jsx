@@ -6,12 +6,66 @@ import {getBrewdata} from '../common/server-api';
 
 const EnergyGraph = (props) => {
   const seriesRef = useRef([]);
+
+  function calcKWHr(series) {
+    let totalE = 0;  
+    series.reduce((prevSeries, currSeries) => {
+      return currSeries.data.reduce(([prevTimestamp, prevValue], [currTimestamp, currValue]) => {
+        
+        const prevms = (new Date(prevTimestamp)).getTime();
+        const currms = (new Date(currTimestamp)).getTime();
+
+        const deltaSecs = (currms - prevms) / 1000;
+        totalE += prevValue * deltaSecs;
+        return [currTimestamp, currValue];
+      }, currSeries.data[0]);
+    },seriesRef.current[0]);
+
+    return (totalE / 1000) / (60 * 60);
+  }
+
+  const ms = timestamp => new Date(timestamp).getTime();
+
+  function setExtremes(event){
+    const start = (event.min === undefined) ? 0 : event.min;
+    const end = (event.min === undefined) ? Number.MAX_SAFE_INTEGER : event.max;
+    
+    const foo = (event.min === undefined) 
+      ? (t, start, end) => true
+      : (t, start, end) => (t > ms(start)) && (t < end);
+
+    const f = seriesRef.current.map(series => {
+      return {data: series.data.filter(([timestamp, value]) => {
+        const t = ms(timestamp);
+        return foo(t, start, end);
+      })};
+    });
+
+    const KWHr = calcKWHr(f);
+    setChartOptions((prevOptions) => ({
+      ...prevOptions,
+      subtitle:{text:`Total energy consumption: ${KWHr.toFixed(20)} KWhr`},
+      series: seriesRef.current,
+    }));
+  }
+
+
   const [chartOptions, setChartOptions] = useState({
-        chart: {zooming: {type: 'x'}},
+        chart: {
+          zooming: {type: 'x'},
+          events: {
+            // selection 
+          },
+        },
         title: {text: `${props.brewname}`},
         subtitle: {text: ``},
-        xAxis: {type: 'datetime'},
-        yAxis: {title: {text: 'Watts'}},
+        xAxis: {
+          type: 'datetime',
+          events: {
+            setExtremes
+          },
+        },
+        yAxis: {title: {text: 'Watts'}}, 
         legend: {enabled: true},
         plotOptions: {
             area: {
@@ -28,23 +82,6 @@ const EnergyGraph = (props) => {
 
 
   useEffect(() => {
-    function calcKWHr(series) {
-      let totalE = 0;  
-      series.reduce((prevSeries, currSeries) => {
-        return currSeries.data.reduce(([prevTimestamp, prevValue], [currTimestamp, currValue]) => {
-          
-          const prevms = (new Date(prevTimestamp)).getTime();
-          const currms = (new Date(currTimestamp)).getTime();
-
-          const deltaSecs = (currms - prevms) / 1000;
-          totalE += prevValue * deltaSecs;
-          return [currTimestamp, currValue];
-        }, currSeries.data[0]);
-      },seriesRef.current[0]);
-
-      return (totalE / 1000) / (60 * 60);
-    }
-
     const fetchData = async () => {
       let KWHr = 0;
       try {
