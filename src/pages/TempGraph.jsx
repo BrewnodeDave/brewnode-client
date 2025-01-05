@@ -30,7 +30,7 @@ const TempGraph = (props) => {
             }
         },
         legend: {
-            enabled: false
+            enabled: true
         },
         plotOptions: {
             area: {

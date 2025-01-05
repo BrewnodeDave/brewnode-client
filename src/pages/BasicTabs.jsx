@@ -74,12 +74,12 @@ export default function BasicTabs(props) {
     return () => {};
   }, []);
 
-  useEffect(() => {
-    getInventory().then(i => {
-      setInventory(rename(i));
-    },handleError);
-    return () => {};
-  }, [inventory]);
+  // useEffect(() => {
+  //   getInventory().then(i => {
+  //     setInventory(rename(i));
+  //   },handleError);
+  //   return () => {};
+  // }, [inventory]);
 
   const handleChange = (event, newValue) => setValue(newValue);
   const handleError = (error) => {

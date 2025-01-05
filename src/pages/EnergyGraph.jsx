@@ -7,55 +7,22 @@ import {getBrewdata} from '../common/server-api';
 const EnergyGraph = (props) => {
   const seriesRef = useRef([]);
   const [chartOptions, setChartOptions] = useState({
-        chart: {
-            zooming: {
-                type: 'x'
-            }
-        },
-        title: {
-            text: `${props.brewname}`
-        },
-        subtitle: {
-            text: ``
-        },
-        xAxis: {
-            type: 'datetime'
-        },
-        yAxis: {
-            title: {
-                text: 'Watts'
-            }
-        },
-        legend: {
-            enabled: false
-        },
+        chart: {zooming: {type: 'x'}},
+        title: {text: `${props.brewname}`},
+        subtitle: {text: ``},
+        xAxis: {type: 'datetime'},
+        yAxis: {title: {text: 'Watts'}},
+        legend: {enabled: true},
         plotOptions: {
             area: {
-                marker: {
-                    radius: 2
-                },
-                lineWidth: 1,
-                color: {
-                    linearGradient: {
-                        x1: 0,
-                        y1: 0,
-                        x2: 0,
-                        y2: 1
-                    },
-                    stops: [
-                        [0, 'rgb(199, 113, 243)'],
-                        [0.7, 'rgb(76, 175, 254)']
-                    ]
-                },
+                marker: {radius: 2},
+                lineWidth: 2,
                 states: {
-                    hover: {
-                        lineWidth: 1
-                    }
+                    hover: {lineWidth: 1}
                 },
                 threshold: null
             }
         },
-        
         series: seriesRef.current,
   });
 
@@ -70,8 +37,7 @@ const EnergyGraph = (props) => {
           const currms = (new Date(currTimestamp)).getTime();
 
           const deltaSecs = (currms - prevms) / 1000;
-          const deltaW = currValue - prevValue;
-          totalE += deltaW * deltaSecs;
+          totalE += prevValue * deltaSecs;
           return [currTimestamp, currValue];
         }, currSeries.data[0]);
       },seriesRef.current[0]);
@@ -97,7 +63,7 @@ const EnergyGraph = (props) => {
 
         KWHr = calcKWHr(seriesRef.current);
         
-        seriesRef.current = seriesRef.current.map(series => ({type:'area', ...series}));                
+        seriesRef.current = seriesRef.current.map(series => ({ cumulative: true, type:'area', ...series}));                
 
       }
       catch (error) {

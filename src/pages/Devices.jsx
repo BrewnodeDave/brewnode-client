@@ -36,8 +36,8 @@ const Devices = (props) => {
       <Container>
         {page === 1 && (
           <Grid container xs={12}>    
-              <Grid xs={8} sx={{ border: 0, padding:2}}>
-                <Box sx={{ border: 2, padding: 2, bgcolor: '#8bb34a' }}>
+              <Grid xs={8} sx={{ border: 0, padding:1}}>
+                <Box sx={{ border: 2, padding: 0, bgcolor: '#8bb34a' }}>
                 <h1>Kettle</h1> 
                 <Temperature name='Kettle' sensor='TempKettle' min={0} max={100} tooLow={30} low={40} ok={75}/>
                   <Grid container xs={12} >
@@ -61,8 +61,8 @@ const Devices = (props) => {
                 </Box>  
               </Grid>  
 
-              <Grid xs={4} sx={{ border: 0, padding:0, borderColor:'yellow'}}>    
-                <Box sx={{ border: 2, padding: 2, bgcolor: '#8bb34a', marginBottom: 2 }}>          
+              <Grid xs={4} sx={{ border: 0, padding:1, borderColor:'yellow'}}>    
+                <Box sx={{ border: 2, padding: 0, bgcolor: '#8bb34a', marginBottom: 2 }}>          
                   <h1>Fill</h1> 
                   <Fill2/>
                 </Box>
@@ -71,7 +71,7 @@ const Devices = (props) => {
         )}
         {page === 2 && (
           <Grid container xs={12}>    
-            <Grid xs={6} sx={{padding:2}} >
+            <Grid xs={6} sx={{padding:1}} >
               <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 2 }}>
               <Grid container xs={12}>    
                   <Grid xs={6}>
@@ -96,7 +96,7 @@ const Devices = (props) => {
               </Box>
             </Grid>
 
-            <Grid sx={{padding:2}} xs={6}>
+            <Grid sx={{padding:1}} xs={6}>
               <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 2 }}>
                 <Grid container xs={12}>    
                   <Grid xs={6}>
