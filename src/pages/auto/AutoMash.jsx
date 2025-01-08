@@ -1,17 +1,16 @@
 import {React, useContext} from 'react';
 
-import Button from '@mui/material/Button';
-
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import Button from '@mui/material/Button';
+
 import {MyContext } from '../../App';
 
 import * as server from '../../common/server-api';
-
  
 function AutoMash(props) {
     const {inProgress, setInProgress} = useContext(MyContext);
@@ -39,7 +38,7 @@ function AutoMash(props) {
     }
 
     return (
-        <Box sx={{ border: 1, padding:2 }}>
+      <Box sx={{ border: 1, padding:2 }}>
         <Table>
           <TableHead>
           </TableHead>
