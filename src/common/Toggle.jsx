@@ -67,7 +67,7 @@ function Toggle(props) {
 
     // Cleanup function to remove the websocket listener when the component unmounts.
     return () => removeSocketListener(sensorName, handler);
-  }, [sensorName]);
+  }, []);
 
   return (
     <div>
