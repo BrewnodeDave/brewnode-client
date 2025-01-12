@@ -22,8 +22,6 @@ const server = require("./server-api.js");
  */
 function Toggle(props) {
   const [selected, setSelected] = useState(false); // State for the toggle button (on/off).
-  const [sensorValue, setValue] = useState("?"); // State for the current sensor value.
-
   const { sensorName } = props;
 
   /**
@@ -49,25 +47,20 @@ function Toggle(props) {
         console.error(watts.error);
       } else {
         if (watts !== undefined) {
-          setValue(watts);
           setSelected(watts > 0);
         }
       }
     }
 
-    console.log("Toggle useEffect", sensorName);
     fetchData();
 
-    const handler = (x) => {
-      setValue(x);
-      setSelected(x > 0 );
-    };
+    const handler = (x) => setSelected(x > 0);
 
     addSocketListener(sensorName, handler); // Subscribe to websocket updates for the sensor.
 
     // Cleanup function to remove the websocket listener when the component unmounts.
     return () => removeSocketListener(sensorName, handler);
-  }, []);
+  });
 
   return (
     <div>

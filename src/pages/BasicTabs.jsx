@@ -13,7 +13,7 @@ import ManualTab from './ManualTab.jsx';
 import ErrorDialog from "../Error.jsx";
 import { Graphs } from "./Graphs.jsx";
 
-import {getBatch, getInventory}  from '../common/server-api';
+import {getBatch}  from '../common/server-api';
 
 // import Ingredients from '../brewnode/Ingredients.jsx';
 
@@ -50,18 +50,8 @@ function a11yProps(index) {
   };
 }
 
-const setAmount = o => o.amount = o.inventory;
-
-function rename(amount){
-  amount?.fermentables?.forEach(setAmount);
-  amount?.hops?.forEach(setAmount);
-  amount?.yeasts?.forEach(setAmount);
-  return amount;
-}
-
 export default function BasicTabs(props) {
   const [batch, setBatch] = useState({});
-  const [inventory, setInventory] = useState({});
   const [value, setValue] = useState(0);
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
@@ -73,13 +63,6 @@ export default function BasicTabs(props) {
     },handleError);
     return () => {};
   }, []);
-
-  // useEffect(() => {
-  //   getInventory().then(i => {
-  //     setInventory(rename(i));
-  //   },handleError);
-  //   return () => {};
-  // }, [inventory]);
 
   const handleChange = (event, newValue) => setValue(newValue);
   const handleError = (error) => {

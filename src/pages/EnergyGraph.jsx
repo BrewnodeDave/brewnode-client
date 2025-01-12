@@ -12,10 +12,24 @@ const EnergyGraph = (props) => {
 
   const seriesRef = useRef([]);
   const subtitleRef = useRef('');
+  const shownNames = useRef(new Set());
+
+  function setChartTitle(series) {
+    const KWHr = calcKWHr(series)
+    subtitleRef.current = `Total energy consumption: ${KWHr.toFixed(2)} KWhr (£${(KWHr*POUNDS_PER_KWHR).toFixed(2)})`;
+    const prevOptions = chartOptions;
+    setChartOptions({
+      ...prevOptions,
+      subtitle:{text: subtitleRef.current},
+      series: seriesRef.current,
+    });
+  }
 
   function calcKWHr(series) {
     let totalE = 0;  
-    series.reduce((prevSeries, currSeries) => {
+    const shownSeries = series.filter(s => shownNames.current.has(s.name));
+
+    shownSeries.reduce((prevSeries, currSeries) => {
       return currSeries.data.reduce(([prevTimestamp, prevValue], [currTimestamp, currValue]) => {
         
         const prevms = (new Date(prevTimestamp)).getTime();
@@ -55,20 +69,16 @@ const EnergyGraph = (props) => {
       : (t, start, end) => (t > ms(start)) && (t < end);
 
     const f = seriesRef.current.map(series => {
-      return {data: series.data.filter(([timestamp, value]) => {
-        const t = ms(timestamp);
-        return foo(t, start, end);
-      })};
+      return {
+        name: series.name,
+        data: series.data.filter(([timestamp, value]) => {
+          const t = ms(timestamp);
+          return foo(t, start, end);
+        })
+      }
     });
 
-    const KWHr = calcKWHr(f);
-    subtitleRef.current = `Total energy consumption: ${KWHr.toFixed(2)} KWhr (£${(KWHr*POUNDS_PER_KWHR).toFixed(2)})`;
-
-    setChartOptions((prevOptions) => ({
-      ...prevOptions,
-      subtitle:{text: subtitleRef.current},
-      series: seriesRef.current,
-    }));
+    setChartTitle(f);
   }
 
 
@@ -101,7 +111,6 @@ const EnergyGraph = (props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      let KWHr = 0;
       try {
         const sensors = await getBrewdata(props.brewname);
         const sensorNames = [
@@ -116,33 +125,43 @@ const EnergyGraph = (props) => {
           "Fan"];
         seriesRef.current = sensors.filter(({ name }) => sensorNames.includes(name));
 
-        // addBasePowerSeries(seriesRef);
+        addBasePowerSeries(seriesRef);
 
-        KWHr = calcKWHr(seriesRef.current);
-        subtitleRef.current = `Total energy consumption: ${KWHr.toFixed(2)} KWhr (£${(KWHr*POUNDS_PER_KWHR).toFixed(2)})`;
+        setChartTitle(seriesRef.current);
 
-        seriesRef.current = seriesRef.current.map(series => ({ cumulative: true, type:'area', ...series}));                
-          
+        seriesRef.current = seriesRef.current.map(series => { 
+          shownNames.current.add(series.name);   
+          return {
+            cumulative: true, 
+            type:'area', 
+            events:{
+              hide:() => {
+                shownNames.current.delete(series.name);
+                setChartTitle(seriesRef.current);            
+              },          
+              show:() => {
+                shownNames.current.add(series.name);
+                setChartTitle(seriesRef.current);            
+              }  
+            }, 
+            ...series
+          }
+        });                     
       }
       catch (error) {
         console.error(error);
       }
 
-      setChartOptions((prevOptions) => ({
-        ...prevOptions,
-        subtitle:{text:`Total energy consumption: ${KWHr.toFixed(2)} KWhr (£${(KWHr*POUNDS_PER_KWHR).toFixed(2)})`},
-        series: seriesRef.current,
-      }));
-
+      setChartTitle(seriesRef.current);
     };
 
     fetchData();
-  }, [props.brewname]);
+  });
   
 
 
   return (
-<div style={{ width: '100%', height: '100vh' }}>
+    <div style={{ width: '100%', height: '100vh' }}>
       <HighchartsReact
         highcharts={Highcharts}
         options={chartOptions}
