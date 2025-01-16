@@ -1,175 +1,241 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
+import React, { useEffect, useRef, useState } from "react";
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
 
-import {getBrewdata} from '../common/server-api';
+import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+
+import { getBrewdata, getBrewnames } from "../common/server-api";
 
 const POUNDS_PER_KWHR = 0.2291;
 const BASE_POWER = 200;
-      
 
 const EnergyGraph = (props) => {
-
-  const seriesRef = useRef([]);
-  const subtitleRef = useRef('');
   const shownNames = useRef(new Set());
 
-  function setChartTitle(series) {
-    const KWHr = calcKWHr(series)
-    subtitleRef.current = `Total energy consumption: ${KWHr.toFixed(2)} KWhr (£${(KWHr*POUNDS_PER_KWHR).toFixed(2)})`;
-    const prevOptions = chartOptions;
-    setChartOptions({
-      ...prevOptions,
-      subtitle:{text: subtitleRef.current},
-      series: seriesRef.current,
-    });
-  }
+  const [series, setSeries] = useState([]);
+  const [brewNames, setBrewNames] = useState([]);
+  const [chartSubtitle, setChartSubtitle] = useState('');
+  
+  const inView = useRef([]);
 
-  function calcKWHr(series) {
-    let totalE = 0;  
-    const shownSeries = series.filter(s => shownNames.current.has(s.name));
+  const [selectedBrew, setSelectedBrew] = useState(props.brewname);
+  const [chartOptions, setChartOptions] = useState({
+    chart: {
+      zooming: { type: "x" },
+    },
+    title: { text: `Energy Use` },
+    subtitle: { text: chartSubtitle },
+    xAxis: {
+      type: "datetime",
+      events: {
+        setExtremes,
+      },
+    },
+    yAxis: { title: { text: "Watts" } },
+    legend: { enabled: true },
+    plotOptions: {
+      area: {
+        marker: { radius: 2 },
+        lineWidth: 2,
+        states: {hover: { lineWidth: 1 }},
+        threshold: null,
+      },
+    },
+    series,
+  });
+
+  useEffect(() => {
+    setChartOptions({
+      chart: {
+        zooming: { type: "x" },
+      },
+      title: { text: 'Energy Use' },
+      subtitle: { text: chartSubtitle },
+      xAxis: {
+        type: "datetime",
+        events: {
+          setExtremes,
+        },
+      },
+      yAxis: { title: { text: "Watts" } },
+      legend: { enabled: true },
+      plotOptions: {
+        area: {
+          marker: { radius: 2 },
+          lineWidth: 2,
+          states: {
+            hover: { lineWidth: 1 },
+          },
+          threshold: null,
+        },
+      },
+      series
+    });
+  }, [series, chartSubtitle]);
+
+  useEffect(() => {
+    fetchData(selectedBrew);
+  }, [selectedBrew]);
+
+  useEffect(() => {
+    const fetchBrewNames = async () => {
+      try {
+        const brewnames = await getBrewnames();
+        setBrewNames(brewnames);
+        setSelectedBrew(brewnames[0]); 
+      } catch (error) {
+        console.error("Error fetching brew names:", error);
+      }
+    };
+
+    fetchBrewNames();
+  }, []);
+
+  const handleBrewChange = (event) => {
+    setSelectedBrew(event.target.value);
+  };
+
+
+  function calcKWHr() {
+    let totalE = 0;
+    const shownSeries = inView.current.filter((s) => shownNames.current.has(s.name));
 
     shownSeries.reduce((prevSeries, currSeries) => {
-      return currSeries.data.reduce(([prevTimestamp, prevValue], [currTimestamp, currValue]) => {
-        
-        const prevms = (new Date(prevTimestamp)).getTime();
-        const currms = (new Date(currTimestamp)).getTime();
+      return currSeries.data.reduce(
+        ([prevTimestamp, prevValue], [currTimestamp, currValue]) => {
+          const prevms = new Date(prevTimestamp).getTime();
+          const currms = new Date(currTimestamp).getTime();
 
-        const deltaSecs = (currms - prevms) / 1000;
-        totalE += prevValue * deltaSecs;
-        return [currTimestamp, currValue];
-      }, currSeries.data[0]);
-    },seriesRef.current[0]);
+          const deltaSecs = (currms - prevms) / 1000;
+          totalE += prevValue * deltaSecs;
+          return [currTimestamp, currValue];
+        },
+        currSeries.data[0]
+      );
+    }, inView.current[0]);
 
-    return (totalE / 1000) / (60 * 60);
+    const KWHr = totalE / 1000 / (60 * 60);
+    setChartSubtitle(`Total energy consumption: ${KWHr.toFixed(2)} KWhr (£${(KWHr * POUNDS_PER_KWHR).toFixed(2)})`);
   }
 
-  const ms = timestamp => new Date(timestamp).getTime();
+  const ms = (timestamp) => new Date(timestamp).getTime();
 
   const addBasePowerSeries = (series) => {
     const basePowerSeries = (start, end) => ({
       name: "Base Power",
-      data: [[start, BASE_POWER], [end, BASE_POWER]]
+      data: [
+        [start, BASE_POWER],
+        [end, BASE_POWER],
+      ],
     });
-    
-    const ms = timestamp => new Date(timestamp).getTime();
-    const mins = series.current.map(sensor => sensor.data[0][0]).map(ms);
+
+    const ms = (timestamp) => new Date(timestamp).getTime();
+    const mins = series.map((sensor) => sensor.data[0][0]).map(ms);
     const minValue = Math.min(...mins);
-    const maxs = series.current.map(sensor => sensor.data[sensor.data.length-1][0]).map(ms);
+    const maxs = series
+      .map((sensor) => sensor.data[sensor.data.length - 1][0])
+      .map(ms);
     const maxValue = Math.max(...maxs);
-    series.current.push(basePowerSeries(minValue, maxValue));
+    series.push(basePowerSeries(minValue, maxValue));
   };
-  
-  function setExtremes(event){
-    const start = (event.min === undefined) ? 0 : event.min;
-    const end = (event.min === undefined) ? Number.MAX_SAFE_INTEGER : event.max;
-    
-    const foo = (event.min === undefined) 
+
+  function setExtremes(event) {
+    const start = event.min === undefined ? 0 : event.min;
+    const end = event.min === undefined ? Number.MAX_SAFE_INTEGER : event.max;
+
+    const isInView = (event.min === undefined)
       ? (t, start, end) => true
-      : (t, start, end) => (t > ms(start)) && (t < end);
+      : (t, start, end) => t > ms(start) && t < end;
 
-    const f = seriesRef.current.map(series => {
-      return {
-        name: series.name,
-        data: series.data.filter(([timestamp, value]) => {
-          const t = ms(timestamp);
-          return foo(t, start, end);
-        })
-      }
-    });
+    const filteredPoints = (s) => ({
+      name: s.name,
+      data: s.data.filter(([timestamp, value]) => {
+        const t = ms(timestamp);
+        return isInView(t, start, end);
+      })
+    })
 
-    setChartTitle(f);
+    const foo =series.map(filteredPoints);
+    inView.current = foo;
+    calcKWHr();
   }
 
+  async function fetchData(){
+    try {
+      const sensors = await getBrewdata(selectedBrew);
+      const sensorNames = [
+        "Heater",
+        "ValveFermentIn",
+        "ValveChillWortIn",
+        "ValveKettleIn",
+        "ValveMashIn",
+        "PumpMash",
+        "PumpKettle",
+        "PumpGlycol",
+        "Fan",
+      ];
+      const ss = sensors.filter(({ name }) => sensorNames.includes(name));
 
-  const [chartOptions, setChartOptions] = useState({
-        chart: {
-          zooming: {type: 'x'},
-        },
-        title: {text: `${props.brewname}`},
-        subtitle: {text: subtitleRef.current},
-        xAxis: {
-          type: 'datetime',
-          events: {
-            setExtremes
-          },
-        },
-        yAxis: {title: {text: 'Watts'}}, 
-        legend: {enabled: true},
-        plotOptions: {
-            area: {
-                marker: {radius: 2},
-                lineWidth: 2,
-                states: {
-                    hover: {lineWidth: 1}
-                },
-                threshold: null
-            }
-        },
-        series: seriesRef.current,
-  });
+      // addBasePowerSeries(series);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const sensors = await getBrewdata(props.brewname);
-        const sensorNames = [
-          'Heater', 
-          "ValveFermentIn", 
-          "ValveChillWortIn",
-          "ValveKettleIn",
-          "ValveMashIn",
-          "PumpMash",
-          "PumpKettle",
-          "PumpGlycol",
-          "Fan"];
-        seriesRef.current = sensors.filter(({ name }) => sensorNames.includes(name));
+      // setChartTitle(series);
 
-        addBasePowerSeries(seriesRef);
-
-        setChartTitle(seriesRef.current);
-
-        seriesRef.current = seriesRef.current.map(series => { 
-          shownNames.current.add(series.name);   
+      setSeries(
+        ss.map((s) => {
+          shownNames.current.add(s.name);
           return {
-            cumulative: true, 
-            type:'area', 
-            events:{
-              hide:() => {
-                shownNames.current.delete(series.name);
-                setChartTitle(seriesRef.current);            
-              },          
-              show:() => {
-                shownNames.current.add(series.name);
-                setChartTitle(seriesRef.current);            
-              }  
-            }, 
-            ...series
-          }
-        });                     
-      }
-      catch (error) {
-        console.error(error);
-      }
+            cumulative: true,
+            type: "area",
+            events: {
+              hide: () => {
+                shownNames.current.delete(s.name);
+                calcKWHr();
+              },
+              show: () => {
+                shownNames.current.add(s.name);
+                calcKWHr();
+              },
+            },
+            ...s,
+          };
+        })
+      );
+    } catch (error) {
+      console.error(error);
+    }
 
-      setChartTitle(seriesRef.current);
-    };
-
-    fetchData();
-  });
-  
-
+    // setChartTitle(series);
+  };
 
   return (
-    <div style={{ width: '100%', height: '100vh' }}>
+    <div style={{ width: "100%", height: "100vh" }}>
+      <div style={{ marginBottom: "20px" }}>
+        <FormControl fullWidth>
+          <InputLabel id="brew-select-label">Select Brew</InputLabel>
+          <Select
+            labelId="brew-select-label"
+            id="brew-select"
+            value={selectedBrew}
+            onChange={handleBrewChange}
+            label="Select Brew"
+            sx={{ fontSize: '2rem' }}
+            >
+            {brewNames.map((brew) => (
+              <MenuItem key={brew} value={brew} sx={{ fontSize: '2rem' }}>
+                {brew}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </div>
+
       <HighchartsReact
         highcharts={Highcharts}
         options={chartOptions}
-        containerProps={{ style: { width: '100%', height: '100%' } }}
+        containerProps={{ style: { width: "100%", height: "100%" } }}
       />
-    </div>  );
+    </div>
+  );
 };
 
 export default EnergyGraph;
-
-

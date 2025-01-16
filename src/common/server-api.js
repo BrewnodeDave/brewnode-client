@@ -29,6 +29,11 @@ export async function getBrewdata(name) {
     return response.data;
 }
 
+export async function getBrewnames() {
+    const response = await axios.get(`http://${host}:${port}/mysql/brewnames`);
+    return response.data;
+}
+
 export async function getInventory() {
     const response = await axios.get(`http://${host}:${port}/inventory`, {
         auth,

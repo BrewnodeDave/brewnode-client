@@ -11,6 +11,29 @@ import TableRow from '@mui/material/TableRow'     ;
 import {MyContext } from '../../App';
 import * as server from '../../common/server-api';  
 
+function fermentStep(prevStep, step){
+  if (step.ramp === null){
+    return step;
+  }else{
+    const deltaTemp = step.stepTemp - prevStep.tempC;
+    const daysPerDeg = step.ramp / deltaTemp;
+    const numSteps = Math.trunc(Math.abs(deltaTemp));
+    const daysPerStep = Math.abs(daysPerDeg / numSteps);
+    const tempPerStep = deltaTemp / numSteps;
+    
+
+    const steps = new Array(numSteps);
+    const foo = steps.reduce((prev, curr) => {
+      steps.push({
+        stepTemp: prev.tempC + tempPerStep,
+        stepTime: prev.days + daysPerStep
+      });
+      return curr;
+    }, prevStep);
+
+    return foo;
+  }
+}
 function AutoFerment(props) {
   const {inProgress, setInProgress} = useContext(MyContext);
   
@@ -20,7 +43,16 @@ function AutoFerment(props) {
 
   const step2string = ({stepTemp, stepTime}) => `${stepTemp}°C for ${stepTime} days`;
   
-  const mySteps = steps.map(step => ({tempC:step.stepTemp, days:step.stepTime}));
+  const mySteps = steps.reduce((prev, curr) => {
+    const result = {
+      tempC:curr.stepTemp, 
+      days: curr.stepTime
+    };
+
+    const rampedSteps = fermentStep(prev,curr);
+    return result;
+  }, []);
+
 
   async function ferment() {
     if (steps.length === 0) return;
