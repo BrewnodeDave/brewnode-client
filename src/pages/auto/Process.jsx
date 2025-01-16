@@ -20,15 +20,15 @@ function Process(props) {
         </TableHead>
         <TableBody>
           <TableRow>
-              <TableCell sx={{fontSize:24}}>Boil Time</TableCell>
-              <TableCell sx={{fontSize:24}} align="right">{props.recipe?.boilTime} mins</TableCell>
+              <TableCell sx={{fontSize:24}}>Boil</TableCell>
+              <TableCell sx={{fontSize:24}} align="right">{props.recipe?.boilTime}m</TableCell>
           </TableRow>
           <TableRow>
-              <TableCell sx={{fontSize:24}} >Original Gravity</TableCell>
+              <TableCell sx={{fontSize:24}} >OG</TableCell>
               <TableCell sx={{fontSize:24}} align="right">{trunc(props.recipe?.og)}</TableCell>
           </TableRow>
           <TableRow>
-              <TableCell sx={{fontSize:24}}>Final Gravity</TableCell>
+              <TableCell sx={{fontSize:24}}>FG</TableCell>
               <TableCell sx={{fontSize:24}} align="right">{trunc(props.recipe?.fg)}</TableCell>
           </TableRow>
           <TableRow>

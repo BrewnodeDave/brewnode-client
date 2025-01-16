@@ -37,7 +37,7 @@ function AutoKettleTemp(props) {
           disabled={inProgress!==''}
           onClick={() => {
             setKettleTemp(props.temp);
-          }}>Strike Temp
+          }}>Strike
       </Button>
     </Box>
   );

@@ -23,8 +23,8 @@ function AutomaticTab(props) {
 
   return (
       <Grid container>
-        <Grid container spacing={2}  margin={2}>
-          
+        <Grid container spacing={2}  margin={2} xs={12}>
+
           <Grid container  xs={12}>
             <Grid xs={3}>
               <Stack spacing={1}>
