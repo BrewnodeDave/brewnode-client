@@ -92,7 +92,17 @@ const Devices = (props) => {
                     <Temperature name='Glycol' sensor='TempGlycol' min={-10} max={40} tooLow={-10} low={0} ok={10} high={30}/>
                   </Grid>
                 </Grid>
-                <Toggle sensorName="PumpGlycol" displayName="Pump"/>
+                <Grid container xs={12}>    
+                  <Grid xs={4}>
+                    <Toggle sensorName="PumpGlycol" displayName="Pump"/>
+                  </Grid>
+                  <Grid xs={4}>
+                    <Toggle sensorName="GlycolHeater" displayName="Heat"/>
+                  </Grid>
+                  <Grid xs={4}>
+                    <Toggle sensorName="GlycolChiller" displayName="Chill"/>
+                  </Grid>
+                </Grid>
               </Box>
             </Grid>
 

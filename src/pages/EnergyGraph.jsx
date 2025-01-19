@@ -172,6 +172,8 @@ const EnergyGraph = (props) => {
         "PumpMash",
         "PumpKettle",
         "PumpGlycol",
+        "GlycolHeat",
+        "GlycolChill",
         "Fan",
       ];
       const ss = sensors.filter(({ name }) => sensorNames.includes(name));

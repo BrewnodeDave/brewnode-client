@@ -87,6 +87,18 @@ export async function PumpGlycol(on) {
     return response.data;
 }
 
+export async function GlycolHeater(on) {
+    const onOff = on ? 'On' : 'Off';
+    const response = await axios.put(`http://${host}:${port}/glycol/heat?onOff=${onOff}`, {});
+    return response.data;
+}
+
+export async function GlycolChiller(on) {
+    const onOff = on ? 'On' : 'Off';
+    const response = await axios.put(`http://${host}:${port}/glycol/chill?onOff=${onOff}`, {});
+    return response.data;
+}
+
 export async function ValveKettleIn(open) {
     const state = open ? 'Open' : 'Close';
     const response = await axios.put(`http://${host}:${port}/valve/kettlein?onOff=${state}`, {});

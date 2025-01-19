@@ -35,6 +35,12 @@ function Toggle(props) {
     }
   }
 
+  const handler = (x) => {
+    const b = setSelected(x > 0);
+    return b;
+  }
+
+
   /**
    * useEffect hook for initializing the component and setting up the websocket listener.
    * Fetches the initial sensor status and updates the toggle state accordingly.
@@ -54,13 +60,16 @@ function Toggle(props) {
 
     fetchData();
 
-    const handler = (x) => setSelected(x > 0);
-
     addSocketListener(sensorName, handler); // Subscribe to websocket updates for the sensor.
+    console.log("Listen for",sensorName);
 
     // Cleanup function to remove the websocket listener when the component unmounts.
-    return () => removeSocketListener(sensorName, handler);
-  });
+    return function (){
+      console.log("remove", sensorName);
+      removeSocketListener(sensorName, handler);
+    }
+
+  }, [selected, sensorName]);
 
   return (
     <div>
