@@ -77,10 +77,19 @@ const EnergyGraph = (props) => {
         type: "datetime",
         events: {
           setExtremes,
-        },
+        }, 
+        labels: {
+          style: {
+            fontSize: '16px', // Increase font size here
+          },
+        },        
       },
       yAxis: { title: { text: "Watts" } },
-      legend: { enabled: true },
+      legend: { 
+        enabled: true,
+        itemStyle: {
+          fontSize: '20px', // Increase legend font size here
+        }, },
       plotOptions: {
         area: {
           marker: { radius: 2 },
@@ -108,8 +117,8 @@ const EnergyGraph = (props) => {
         "PumpMash",
         "PumpKettle",
         "PumpGlycol",
-        "GlycolHeat",
-        "GlycolChill",
+        "GlycolHeater",
+        "GlycolChiller",
         "Fan",
       ];
       const ss = sensors.filter(({ name }) => sensorNames.includes(name));
