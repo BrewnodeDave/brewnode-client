@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
@@ -7,7 +7,7 @@ import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { getBrewdata, getBrewnames } from "../common/server-api";
 
 const POUNDS_PER_KWHR = 0.2291;
-const BASE_POWER = 200;
+// const BASE_POWER = 200;
 
 const EnergyGraph = (props) => {
   const shownNames = useRef(new Set());
@@ -19,6 +19,28 @@ const EnergyGraph = (props) => {
   const inView = useRef([]);
 
   const [selectedBrew, setSelectedBrew] = useState(props.brewname);
+
+  const setExtremes = useCallback((event) => {
+    const start = event.min === undefined ? 0 : event.min;
+    const end = event.min === undefined ? Number.MAX_SAFE_INTEGER : event.max;
+
+    const isInView = (event.min === undefined)
+      ? (t, start, end) => true
+      : (t, start, end) => t > ms(start) && t < end;
+
+    const filteredPoints = (s) => ({
+      name: s.name,
+      data: s.data.filter(([timestamp, value]) => {
+        const t = ms(timestamp);
+        return isInView(t, start, end);
+      })
+    })
+
+    const foo =series.map(filteredPoints);
+    inView.current = foo;
+    calcKWHr();
+  },[series]);
+
   const [chartOptions, setChartOptions] = useState({
     chart: {
       zooming: { type: "x" },
@@ -42,7 +64,7 @@ const EnergyGraph = (props) => {
       },
     },
     series,
-  });
+  },[]);
 
   useEffect(() => {
     setChartOptions({
@@ -71,98 +93,12 @@ const EnergyGraph = (props) => {
       },
       series
     });
-  }, [series, chartSubtitle]);
-
-  useEffect(() => {
-    fetchData(selectedBrew);
-  }, [selectedBrew]);
-
-  useEffect(() => {
-    const fetchBrewNames = async () => {
-      try {
-        const brewnames = await getBrewnames();
-        setBrewNames(brewnames);
-        setSelectedBrew(brewnames[0]); 
-      } catch (error) {
-        console.error("Error fetching brew names:", error);
-      }
-    };
-
-    fetchBrewNames();
-  }, []);
-
-  const handleBrewChange = (event) => {
-    setSelectedBrew(event.target.value);
-  };
+  }, [series, chartSubtitle, setExtremes]);
 
 
-  function calcKWHr() {
-    let totalE = 0;
-    const shownSeries = inView.current.filter((s) => shownNames.current.has(s.name));
-
-    shownSeries.reduce((prevSeries, currSeries) => {
-      return currSeries.data.reduce(
-        ([prevTimestamp, prevValue], [currTimestamp, currValue]) => {
-          const prevms = new Date(prevTimestamp).getTime();
-          const currms = new Date(currTimestamp).getTime();
-
-          const deltaSecs = (currms - prevms) / 1000;
-          totalE += prevValue * deltaSecs;
-          return [currTimestamp, currValue];
-        },
-        currSeries.data[0]
-      );
-    }, inView.current[0]);
-
-    const KWHr = totalE / 1000 / (60 * 60);
-    setChartSubtitle(`Total energy consumption: ${KWHr.toFixed(2)} KWhr (£${(KWHr * POUNDS_PER_KWHR).toFixed(2)})`);
-  }
-
-  const ms = (timestamp) => new Date(timestamp).getTime();
-
-  const addBasePowerSeries = (series) => {
-    const basePowerSeries = (start, end) => ({
-      name: "Base Power",
-      data: [
-        [start, BASE_POWER],
-        [end, BASE_POWER],
-      ],
-    });
-
-    const ms = (timestamp) => new Date(timestamp).getTime();
-    const mins = series.map((sensor) => sensor.data[0][0]).map(ms);
-    const minValue = Math.min(...mins);
-    const maxs = series
-      .map((sensor) => sensor.data[sensor.data.length - 1][0])
-      .map(ms);
-    const maxValue = Math.max(...maxs);
-    series.push(basePowerSeries(minValue, maxValue));
-  };
-
-  function setExtremes(event) {
-    const start = event.min === undefined ? 0 : event.min;
-    const end = event.min === undefined ? Number.MAX_SAFE_INTEGER : event.max;
-
-    const isInView = (event.min === undefined)
-      ? (t, start, end) => true
-      : (t, start, end) => t > ms(start) && t < end;
-
-    const filteredPoints = (s) => ({
-      name: s.name,
-      data: s.data.filter(([timestamp, value]) => {
-        const t = ms(timestamp);
-        return isInView(t, start, end);
-      })
-    })
-
-    const foo =series.map(filteredPoints);
-    inView.current = foo;
-    calcKWHr();
-  }
-
-  async function fetchData(){
+  const fetchData = useCallback(async (brew) => {
     try {
-      const sensors = await getBrewdata(selectedBrew);
+      const sensors = await getBrewdata(brew);
       const sensorNames = [
         "Heater",
         "ValveFermentIn",
@@ -207,7 +143,74 @@ const EnergyGraph = (props) => {
     }
 
     // setChartTitle(series);
+  }, []);
+
+  useEffect(() => {
+    fetchData(selectedBrew);
+  }, [selectedBrew, fetchData]);
+
+  useEffect(() => {
+    const fetchBrewNames = async () => {
+      try {
+        const brewnames = await getBrewnames();
+        setBrewNames(brewnames);
+        setSelectedBrew(brewnames[0]); 
+      } catch (error) {
+        console.error("Error fetching brew names:", error);
+      }
+    };
+
+    fetchBrewNames();
+  }, []);
+
+  const handleBrewChange = (event) => {
+    setSelectedBrew(event.target.value);
   };
+
+
+  function calcKWHr() {
+    let totalE = 0;
+    const shownSeries = inView.current.filter((s) => shownNames.current.has(s.name));
+
+    shownSeries.reduce((prevSeries, currSeries) => {
+      return currSeries.data.reduce(
+        ([prevTimestamp, prevValue], [currTimestamp, currValue]) => {
+          const prevms = new Date(prevTimestamp).getTime();
+          const currms = new Date(currTimestamp).getTime();
+
+          const deltaSecs = (currms - prevms) / 1000;
+          totalE += prevValue * deltaSecs;
+          return [currTimestamp, currValue];
+        },
+        currSeries.data[0]
+      );
+    }, inView.current[0]);
+
+    const KWHr = totalE / 1000 / (60 * 60);
+    setChartSubtitle(`Total energy consumption: ${KWHr.toFixed(2)} KWhr (£${(KWHr * POUNDS_PER_KWHR).toFixed(2)})`);
+  }
+
+  const ms = (timestamp) => new Date(timestamp).getTime();
+
+  // const addBasePowerSeries = (series) => {
+  //   const basePowerSeries = (start, end) => ({
+  //     name: "Base Power",
+  //     data: [
+  //       [start, BASE_POWER],
+  //       [end, BASE_POWER],
+  //     ],
+  //   });
+
+  //   const ms = (timestamp) => new Date(timestamp).getTime();
+  //   const mins = series.map((sensor) => sensor.data[0][0]).map(ms);
+  //   const minValue = Math.min(...mins);
+  //   const maxs = series
+  //     .map((sensor) => sensor.data[sensor.data.length - 1][0])
+  //     .map(ms);
+  //   const maxValue = Math.max(...maxs);
+  //   series.push(basePowerSeries(minValue, maxValue));
+  // };
+
 
   return (
     <div style={{ width: "100%", height: "100vh" }}>
