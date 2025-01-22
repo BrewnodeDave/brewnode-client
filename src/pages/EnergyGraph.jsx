@@ -7,7 +7,7 @@ import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { getBrewdata, getBrewnames } from "../common/server-api";
 
 const POUNDS_PER_KWHR = 0.2291;
-// const BASE_POWER = 200;
+const BASE_POWER = 200;
 
 const EnergyGraph = (props) => {
   const shownNames = useRef(new Set());
@@ -123,10 +123,10 @@ const EnergyGraph = (props) => {
       ];
       const ss = sensors.filter(({ name }) => sensorNames.includes(name));
 
-      // addBasePowerSeries(series);
+      const basePower = addBasePowerSeries(ss);
 
-      // setChartTitle(series);
-
+      ss.push(basePower);
+      
       setSeries(
         ss.map((s) => {
           shownNames.current.add(s.name);
@@ -147,6 +147,8 @@ const EnergyGraph = (props) => {
           };
         })
       );
+
+  
     } catch (error) {
       console.error(error);
     }
@@ -156,7 +158,14 @@ const EnergyGraph = (props) => {
 
   useEffect(() => {
     fetchData(selectedBrew);
-  }, [selectedBrew, fetchData]);
+  },[]);
+
+  // useEffect(() => {
+  //   if (series.length > 0) {
+  //     addBasePowerSeries(series);
+  //     //calcKWHr();
+  //   }
+  // }, [series]);
 
   useEffect(() => {
     const fetchBrewNames = async () => {
@@ -201,24 +210,28 @@ const EnergyGraph = (props) => {
 
   const ms = (timestamp) => new Date(timestamp).getTime();
 
-  // const addBasePowerSeries = (series) => {
-  //   const basePowerSeries = (start, end) => ({
-  //     name: "Base Power",
-  //     data: [
-  //       [start, BASE_POWER],
-  //       [end, BASE_POWER],
-  //     ],
-  //   });
+  const addBasePowerSeries = (series) => {
+    const basePowerSeries = (start, end) => ({
+      name: "Base Power",
+      data: [
+        [start, 0],
+        [start + 1, BASE_POWER],
+        [end, BASE_POWER],
+        [end + 1, 0],
+      ],
+    });
 
-  //   const ms = (timestamp) => new Date(timestamp).getTime();
-  //   const mins = series.map((sensor) => sensor.data[0][0]).map(ms);
-  //   const minValue = Math.min(...mins);
-  //   const maxs = series
-  //     .map((sensor) => sensor.data[sensor.data.length - 1][0])
-  //     .map(ms);
-  //   const maxValue = Math.max(...maxs);
-  //   series.push(basePowerSeries(minValue, maxValue));
-  // };
+    const milliSecs = (timestamp) => new Date(timestamp).getTime();
+    const mins = series.map((sensor) => sensor.data[0][0]).map(ms);
+    const minValue = Math.min(...mins);
+
+    const timestamp = (sensor) => sensor.data[sensor.data.length - 1][0];
+
+    const maxs = series.map(sensor => milliSecs(timestamp(sensor)));
+    
+    const maxValue = Math.max(...maxs);
+    return basePowerSeries(minValue, maxValue);
+  };
 
 
   return (
