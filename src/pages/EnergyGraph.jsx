@@ -36,9 +36,9 @@ const EnergyGraph = (props) => {
       })
     })
 
-    const foo =series.map(filteredPoints);
-    inView.current = foo;
+    inView.current = series.map(filteredPoints);
     calcKWHr();
+
   },[series]);
 
   const [chartOptions, setChartOptions] = useState({
@@ -49,9 +49,7 @@ const EnergyGraph = (props) => {
     subtitle: { text: chartSubtitle },
     xAxis: {
       type: "datetime",
-      events: {
-        setExtremes,
-      },
+      events: {setExtremes},
     },
     yAxis: { title: { text: "Watts" } },
     legend: { enabled: true },
@@ -68,44 +66,55 @@ const EnergyGraph = (props) => {
 
   useEffect(() => {
     setChartOptions({
-      chart: {
-        zooming: { type: "x" },
-      },
+      chart: {zooming: { type: "x" }},
       title: { text: 'Energy Use' },
       subtitle: { text: chartSubtitle },
       xAxis: {
         type: "datetime",
-        events: {
-          setExtremes,
-        }, 
-        labels: {
-          style: {
-            fontSize: '16px', // Increase font size here
-          },
-        },        
+        events: {setExtremes}, 
+        labels: {style: {fontSize: '16px'}},        
       },
       yAxis: { title: { text: "Watts" } },
       legend: { 
         enabled: true,
-        itemStyle: {
-          fontSize: '20px', // Increase legend font size here
-        }, },
+        itemStyle: {fontSize: '20px'}
+      },
       plotOptions: {
         area: {
           marker: { radius: 2 },
           lineWidth: 2,
-          states: {
-            hover: { lineWidth: 1 },
-          },
-          threshold: null,
+          states: {hover: { lineWidth: 1 }},
+          threshold: null
         },
       },
       series
     });
   }, [series, chartSubtitle, setExtremes]);
 
-
   const fetchData = useCallback(async (brew) => {
+    const addBasePowerSeries = (series) => {
+      const basePowerSeries = (start, end) => ({
+        name: "Base Power",
+        data: [
+          [start, 0],
+          [start + 1, BASE_POWER],
+          [end, BASE_POWER],
+          [end + 1, 0],
+        ],
+      });
+  
+      const milliSecs = (timestamp) => new Date(timestamp).getTime();
+      const mins = series.map((sensor) => sensor.data[0][0]).map(ms);
+      const minValue = Math.min(...mins);
+  
+      const timestamp = (sensor) => sensor.data[sensor.data.length - 1][0];
+  
+      const maxs = series.map(sensor => milliSecs(timestamp(sensor)));
+      
+      const maxValue = Math.max(...maxs);
+      return basePowerSeries(minValue, maxValue);
+    };
+  
     try {
       const sensors = await getBrewdata(brew);
       const sensorNames = [
@@ -121,51 +130,43 @@ const EnergyGraph = (props) => {
         "GlycolChiller",
         "Fan",
       ];
-      const ss = sensors.filter(({ name }) => sensorNames.includes(name));
+      const energySensors = sensors.filter(({ name }) => sensorNames.includes(name));
 
-      const basePower = addBasePowerSeries(ss);
+      const basePower = addBasePowerSeries(energySensors);
 
-      ss.push(basePower);
+      energySensors.push(basePower);
       
       setSeries(
-        ss.map((s) => {
-          shownNames.current.add(s.name);
+        energySensors.map((energySensor) => {
+          shownNames.current.add(energySensor.name);
           return {
             cumulative: true,
             type: "area",
             events: {
               hide: () => {
-                shownNames.current.delete(s.name);
+                shownNames.current.delete(energySensor.name);
                 calcKWHr();
               },
               show: () => {
-                shownNames.current.add(s.name);
+                shownNames.current.add(energySensor.name);
                 calcKWHr();
               },
             },
-            ...s,
+            ...energySensor,
           };
         })
       );
-
-  
     } catch (error) {
       console.error(error);
     }
-
-    // setChartTitle(series);
   }, []);
 
   useEffect(() => {
-    fetchData(selectedBrew);
-  },[]);
-
-  // useEffect(() => {
-  //   if (series.length > 0) {
-  //     addBasePowerSeries(series);
-  //     //calcKWHr();
-  //   }
-  // }, [series]);
+    async function foo(brew) {
+      await fetchData(selectedBrew);
+    }
+    foo(selectedBrew);
+  }, [fetchData, selectedBrew]);
 
   useEffect(() => {
     const fetchBrewNames = async () => {
@@ -184,7 +185,6 @@ const EnergyGraph = (props) => {
   const handleBrewChange = (event) => {
     setSelectedBrew(event.target.value);
   };
-
 
   function calcKWHr() {
     let totalE = 0;
@@ -210,32 +210,8 @@ const EnergyGraph = (props) => {
 
   const ms = (timestamp) => new Date(timestamp).getTime();
 
-  const addBasePowerSeries = (series) => {
-    const basePowerSeries = (start, end) => ({
-      name: "Base Power",
-      data: [
-        [start, 0],
-        [start + 1, BASE_POWER],
-        [end, BASE_POWER],
-        [end + 1, 0],
-      ],
-    });
-
-    const milliSecs = (timestamp) => new Date(timestamp).getTime();
-    const mins = series.map((sensor) => sensor.data[0][0]).map(ms);
-    const minValue = Math.min(...mins);
-
-    const timestamp = (sensor) => sensor.data[sensor.data.length - 1][0];
-
-    const maxs = series.map(sensor => milliSecs(timestamp(sensor)));
-    
-    const maxValue = Math.max(...maxs);
-    return basePowerSeries(minValue, maxValue);
-  };
-
-
   return (
-    <div style={{ width: "100%", height: "100vh" }}>
+    <div style={{ width: "100%", height: "100%" }}>
       <div style={{ marginBottom: "20px" }}>
         <FormControl fullWidth>
           <InputLabel id="brew-select-label">Select Brew</InputLabel>
@@ -245,10 +221,10 @@ const EnergyGraph = (props) => {
             value={selectedBrew}
             onChange={handleBrewChange}
             label="Select Brew"
-            sx={{ fontSize: '2rem' }}
+            sx={{ fontSize: '1.5rem' }}
             >
             {brewNames.map((brew) => (
-              <MenuItem key={brew} value={brew} sx={{ fontSize: '2rem' }}>
+              <MenuItem key={brew} value={brew} sx={{ fontSize: '1.5rem' }}>
                 {brew}
               </MenuItem>
             ))}

@@ -43,14 +43,14 @@ const TempGraph = (props) => {
     yAxis: {title: {text: '°C'}},
     legend: {enabled: true},
     plotOptions: {
-        area: {
-            marker: {radius: 2},
-            lineWidth: 1,
-            states: {
-                hover: {lineWidth: 1}
-            },
-            threshold: null
-        }
+      area: {
+          marker: {radius: 2},
+          lineWidth: 1,
+          states: {
+              hover: {lineWidth: 1}
+          },
+          threshold: null
+      }
     },      
     series,
   });
@@ -80,9 +80,8 @@ const TempGraph = (props) => {
   }, [selectedBrew]);
   
 
-
   return (
-    <div style={{ width: '100%', height: '100vh' }}>
+    <div style={{ width: '100%', height: '100%' }}>
       <div style={{ marginBottom: '20px' }}>
         <FormControl fullWidth>
           <InputLabel id="brew-select-label">Select Brew</InputLabel>
@@ -92,10 +91,10 @@ const TempGraph = (props) => {
             value={selectedBrew}
             onChange={handleBrewChange}
             label="Select Brew"
-            sx={{ fontSize: '2rem' }}
+            sx={{ fontSize: '1.5rem' }}
           >
             {brewNames.map((brew) => (
-              <MenuItem key={brew} value={brew} sx={{ fontSize: '2rem' }}>
+              <MenuItem key={brew} value={brew} sx={{ fontSize: '1.5rem' }}>
                 {brew}
               </MenuItem>
             ))}
