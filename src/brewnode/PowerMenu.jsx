@@ -98,6 +98,7 @@ function PowerMenu() {
         <MenuItem onClick={() => handleMenuItemClick('Server')}>Server</MenuItem>
         <MenuItem onClick={() => handleMenuItemClick('Login')}>Login</MenuItem>
         <MenuItem onClick={() => handleMenuItemClick('Logout')}>Logout</MenuItem>
+        <MenuItem onClick={() => window.location.href = 'http://localhost:8080/docs'}>Docs</MenuItem>
       </Menu>
       <Dialog open={dialogOpen} onClose={handleDialogClose}>
         <DialogTitle>
