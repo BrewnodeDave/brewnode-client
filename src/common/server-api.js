@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { error } from 'highcharts';
 
 
 // Retrieve username and password from localStorage
@@ -18,10 +19,18 @@ export async function getBatch() {
         auth,
         withCredentials: true});
 
+    if (response.errors){
+        return {err: response.message};
+    }
+
     const name = response.data.name;
-    await axios.put(`http://${host}:${port}/brewname?name=${name}`);
-    
-    return response.data;
+    if (name != undefined) {        
+        const result = await axios.put(`http://${host}:${port}/brewname?name=${name}`);
+        return response.data;
+    }else{
+        return {err: 'No batch in progress'};
+    }
+
 }
 
 export async function getBrewdata(name) {
