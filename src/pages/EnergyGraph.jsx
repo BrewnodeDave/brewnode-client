@@ -4,7 +4,7 @@ import HighchartsReact from "highcharts-react-official";
 
 import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 
-import { getBrewdata, getBrewnames } from "../common/server-api";
+import { getBrewdata } from "../common/server-api";
 
 const POUNDS_PER_KWHR = 0.2291;
 const BASE_POWER = 200;
@@ -13,12 +13,12 @@ const EnergyGraph = (props) => {
   const shownNames = useRef(new Set());
 
   const [series, setSeries] = useState([]);
-  const [brewNames, setBrewNames] = useState([]);
+  const [brewNames] = useState(props.brewnames);
   const [chartSubtitle, setChartSubtitle] = useState('');
   
   const inView = useRef([]);
 
-  const [selectedBrew, setSelectedBrew] = useState(props.brewname);
+  const [selectedBrew, setSelectedBrew] = useState(props.brewnames[0]);
 
   const setExtremes = useCallback((event) => {
     const start = event.min === undefined ? 0 : event.min;
@@ -167,20 +167,6 @@ const EnergyGraph = (props) => {
     }
     foo(selectedBrew);
   }, [fetchData, selectedBrew]);
-
-  useEffect(() => {
-    const fetchBrewNames = async () => {
-      try {
-        const brewnames = await getBrewnames();
-        setBrewNames(brewnames);
-        setSelectedBrew(brewnames[0]); 
-      } catch (error) {
-        console.error("Error fetching brew names:", error);
-      }
-    };
-
-    fetchBrewNames();
-  }, []);
 
   const handleBrewChange = (event) => {
     setSelectedBrew(event.target.value);

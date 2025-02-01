@@ -4,26 +4,12 @@ import HighchartsReact from 'highcharts-react-official';
 
 import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 
-import {getBrewdata, getBrewnames} from '../common/server-api';
+import {getBrewdata } from '../common/server-api';
 
 const TempGraph = (props) => {
   const [series, setSeries] = useState([]);
-  const [brewNames, setBrewNames] = useState([]);
-  const [selectedBrew, setSelectedBrew] = useState(props.brewname);
-
-  useEffect(() => {
-    const fetchBrewNames = async () => {
-      try {
-        const brewnames = await getBrewnames();
-        setBrewNames(brewnames);
-        setSelectedBrew(brewnames[0]);
-      } catch (error) {
-        console.error('Error fetching brew names:', error);
-      }
-    };
-
-    fetchBrewNames();
-  }, []);
+  const [brewNames] = useState(props.brewnames);
+  const [selectedBrew, setSelectedBrew] = useState(props.brewnames[0]);
 
   const handleBrewChange = (event) => {
     setSelectedBrew(event.target.value);
@@ -67,7 +53,7 @@ const TempGraph = (props) => {
   const fetchData = async (brewname) => {
     try {
       const sensors = await getBrewdata(brewname);
-      const sensorNames = ['TempKettle', 'TempMash', 'TempFermenter'];
+      const sensorNames = ['TempKettle', 'TempMash', 'TempFermenter', 'TempGlycol'];
       setSeries(sensors.filter(({ name }) => sensorNames.includes(name)));
     }
     catch (error) {

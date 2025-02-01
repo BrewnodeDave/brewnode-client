@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { error } from 'highcharts';
+// import { error } from 'highcharts';
 
 
 // Retrieve username and password from localStorage
