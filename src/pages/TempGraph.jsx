@@ -67,8 +67,8 @@ const TempGraph = (props) => {
   
 
   return (
-    <div style={{ width: '100%', height: '100%' }}>
-      <div style={{ marginBottom: '20px' }}>
+    <div style={{ width: "100%", height: "100vh", display: "flex", flexDirection: "column" }}>
+      <div style={{ marginBottom: "20px" }}>
         <FormControl fullWidth>
           <InputLabel id="brew-select-label">Select Brew</InputLabel>
           <Select
@@ -88,12 +88,15 @@ const TempGraph = (props) => {
         </FormControl>
       </div>
 
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={chartOptions}
-        containerProps={{ style: { width: '100%', height: '100%' } }}
-      />
-    </div>  );
+      <div style={{ flexGrow: 1 }}>
+        <HighchartsReact
+          highcharts={Highcharts}
+          options={chartOptions}
+          containerProps={{ style: { width: '100%', height: '100%' } }}
+        />
+      </div>
+    </div>
+  );
 };
 
 export default TempGraph;
