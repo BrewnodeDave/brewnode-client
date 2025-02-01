@@ -6,8 +6,8 @@ import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 
 import { getBrewdata } from "../common/server-api";
 
-const POUNDS_PER_KWHR = 0.2291;
-const BASE_POWER = 200;
+const POUNDS_PER_KWHR = 0.2531;
+const BASE_POWER = 50;
 
 const EnergyGraph = (props) => {
   const shownNames = useRef(new Set());
