@@ -24,8 +24,8 @@ export async function getBatch() {
     }
 
     const name = response.data.name;
-    if (name != undefined) {        
-        const result = await axios.put(`http://${host}:${port}/brewname?name=${name}`);
+    if (name) {        
+        await axios.put(`http://${host}:${port}/brewname?name=${name}`);
         return response.data;
     }else{
         return {err: 'No batch in progress'};
