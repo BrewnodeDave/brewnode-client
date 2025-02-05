@@ -171,6 +171,11 @@ export async function kettleTemp(temp, mins) {
     return response.data;
 }
 
+export async function ambientTemp(temp, mins) {
+    const response = await axios.put(`http://${host}:${port}/ambientTemp?temp=${temp}&mins=${mins}`, {});
+    return response.data;
+}
+
 export async function mash(steps) {
     const string = steps.map(step => `step=${encodeURIComponent(JSON.stringify(step))}`).join('&');
 
