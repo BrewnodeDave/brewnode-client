@@ -23,7 +23,7 @@ const Devices = (props) => {
   };
 
   return (
-    <div style={{ position: 'relative', width: '100%' }}>
+    <div style={{ position: 'relative', width: '100%', height: '80vh' }}>
       <Button
         size="large"
         onClick={handlePrev}
@@ -33,11 +33,11 @@ const Devices = (props) => {
         <Typography sx={{ fontSize: 100 }}>&lt;</Typography>
       </Button>
 
-      <Container>
+      <Container sx={{ height: '100%' }}>
         {page === 1 && (
-          <Grid container xs={12}>    
-              <Grid xs={8} sx={{ border: 0, padding:1}}>
-                <Box sx={{ border: 2, padding: 0, bgcolor: '#8bb34a' }}>
+          <Grid container xs={12} sx={{ height: '100%' }}>    
+              <Grid xs={8} sx={{ border: 0, padding:1, height: '100%' }}>
+                <Box sx={{ border: 2, padding: 0, bgcolor: '#8bb34a', height: '100%' }}>
                 <h1>Kettle</h1> 
                 <Temperature name='Kettle' sensor='TempKettle' min={0} max={100} tooLow={30} low={40} ok={75}/>
                   <Grid container xs={12} >
@@ -61,8 +61,8 @@ const Devices = (props) => {
                 </Box>  
               </Grid>  
 
-              <Grid xs={4} sx={{ border: 0, padding:1, borderColor:'yellow'}}>    
-                <Box sx={{ border: 2, padding: 0, bgcolor: '#8bb34a', marginBottom: 2 }}>          
+              <Grid xs={4} sx={{ border: 0, padding:1, borderColor:'yellow', height: '100%' }}>    
+                <Box sx={{ border: 2, padding: 0, bgcolor: '#8bb34a', marginBottom: 2, height: '100%' }}>          
                   <h1>Fill</h1> 
                   <Fill2/>
                 </Box>
@@ -70,9 +70,9 @@ const Devices = (props) => {
           </Grid>
         )}
         {page === 2 && (
-          <Grid container xs={12}>    
-            <Grid xs={6} sx={{padding:1}} >
-              <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 2 }}>
+          <Grid container xs={12} sx={{ height: '100%' }}>    
+            <Grid xs={6} sx={{padding:1, height: '100%' }} >
+              <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 2, height: '50%' }}>
               <Grid container xs={12}>    
                   <Grid xs={6}>
                     <h1>Fermenter</h1>
@@ -83,7 +83,7 @@ const Devices = (props) => {
                 </Grid>
               </Box>
             
-              <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 2 }}>
+              <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 2, height: '50%' }}>
                 <Grid container xs={12}>    
                   <Grid xs={6}>
                     <h1>Glycol</h1>
@@ -106,8 +106,8 @@ const Devices = (props) => {
               </Box>
             </Grid>
 
-            <Grid sx={{padding:1}} xs={6}>
-              <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 2 }}>
+            <Grid sx={{padding:1, height: '100%' }} xs={6}>
+              <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 2, height: '50%' }}>
                 <Grid container xs={12}>    
                   <Grid xs={6}>
                     <h1>Mash Tun</h1>
@@ -127,7 +127,7 @@ const Devices = (props) => {
                </Box>
 
 
-              <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 2 }}>
+              <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 2, height: '50%' }}>
                 <h1>Chiller</h1>
                 <Grid container xs={12} >    
                   <Grid xs={6}>
