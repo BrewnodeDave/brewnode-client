@@ -14,6 +14,7 @@ const auth = {
 };
 
 
+
 export async function getBatch() {
     const response = await axios.get(`http://${host}:${port}/brewing`, {
         auth,
@@ -24,8 +25,8 @@ export async function getBatch() {
     }
 
     const name = response.data.name;
-    if (name != undefined) {        
-        const result = await axios.put(`http://${host}:${port}/brewname?name=${name}`);
+    if (name) {        
+        await axios.put(`http://${host}:${port}/brewname?name=${name}`);
         return response.data;
     }else{
         return {err: 'No batch in progress'};
@@ -168,11 +169,6 @@ export async function fill(litres) {
 
 export async function kettleTemp(temp, mins) {
     const response = await axios.put(`http://${host}:${port}/kettleTemp?temp=${temp}&mins=${mins}`, {});
-    return response.data;
-}
-
-export async function ambientTemp(temp, mins) {
-    const response = await axios.put(`http://${host}:${port}/ambientTemp?temp=${temp}&mins=${mins}`, {});
     return response.data;
 }
 

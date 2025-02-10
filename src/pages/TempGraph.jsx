@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
 
 import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 
 import {getBrewdata } from '../common/server-api';
+import SimpleTempGraph from './SimpleTempGraph';
 
 const TempGraph = (props) => {
   const [series, setSeries] = useState([]);
@@ -88,11 +87,8 @@ const TempGraph = (props) => {
         </FormControl>
       </div>
 
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={chartOptions}
-        containerProps={{ style: { width: '100%', height: '100%' } }}
-      />
+      <SimpleTempGraph brewname={selectedBrew} />
+     
     </div>  );
 };
 
