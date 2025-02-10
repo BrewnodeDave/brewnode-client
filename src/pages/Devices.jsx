@@ -23,7 +23,7 @@ const Devices = (props) => {
   };
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
+    <div style={{ position: 'relative', width: '100%', height: '80vh' }}>
       <Button
         size="large"
         onClick={handlePrev}
