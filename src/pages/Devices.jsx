@@ -128,7 +128,14 @@ const Devices = (props) => {
 
 
               <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 2, height: '50%' }}>
-                <h1>Chiller</h1>
+              <Grid container xs={12}>    
+                  <Grid xs={6}>
+                    <h1>Chiller</h1>
+                  </Grid>
+                  <Grid xs={6}>
+                    <Temperature name="Ambient" sensor='TempAmbient'/>
+                  </Grid>
+                </Grid>
                 <Grid container xs={12} >    
                   <Grid xs={6}>
                     <Toggle sensorName="ValveChillWortIn" displayName="Input Valve"/>

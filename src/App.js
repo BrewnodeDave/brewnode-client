@@ -24,7 +24,9 @@ const theme = responsiveFontSizes(createTheme({
 function App() {
   const [inProgress, setInProgress] = useState('');
 
-  addSocketListener('progress', ({value}) => setInProgress(value));
+  addSocketListener('progress', (value) => {
+    setInProgress(value)
+  });
   
   return (
     <div className="App">
