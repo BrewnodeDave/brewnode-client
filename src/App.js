@@ -1,5 +1,5 @@
 import React from 'react';
-import {createContext, useState} from 'react';
+import {createContext, useEffect, useState} from 'react';
 
 import { responsiveFontSizes, createTheme, ThemeProvider } from '@mui/material/styles';
 import {lightGreen} from '@mui/material/colors';
@@ -24,8 +24,10 @@ const theme = responsiveFontSizes(createTheme({
 function App() {
   const [inProgress, setInProgress] = useState('');
 
-  addSocketListener('Progress', (value) => {
-    setInProgress(value)
+  useEffect(()=>{
+    addSocketListener('Progress', (value) => {
+      setInProgress(value)
+    });
   });
   
   return (
