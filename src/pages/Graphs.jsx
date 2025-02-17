@@ -9,7 +9,6 @@ const numPages = 2;
 
 const Graphs = (props) => {  
   const [page, setPage] = useState(1);
-  const [brewnames] = useState(props.brewnames);
     
   const handlePrev = () => {
     setPage((prevPage) => (prevPage > 1 ? prevPage - 1 : prevPage));
@@ -32,10 +31,10 @@ const Graphs = (props) => {
 
       <Container>
         {page === 1 && (
-          <TempGraph brewnames = {brewnames}/>
+          <TempGraph brewname = {props.brewname}/>
           )}
         {page === 2 && (
-          <EnergyGraph brewnames = {brewnames}/>
+          <EnergyGraph brewname = {props.brewname}/>
         )}
       </Container>
 

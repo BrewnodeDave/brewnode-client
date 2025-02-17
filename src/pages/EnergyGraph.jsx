@@ -2,8 +2,6 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
-import { Select, MenuItem, FormControl, InputLabel } from '@mui/material';
-
 import { getBrewdata } from "../common/server-api";
 
 const POUNDS_PER_KWHR = 0.2531;
@@ -13,12 +11,9 @@ const EnergyGraph = (props) => {
   const shownNames = useRef(new Set());
 
   const [series, setSeries] = useState([]);
-  const [brewNames] = useState(props.brewnames);
   const [chartSubtitle, setChartSubtitle] = useState('');
   
   const inView = useRef([]);
-
-  const [selectedBrew, setSelectedBrew] = useState(props.brewnames[0]);
 
   const setExtremes = useCallback((event) => {
     const start = event.min === undefined ? 0 : event.min;
@@ -162,15 +157,12 @@ const EnergyGraph = (props) => {
   }, []);
 
   useEffect(() => {
-    async function foo(brew) {
-      await fetchData(selectedBrew);
+    async function foo() {
+      await fetchData(props.brewname);
     }
-    foo(selectedBrew);
-  }, [fetchData, selectedBrew]);
+    foo();
+  }, [props.brewname, fetchData]);
 
-  const handleBrewChange = (event) => {
-    setSelectedBrew(event.target.value);
-  };
 
   function calcKWHr() {
     let totalE = 0;
@@ -198,25 +190,6 @@ const EnergyGraph = (props) => {
 
   return (
     <div style={{ width: "100%", height: "100vh", display: "flex", flexDirection: "column" }}>
-      <div style={{ marginBottom: "20px"}}>
-        <FormControl fullWidth>
-          <InputLabel id="brew-select-label">Select Brew</InputLabel>
-          <Select
-            labelId="brew-select-label"
-            id="brew-select"
-            value={selectedBrew}
-            onChange={handleBrewChange}
-            label="Select Brew"
-            sx={{ fontSize: '1.5rem' }}
-            >
-            {brewNames.map((brew) => (
-              <MenuItem key={brew} value={brew} sx={{ fontSize: '1.5rem' }}>
-                {brew}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </div>
 
       <HighchartsReact
         highcharts={Highcharts}

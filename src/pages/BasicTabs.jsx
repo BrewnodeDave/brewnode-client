@@ -13,7 +13,7 @@ import ManualTab from './ManualTab.jsx';
 import ErrorDialog from "../Error.jsx";
 import { Graphs } from "./Graphs.jsx";
 
-import {getBatch,  getBrewnames}  from '../common/server-api';
+import {getBatch}  from '../common/server-api';
 
 // import Ingredients from '../brewnode/Ingredients.jsx';
 
@@ -55,10 +55,11 @@ export default function BasicTabs(props) {
   const [value, setValue] = useState(0);
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
-  const [brewnames, setBrewNames] = useState([]);
+  const [brewname, setBrewname] = useState([]);
   
   useEffect(() => {
     getBatch().then(batch => {
+      setBrewname(batch.name);
       setBatch(batch);
     },handleError);
     return () => {};
@@ -72,20 +73,6 @@ export default function BasicTabs(props) {
   const handleClose = () => {
     setOpen(false);
   };
-
-  useEffect(() => {
-    const fetchBrewNames = async () => {
-      try {
-        const brewnames = await getBrewnames();
-        setBrewNames(brewnames);
-      } catch (error) {
-        console.error('Error fetching brew names:', error);
-      }
-    };
-
-    fetchBrewNames();
-  }, []);
-
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -128,7 +115,7 @@ export default function BasicTabs(props) {
       </TabPanel>
 
       <TabPanel value={value} index={3}>
-        <Graphs brewnames={brewnames}/>
+        <Graphs brewname={brewname}/>
       </TabPanel>
     </Box>
   );
