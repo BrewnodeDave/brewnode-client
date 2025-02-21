@@ -1,4 +1,4 @@
-import {React, useContext, useState} from 'react';
+import {React, useContext, useState, useEffect} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -34,11 +34,25 @@ export default function MyAppBar() {
     setColour(value ? "#00FF00" : "#007f00");
   }
 
+  const [time, setTime] = useState(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+    }, 60 * 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
           <PowerMenu/>
+
+          <Typography variant="h4" component="div" sx={{ flexGrow: 2}}>
+            {time}
+          </Typography>
 
           <Typography variant="h4" component="div" sx={{ flexGrow: 2}}>
             {inProgress}
