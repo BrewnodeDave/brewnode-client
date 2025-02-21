@@ -67,7 +67,7 @@ export default function BasicTabs(props) {
 
   const handleChange = (event, newValue) => setValue(newValue);
   const handleError = (error) => {
-    setError(error.message || error);
+    setError(error.response.data || error.message || error);
     setOpen(true);
   };
   const handleClose = () => {
