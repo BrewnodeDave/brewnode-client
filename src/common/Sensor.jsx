@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { sensorStatus } from "./server-api.js";
+import { sensorStatus } from "../brewnode/server-api.js";
 
 import "../common/App.css";
 

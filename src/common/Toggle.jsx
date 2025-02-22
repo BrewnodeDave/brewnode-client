@@ -6,10 +6,10 @@
 import React, { useEffect, useState } from "react";
 import ToggleButton from "@mui/material/ToggleButton";
 import { addSocketListener, removeSocketListener } from "../brewnode/socketListener.js";
-import { sensorStatus } from "./server-api.js";
+import { sensorStatus } from "../brewnode/server-api.js";
 
 // Import server-api functions (assumed to handle communication with the brewery control system)
-const server = require("./server-api.js");
+const server = require("../brewnode/server-api.js");
 
 /**
  * A toggle button component that controls a device in the brewery system.

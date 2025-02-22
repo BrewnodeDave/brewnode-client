@@ -7,7 +7,7 @@ import {MyContext } from '../App';
 
 import {addSocketListener} from './socketListener.js';
 
-import * as server from '../common/server-api';
+import * as server from './server-api.js';
 
 const marks = [
   {value: 0, label: '0m'},

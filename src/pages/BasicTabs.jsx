@@ -11,9 +11,9 @@ import AutomaticTab from './AutomaticTab.jsx';
 import ManualTab from './ManualTab.jsx';
 
 import ErrorDialog from "../Error.jsx";
-import { Graphs } from "./Graphs.jsx";
+import CombinedGraph from "../components/CombinedGraph.jsx";
 
-import {getBatch}  from '../common/server-api';
+import {getBatch}  from '../brewnode/server-api.js';
 
 // import Ingredients from '../brewnode/Ingredients.jsx';
 
@@ -115,7 +115,7 @@ export default function BasicTabs(props) {
       </TabPanel>
 
       <TabPanel value={value} index={3}>
-        <Graphs brewname={brewname}/>
+        <CombinedGraph brewname={brewname}/>
       </TabPanel>
     </Box>
   );

@@ -11,7 +11,7 @@ import Sensor from './common/Sensor'; // Import the Sensor component
 
 import {MyContext } from './App';
 
-import * as server from './common/server-api';
+import * as server from './brewnode/server-api';
 
 export default function MyAppBar() {
 

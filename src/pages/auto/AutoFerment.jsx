@@ -9,7 +9,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow'     ;
 
 import {MyContext } from '../../App';
-import * as server from '../../common/server-api';  
+import * as server from '../../brewnode/server-api';  
 
 function fermentStep(_prevTemp, step){
   if (step.ramp === null){

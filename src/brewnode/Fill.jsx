@@ -4,7 +4,7 @@ import Slider from '@mui/material/Slider';
 import Button from '@mui/material/Button';
 
 import {MyContext } from '../App';
-import * as server from '../common/server-api';
+import * as server from './server-api.js';
 
 import {addSocketListener} from './socketListener.js';
 

@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import ToggleButton from '@mui/material/ToggleButton';
 
-import * as server from './server-api.js';
+import * as server from '../brewnode/server-api.js';
 
 import {addSocketListener} from '../brewnode/socketListener.js';
 

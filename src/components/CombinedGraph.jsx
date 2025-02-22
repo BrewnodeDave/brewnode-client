@@ -1,17 +1,18 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
-import Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
-
-import { getBrewdata } from "../common/server-api";
+import React, { useEffect, useState, useCallback, useRef } from 'react';
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+import { getBrewdata } from '../brewnode/server-api';
+import EggTimer from './EggTimer';
 
 const POUNDS_PER_KWHR = 0.2531;
 const BASE_POWER = 50;
 
-const EnergyGraph = (props) => {
+const CombinedGraph = (props) => {
   const shownNames = useRef(new Set());
 
   const [series, setSeries] = useState([]);
   const [chartSubtitle, setChartSubtitle] = useState('');
+  const [loading, setLoading] = useState(false);
   
   const inView = useRef([]);
 
@@ -40,13 +41,16 @@ const EnergyGraph = (props) => {
     chart: {
       zooming: { type: "x" },
     },
-    title: { text: `Energy Use` },
+    title: { text: `Energy & Temperature` },
     subtitle: { text: chartSubtitle },
     xAxis: {
       type: "datetime",
       events: {setExtremes},
     },
-    yAxis: { title: { text: "Watts" } },
+    yAxis: [
+      { title: { text: "Watts" }, opposite: true },
+      { title: { text: "°C" } }
+    ],
     legend: { enabled: true },
     plotOptions: {
       area: {
@@ -62,14 +66,17 @@ const EnergyGraph = (props) => {
   useEffect(() => {
     setChartOptions({
       chart: {zooming: { type: "x" }},
-      title: { text: 'Energy Use' },
+      title: { text: 'Energy & Temperature' },
       subtitle: { text: chartSubtitle },
       xAxis: {
         type: "datetime",
         events: {setExtremes}, 
         labels: {style: {fontSize: '16px'}},        
       },
-      yAxis: { title: { text: "Watts" } },
+      yAxis: [
+        { title: { text: "Watts" }, opposite: true },
+        { title: { text: "°C" } }
+      ],
       legend: { 
         enabled: true,
         itemStyle: {fontSize: '20px'}
@@ -111,7 +118,9 @@ const EnergyGraph = (props) => {
     };
   
     try {
+      setLoading(true);
       const sensors = await getBrewdata(brew);
+      setLoading(false);
       const sensorNames = [
         "Heater",
         "ValveFermentIn",
@@ -127,29 +136,40 @@ const EnergyGraph = (props) => {
       ];
       const energySensors = sensors.filter(({ name }) => sensorNames.includes(name));
 
+      const tempSensorNames = ['TempAmbient', 'TempKettle', 'TempMash', 'TempFermenter', 'TempGlycol'];
+      const tempSensors = sensors.filter(({ name }) => tempSensorNames.includes(name));
+
       const basePower = addBasePowerSeries(energySensors);
 
       energySensors.push(basePower);
       
       setSeries(
-        energySensors.map((energySensor) => {
-          shownNames.current.add(energySensor.name);
-          return {
-            cumulative: true,
-            type: "area",
-            events: {
-              hide: () => {
-                shownNames.current.delete(energySensor.name);
-                calcKWHr();
+        [
+          ...energySensors.map((energySensor) => {
+            shownNames.current.add(energySensor.name);
+            return {
+              cumulative: true,
+              type: "area",
+              yAxis: 0,
+              events: {
+                hide: () => {
+                  shownNames.current.delete(energySensor.name);
+                  calcKWHr();
+                },
+                show: () => {
+                  shownNames.current.add(energySensor.name);
+                  calcKWHr();
+                },
               },
-              show: () => {
-                shownNames.current.add(energySensor.name);
-                calcKWHr();
-              },
-            },
-            ...energySensor,
-          };
-        })
+              ...energySensor,
+            };
+          }),
+          ...tempSensors.map((tempSensor) => ({
+            type: "line",
+            yAxis: 1,
+            ...tempSensor,
+          }))
+        ]
       );
     } catch (error) {
       console.error(error);
@@ -190,14 +210,14 @@ const EnergyGraph = (props) => {
 
   return (
     <div style={{ width: "100%", height: "100vh", display: "flex", flexDirection: "column" }}>
-
+      {loading && <EggTimer />}
       <HighchartsReact
         highcharts={Highcharts}
         options={chartOptions}
-        containerProps={{ style: { width: "100%"} }}
+        containerProps={{ style: { width: "100%", height:"100%"} }}
       />
     </div>
   );
 };
 
-export default EnergyGraph;
+export default CombinedGraph;

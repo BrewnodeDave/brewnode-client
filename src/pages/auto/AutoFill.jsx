@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 
 import {MyContext } from '../../App';
 
-import * as server from '../../common/server-api';
+import * as server from '../../brewnode/server-api';
 
 function AutoFill(props) {
   const {inProgress, setInProgress} = useContext(MyContext);

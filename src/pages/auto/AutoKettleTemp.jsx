@@ -6,7 +6,7 @@ import TableHead from '@mui/material/TableHead';
 
 import Button from '@mui/material/Button';
 
-import * as server from '../../common/server-api';
+import * as server from '../../brewnode/server-api';
 import {MyContext } from '../../App';
   
 function AutoKettleTemp(props) {

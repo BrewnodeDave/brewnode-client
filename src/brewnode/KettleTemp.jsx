@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import Button from '@mui/material/Button';
 
-import * as server from '../common/server-api';
+import * as server from './server-api.js';
 
 import {addSocketListener} from './socketListener.js';
 
