@@ -12,6 +12,17 @@ function Temperature(props) {
   const [temp, setTemp] = useState(0);
 
   useEffect(() => {
+    const savedTemp = localStorage.getItem(`temp-${sensor}`);
+    if (savedTemp) {
+      setTemp(JSON.parse(savedTemp));
+    }
+  }, [sensor]);
+
+  useEffect(() => {
+    localStorage.setItem(`temp-${sensor}`, JSON.stringify(temp));
+  }, [temp, sensor]);
+  
+  useEffect(() => {
     async function fetchData() {
       const status = await sensorStatus(sensor);
       if (status.error) {
