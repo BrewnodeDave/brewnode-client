@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
+// import Highcharts from 'highcharts';
+// import HighchartsReact from 'highcharts-react-official';
 import { getBrewdata } from '../brewnode/server-api';
-import EggTimer from './EggTimer';
+// import EggTimer from './EggTimer';
 import { memo } from 'react';
 
 const POUNDS_PER_KWHR = 0.2531;
@@ -131,17 +131,17 @@ const CombinedGraph = memo((props) => {
     //     ],
     //   });
 
-      const milliSecs = (timestamp) => new Date(timestamp).getTime();
-      const mins = series.map((sensor) => sensor.data[0][0]).map(ms);
-      const minValue = Math.min(...mins);
+    //   const milliSecs = (timestamp) => new Date(timestamp).getTime();
+    //   const mins = series.map((sensor) => sensor.data[0][0]).map(ms);
+    //   const minValue = Math.min(...mins);
 
-      const timestamp = (sensor) => sensor.data[sensor.data.length - 1][0];
+    //   const timestamp = (sensor) => sensor.data[sensor.data.length - 1][0];
 
-      const maxs = series.map(sensor => milliSecs(timestamp(sensor)));
+    //   const maxs = series.map(sensor => milliSecs(timestamp(sensor)));
 
-      const maxValue = Math.max(...maxs);
-      return basePowerSeries(minValue, maxValue);
-    };
+    //   const maxValue = Math.max(...maxs);
+    //   return basePowerSeries(minValue, maxValue);
+    // };
 
     try {
       // setLoading(true);
