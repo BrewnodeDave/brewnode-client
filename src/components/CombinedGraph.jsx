@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-// import Highcharts from 'highcharts';
-// import HighchartsReact from 'highcharts-react-official';
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
 import { getBrewdata } from '../brewnode/server-api';
-// import EggTimer from './EggTimer';
+import EggTimer from './EggTimer';
 import { memo } from 'react';
 
 const POUNDS_PER_KWHR = 0.2531;
-const BASE_POWER = 50;
+// const BASE_POWER = 50;
 
 const sensorNames = [
   "Heater",
