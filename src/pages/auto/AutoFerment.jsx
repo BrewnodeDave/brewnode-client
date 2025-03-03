@@ -12,7 +12,7 @@ import {MyContext } from '../../App';
 import * as server from '../../brewnode/server-api';  
 
 function fermentStep(_prevTemp, step){
-  if (step.ramp === null){
+  if ((step.ramp === null) || (step.ramp === 0)){
     return [step];
   }else{
     let prevTemp = _prevTemp;

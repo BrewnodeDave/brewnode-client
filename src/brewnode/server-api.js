@@ -34,9 +34,17 @@ export async function getBatch() {
 
 }
 
-export async function getBrewdata(name) {
-    const response = await axios.get(`http://${host}:${port}/brewdata?brewname=${name}`);
-    return response.data;
+export async function getBrewdata(name, since) {
+    try {
+        const encodedSince = encodeURIComponent(since);
+        const url = (since === '') 
+            ? `http://${host}:${port}/brewdata?brewname=${name}` 
+            : `http://${host}:${port}/brewdata?brewname=${name}&since=${encodedSince}`;
+        const response = await axios.get(url);
+        return response.data;
+    } catch (error) {
+        return { err: error.message || error };
+    }
 }
 
 export async function getBrewnames() {

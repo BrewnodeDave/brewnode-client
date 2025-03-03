@@ -8,7 +8,7 @@ import Toggle from '../common/Toggle.jsx';
 const Devices = (props) => {  
   return (
     <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
-      <Container sx={{ height: '100%' }}>
+      <Container sx={{ height: '100%' , width: '100%'}}>
         <Grid container xs={12} sx={{ height: '100%' }}> 
           <Grid xs={4} sx={{ padding: 1, height: '100%' }}>
             <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 2, height: '100%' }}>
@@ -33,7 +33,7 @@ const Devices = (props) => {
             </Box> 
           </Grid>  
 
-          <Grid xs={4} sx={{ padding: 1, height: '100%' }}>
+          <Grid xs={4} sx={{ padding: 1, height: '100%' , width: '100%'}}>
             <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 2, height: '25%' }}>
               <Grid container xs={12}>    
                 <Grid xs={6}>
@@ -69,7 +69,7 @@ const Devices = (props) => {
             </Box>
           </Grid>
 
-          <Grid xs={4} sx={{ padding: 1, height: '100%' }}>
+          <Grid xs={4} sx={{ padding: 1, height: '100%' , width: '100%'}}>
             <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 2, height: '50%' }}>
               <Grid container xs={12}>    
                 <Grid xs={6}>
