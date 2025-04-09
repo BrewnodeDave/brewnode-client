@@ -11,7 +11,7 @@ const Devices = (props) => {
       <Container sx={{ height: '100%' , width: '100%' }}>
         <Grid container sx={{ height: '100%' }}>
           {/* column 1 */}
-          <Grid item xs={12} md={4} sx={{ padding: 1, height: '100%' }}>
+          <Grid item xs={12} md={4} sx={{ padding: 1, height: '100%'}}>
             <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 2, height: '100%' }}>
               <h1>Kettle</h1> 
               <Temperature name='Kettle' sensor='TempKettle' min={0} max={100} tooLow={30} low={40} ok={75}/>
