@@ -76,14 +76,14 @@ export default function BasicTabs(props) {
 
   return (
     <Box sx={{ width: '100%'}}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      <Box sx={{ borderBottom: 0, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" variant="fullWidth">
           <Tab label="Manual" {...a11yProps(0)} sx={{fontSize: 28}}/>
           <Tab label="Automatic" {...a11yProps(1)} sx={{fontSize: 28}}/>
           {/* <Tab label="Ingredients" {...a11yProps(2)} sx={{fontSize: 28}}/> */}
           {/* <Tab label="Inventory" {...a11yProps(3)} sx={{fontSize: 28}}/> */}
-          <Tab label="Devices" {...a11yProps(4)} sx={{fontSize: 28}}/>
-          <Tab label="Graphs" {...a11yProps(4)} sx={{fontSize: 28}}/>
+          <Tab label="Devices" {...a11yProps(2)} sx={{fontSize: 28}}/>
+          <Tab label="Graphs" {...a11yProps(3)} sx={{fontSize: 28}}/>
         </Tabs>
         <ErrorDialog
           open={open}

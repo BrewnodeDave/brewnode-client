@@ -8,10 +8,10 @@ import Toggle from '../common/Toggle.jsx';
 const Devices = (props) => {  
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-      <Container sx={{ height: '100%' , width: '100%' }}>
-        <Grid container sx={{ height: '100%' }}>
+      <Container >
+        <Grid container sx={{ height: '100%', alignItems: 'stretch' }}>
           {/* column 1 */}
-          <Grid item xs={12} md={4} sx={{ padding: 1, height: '100%'}}>
+          <Grid item xs={12} md={4} sx={{ padding: 1}}>
             <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 2, height: '100%' }}>
               <h1>Kettle</h1> 
               <Temperature name='Kettle' sensor='TempKettle' min={0} max={100} tooLow={30} low={40} ok={75}/>
@@ -35,7 +35,7 @@ const Devices = (props) => {
           </Grid>  
 
           {/* column 2 */}
-          <Grid item xs={12} md={4} sx={{ padding: 1, height: '100%' }}>
+          <Grid item xs={12} md={4} sx={{ padding: 1}}>
             <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 2, height: '25%' }}>
               <Grid container>    
                 <Grid item xs={6}>
@@ -73,7 +73,7 @@ const Devices = (props) => {
           </Grid>
 
           {/* column 3 */}
-          <Grid item xs={12} md={4} sx={{ padding: 1, height: '100%' }}>
+          <Grid item xs={12} md={4} sx={{ padding: 1}}>
             <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 2, height: '50%' }}>
               <Grid container>    
                 <Grid item xs={6}>

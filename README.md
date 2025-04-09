@@ -1,6 +1,9 @@
 # Autostart
+## Install http-server globally
+npm i http-server -g
+
 Start Client automatically by adding
-`/home/dave/.nvm/versions/node/v18.20.5/bin/http-server -p 3000 /home/dave/git/brewnode-client/build &` 
+`/home/dave/.nvm/versions/node/v20.18.3/bin/http-server -p 3000 /home/dave/git/brewnode-client/build &` 
 to
 `/etc/rc.local`
 

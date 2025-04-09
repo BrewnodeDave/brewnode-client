@@ -9,8 +9,8 @@ body {
 }
 
 #root {
-  width: 1024px;
-  height: 600px;
+  width: 1280px;
+  height: 720px;
   justify-content: center;
   align-items: center;
   min-height: 100vh;

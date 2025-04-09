@@ -40,7 +40,7 @@ function Temperature(props) {
   }, [props.sensor, sensor]); 
 
   return (
-        <h1 style={{"margin":"0px","fontSize":"50px", "color":"#FF7C00"}}>{temp}°C</h1>
+        <h1 style={{"margin":"0px","fontSize":"40px", "color":"#FF7C00"}}>{temp}°C</h1>
   )
 }
 

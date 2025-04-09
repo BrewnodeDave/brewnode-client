@@ -82,7 +82,7 @@ function Toggle(props) {
               border: selected ? "5px solid red" : "5px solid blue",
               backgroundColor: selected ? "#080808" : "#484848",
               color: "#FFFFFF",
-              fontSize: "20px",
+              fontSize: "25px",
               fontWeight: "bold",
               width: "130px",
               height: "130px",
