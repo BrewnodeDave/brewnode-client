@@ -32,21 +32,3 @@ h1 {
   margin:0px
 }
 
-.circular-button {
-  border: 5px solid aquamarine; /* Add a circular border */
-  border-radius: 50%;
-  width: 100px; /* Adjust the size as needed */
-  height: 100px; /* Adjust the size as needed */
-  background-color: #000000; /* Adjust the background color */
-  color: #fff; /* Adjust the text color */
-  font-size: 10px; /* Adjust the font size */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.circular-button:hover {
-  border: 5px solid rgb(255, 129, 127); /* Add a circular border */
-  background-color: #ee2213bb; /* Adjust the hover background color */
-  cursor: pointer;
-}
