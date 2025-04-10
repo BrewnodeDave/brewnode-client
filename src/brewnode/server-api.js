@@ -26,8 +26,13 @@ export async function getBatch() {
 
     const name = response.data.name;
     if (name) {        
-        await axios.put(`http://${host}:${port}/brewname?name=${name}`);
-        return response.data;
+        const url = new URL(`http://${host}:${port}/brewname?name=${encodeURIComponent(name)}`);
+        try {
+            await axios.put(url);
+            return response.data;
+        } catch (error) {
+            return { err: error.message || error };
+        }
     }else{
         return {err: 'No batch in progress'};
     }
