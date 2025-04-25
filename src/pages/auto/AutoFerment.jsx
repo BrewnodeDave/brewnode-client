@@ -49,11 +49,13 @@ function AutoFerment(props) {
       : [];
     
     let xxxx = [];  
+    
+    const prevStepTemp = steps.length===1 ? 19  : steps[0].stepTemp;
     steps.reduce((prev, curr) => {
       const rampedSteps = fermentStep(prev.stepTemp, curr);
       xxxx = xxxx.concat(rampedSteps);
       return rampedSteps[rampedSteps.length-1];
-    }, steps[0] ? {stepTemp: steps[0].stepTemp} : [] );
+    }, steps[0] ? {stepTemp: prevStepTemp} : [] );
 
 
     setMySteps(xxxx);
