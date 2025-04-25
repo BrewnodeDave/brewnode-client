@@ -82,9 +82,42 @@ const CombinedGraph = memo((props) => {
       },
     },
     series: JSON.parse(localStorage.getItem('series')),
+    responsive: {
+      rules: [
+        {
+          condition: {
+            maxWidth: 768, // Apply this rule for screens smaller than 768px
+          },
+          chartOptions: {
+            legend: {
+              layout: 'horizontal',
+              align: 'center',
+              verticalAlign: 'bottom',
+            },
+          },
+        },
+      ],
+    }
   }, []);
 
   useEffect(() => {
+    const responsive = {
+      rules: [
+        {
+          condition: {
+            maxWidth: 768, // Apply this rule for screens smaller than 768px
+          },
+          chartOptions: {
+            legend: {
+              layout: 'horizontal',
+              align: 'center',
+              verticalAlign: 'bottom',
+            },
+          },
+        },
+      ],
+    };
+
     setChartOptions({
       chart: { zooming: { type: "x" } },
       title: { text: 'Energy & Temperature' },
@@ -114,34 +147,42 @@ const CombinedGraph = memo((props) => {
         },
       },
       series: JSON.parse(localStorage.getItem('series')),
+      responsive 
     });
   }, [chartSubtitle, setExtremes]);
+
+  useEffect(() => {
+    // Clear local storage when brewname changes
+    localStorage.removeItem('series');
+    localStorage.removeItem('prevTimestamp');   
+  }, [props.brewname]);
 
   const fetchData = async (brew) => {
     if (typeof brew !== 'string') return null;
 
-    // const addBasePowerSeries = (series) => {
-    //   const basePowerSeries = (start, end) => ({
-    //     name: "Base Power",
-    //     data: [
-    //       [start, 0],
-    //       [start + 1, BASE_POWER],
-    //       [end, BASE_POWER],
-    //       [end + 1, 0],
-    //     ],
-    //   });
+    const addBasePowerSeries = (series) => {
+      const BASE_POWER = 50; // Watts
+      const basePowerSeries = (start, end) => ({
+        name: "Base Power",
+        data: [
+          [start, 0],
+          [start + 1, BASE_POWER],
+          [end, BASE_POWER],
+          [end + 1, 0],
+        ],
+      });
 
-    //   const milliSecs = (timestamp) => new Date(timestamp).getTime();
-    //   const mins = series.map((sensor) => sensor.data[0][0]).map(ms);
-    //   const minValue = Math.min(...mins);
+      const milliSecs = (timestamp) => new Date(timestamp).getTime();
+      const mins = series.map((sensor) => sensor.data[0][0]).map(ms);
+      const minValue = Math.min(...mins);
 
-    //   const timestamp = (sensor) => sensor.data[sensor.data.length - 1][0];
+      const timestamp = (sensor) => sensor.data[sensor.data.length - 1][0];
 
-    //   const maxs = series.map(sensor => milliSecs(timestamp(sensor)));
+      const maxs = series.map(sensor => milliSecs(timestamp(sensor)));
 
-    //   const maxValue = Math.max(...maxs);
-    //   return basePowerSeries(minValue, maxValue);
-    // };
+      const maxValue = Math.max(...maxs);
+      return basePowerSeries(minValue, maxValue);
+    };
 
     try {
       // setLoading(true);
@@ -256,6 +297,8 @@ const CombinedGraph = memo((props) => {
     }, inView.current[0]);
 
     const KWHr = totalE / 1000 / (60 * 60);
+    const POUNDS_PER_KWHR = 0.2392;
+    
     setChartSubtitle(`Total energy consumption: ${KWHr.toFixed(2)} KWhr (£${(KWHr * POUNDS_PER_KWHR).toFixed(2)})`);
   }
 
