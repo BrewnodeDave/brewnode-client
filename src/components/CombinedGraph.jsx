@@ -1,12 +1,10 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { getBrewdata } from '../brewnode/server-api';
+import { getBrewdata } from '../brewnode/php-service';
 import EggTimer from './EggTimer';
 import { memo } from 'react';
 
-const POUNDS_PER_KWHR = 0.2531;
-// const BASE_POWER = 50;
 
 const sensorNames = [
   "Heater",
@@ -97,9 +95,11 @@ const CombinedGraph = memo((props) => {
           },
         },
       ],
-    }
+    },
+
   }, []);
 
+  
   useEffect(() => {
     const responsive = {
       rules: [
@@ -199,8 +199,8 @@ const CombinedGraph = memo((props) => {
       const tempSensorNames = ['TempAmbient', 'TempKettle', 'TempMash', 'TempFermenter', 'TempGlycol'];
       const tempSensors = sensors.filter(({ name }) => tempSensorNames.includes(name));
 
-      // const basePower = addBasePowerSeries(energySensors);
-      // energySensors.push(basePower);
+      const basePower = addBasePowerSeries(energySensors);
+      energySensors.push(basePower);
 
       const energyChart = (energySensor) => {
         shownNames.current.add(energySensor.name);
@@ -236,6 +236,8 @@ const CombinedGraph = memo((props) => {
       merge(newSeries, series);
       localStorage.setItem('series', JSON.stringify(series));
 
+      setExtremes({ min: undefined, max: undefined });
+
       function merge(newSeries, series) {
         // const toSet = a => [...new Set(a)];
 
@@ -254,8 +256,6 @@ const CombinedGraph = memo((props) => {
         newSeries.forEach((newS) => {
           const oldS = series.find((s) => s.name === newS.name);
           if (oldS) {
-            console.log(oldS.data.length, newS.data.length);
-
             oldS.data = [...oldS.data, ...newS.data];
             const foo = removeDuplicatePairs(oldS.data);
             oldS.data = foo;
@@ -298,7 +298,7 @@ const CombinedGraph = memo((props) => {
 
     const KWHr = totalE / 1000 / (60 * 60);
     const POUNDS_PER_KWHR = 0.2392;
-    
+
     setChartSubtitle(`Total energy consumption: ${KWHr.toFixed(2)} KWhr (£${(KWHr * POUNDS_PER_KWHR).toFixed(2)})`);
   }
 
