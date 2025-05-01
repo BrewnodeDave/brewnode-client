@@ -53,7 +53,7 @@ const CombinedGraph = memo((props) => {
     chart: {
       zooming: { type: "x" },
     },
-    title: { text: `Energy & Temperature` },
+    title: { text: props.brewname },
     subtitle: { text: chartSubtitle },
     xAxis: {
       type: "datetime",
@@ -120,7 +120,7 @@ const CombinedGraph = memo((props) => {
 
     setChartOptions({
       chart: { zooming: { type: "x" } },
-      title: { text: 'Energy & Temperature' },
+      title: { text: props.brewname },
       subtitle: { text: chartSubtitle },
       xAxis: {
         type: "datetime",
@@ -149,7 +149,7 @@ const CombinedGraph = memo((props) => {
       series: JSON.parse(localStorage.getItem('series')),
       responsive 
     });
-  }, [chartSubtitle, setExtremes]);
+  }, [chartSubtitle, setExtremes, props.brewname]);
 
   useEffect(() => {
     // Clear local storage when brewname changes
