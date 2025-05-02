@@ -151,11 +151,14 @@ const CombinedGraph = memo((props) => {
     });
   }, [chartSubtitle, setExtremes, props.brewname]);
 
-  useEffect(() => {
-    // Clear local storage when brewname changes
+  const clearLocalStorage = () => {
     localStorage.removeItem('series');
-    localStorage.removeItem('prevTimestamp');   
-  }, [props.brewname]);
+    localStorage.removeItem('prevTimestamp');
+  };
+
+  useEffect(clearLocalStorage, [props.brewname]);
+
+  useEffect(clearLocalStorage, []);
 
   const fetchData = async (brew) => {
     if (typeof brew !== 'string') return null;
