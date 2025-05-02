@@ -25,10 +25,13 @@ function App() {
   const [inProgress, setInProgress] = useState('');
 
   useEffect(()=>{
+    // Clear local storage when the app starts
+    localStorage.clear();
+
     addSocketListener('Progress', (value) => {
-      setInProgress(value)
+      setInProgress(value);
     });
-  });
+  }, []); // Empty dependency array ensures this runs only once
   
   return (
     <div className="App">
