@@ -3,10 +3,10 @@ import axios from 'axios';
 
 
 // Retrieve username and password from localStorage
-const username = localStorage.getItem('username');
-const password = localStorage.getItem('password');
-const host = localStorage.getItem('ipAddress');
-const port = localStorage.getItem('ipPort');
+const username = localStorage.getItem('username') || process.env.REACT_APP_BREWFATHER_USERNAME;
+const password = localStorage.getItem('password') || process.env.REACT_APP_BREWFATHER_PASSWORD;
+const host = localStorage.getItem('ipAddress') || process.env.REACT_APP_IP_ADDRESS;
+const port = localStorage.getItem('ipPort')|| process.env.REACT_APP_IP_PORT;
     
 const auth = {
     username: username || process.env.REACT_APP_BREWFATHER_USERNAME, 
