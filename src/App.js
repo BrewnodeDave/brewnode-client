@@ -25,9 +25,6 @@ function App() {
   const [inProgress, setInProgress] = useState('');
 
   useEffect(()=>{
-    // Clear local storage when the app starts
-    localStorage.clear();
-
     addSocketListener('Progress', (value) => {
       setInProgress(value);
     });
