@@ -189,8 +189,8 @@ const CombinedGraph = memo((props) => {
 
     try {
       // setLoading(true);
-      const latest = localStorage.prevTimestamp ? localStorage.prevTimestamp : '';
-      const { highcharts: sensors, latestTimestamp, err } = await getBrewdata(brew, latest);
+      const latestString = localStorage.prevTimestamp ? localStorage.prevTimestamp : '';
+      const { highcharts: sensors, latestTimestamp, err } = await getBrewdata(brew, latestString);
       // setLoading(false);
       if (err) {
         console.error(err);
@@ -202,9 +202,11 @@ const CombinedGraph = memo((props) => {
       const tempSensorNames = ['TempAmbient', 'TempKettle', 'TempMash', 'TempFermenter', 'TempGlycol'];
       const tempSensors = sensors.filter(({ name }) => tempSensorNames.includes(name));
 
-      const basePower = addBasePowerSeries(energySensors);
-      energySensors.push(basePower);
-
+      if (energySensors.length > 0) {
+        const basePower = addBasePowerSeries(energySensors);
+        energySensors.push(basePower);
+      }
+      
       const energyChart = (energySensor) => {
         shownNames.current.add(energySensor.name);
         return {

@@ -3,7 +3,7 @@ async function getBrewdata(name, since) {
         const encodedSince = encodeURIComponent(since);
         
         const result = await mySQLgetBrewData(name, (since === '') ? undefined : encodedSince);
-        result.latestTimestamp = result.latestTimestamp ? result.latestTimestamp : '';
+        result.latestTimestamp = result.latestTimestamp ? result.latestTimestamp.toString() : '';
 
         return result;
     } catch (error) {
@@ -26,12 +26,12 @@ function sanitizeBrewName(brewname) {
     return sanitized.substring(0, 64);
 }
 
-async function mySQLgetBrewData(name, since = '1970-01-01') {
+async function mySQLgetBrewData(name, sinceString = '1970-01-01') {
 // async function mySQLgetBrewData(name, since = '1970-01-01 00:00:00') {
 	const TIME_ZONE_OFFSET = 0;
     const tablename = sanitizeBrewName(name);
 
-    const url = `https://brewnode.co.uk/php/index.php?cmd=getBrewData&name=${tablename}&since=${since}`;
+    const url = `https://brewnode.co.uk/php/index.php?cmd=getBrewData&name=${tablename}&since=${sinceString}`;
     
     try {
         return await fetch(url, { 
