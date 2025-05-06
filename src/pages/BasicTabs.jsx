@@ -16,6 +16,8 @@ import CombinedGraph from "../components/CombinedGraph.jsx";
 import {getBatch}  from '../brewnode/server-api.js';
 
 // import Ingredients from '../brewnode/Ingredients.jsx';
+import FileStreamer from '../components/FileStreamer';
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -84,6 +86,7 @@ export default function BasicTabs(props) {
           {/* <Tab label="Inventory" {...a11yProps(3)} sx={{fontSize: 28}}/> */}
           <Tab label="Devices" {...a11yProps(2)} sx={{fontSize: 28}}/>
           <Tab label="Graphs" {...a11yProps(3)} sx={{fontSize: 28}}/>
+          <Tab label="Log" {...a11yProps(4)} sx={{fontSize: 28}}/>
         </Tabs>
         <ErrorDialog
           open={open}
@@ -117,6 +120,11 @@ export default function BasicTabs(props) {
       <TabPanel value={value} index={3}>
         <CombinedGraph brewname={brewname}/>
       </TabPanel>
+
+      <TabPanel value={value} index={4}>
+        <FileStreamer/>
+      </TabPanel>
+
     </Box>
   );
 }

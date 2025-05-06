@@ -227,3 +227,12 @@ export async function fanStatus() {
         return {error: error.message || error};
     }
 }
+
+export async function streamLog() {
+    try {  
+        const response = await fetch(`http://${host}:${port}/streamLog`);
+        return response;
+    }catch(error){
+        return {error: error.message || error};
+    }
+}

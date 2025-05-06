@@ -34,8 +34,8 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}> 
         <MyContext.Provider value={{inProgress, setInProgress}}> 
-          <MyAppBar/>
-          <BasicTabs/>
+        <MyAppBar/>
+        <BasicTabs/>
         </MyContext.Provider>
       </ThemeProvider> 
     </div>
