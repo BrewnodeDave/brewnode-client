@@ -18,7 +18,7 @@ const Devices = (props) => {
                   <h1>Kettle</h1>
                 </Grid>
                 <Grid item xs={6}>
-                  <Temperature name='Kettle' sensor='TempKettle' min={0} max={100} tooLow={30} low={40} ok={75}/>
+                  <Temperature name='Kettle' sensor='Temp Kettle' min={0} max={100} tooLow={30} low={40} ok={75}/>
                 </Grid>
               </Grid>
               
@@ -50,7 +50,7 @@ const Devices = (props) => {
                   <h1>Fermenter</h1>
                 </Grid>
                 <Grid item xs={6}>
-                  <Temperature name='Ferment' sensor='TempFermenter' min={5} max={40} tooLow={10} low={15} ok={21} high={25}/>
+                  <Temperature name='Ferment' sensor='Temp Fermenter' min={5} max={40} tooLow={10} low={15} ok={21} high={25}/>
                 </Grid>
               </Grid>
             </Box>
@@ -61,7 +61,7 @@ const Devices = (props) => {
                   <h1>Glycol</h1>
                 </Grid>
                 <Grid item xs={6}>
-                  <Temperature name='Glycol' sensor='TempGlycol' min={-10} max={40} tooLow={-10} low={0} ok={10} high={30}/>
+                  <Temperature name='Glycol' sensor='Temp Glycol' min={-10} max={40} tooLow={-10} low={0} ok={10} high={30}/>
                 </Grid>
               </Grid>
 
@@ -90,7 +90,7 @@ const Devices = (props) => {
                   <h1>Mash Tun</h1>
                 </Grid>
                 <Grid item xs={6}>
-                  <Temperature name="Mash" sensor='TempMash' min={50} max={80} tooLow={55} low={60} ok={70} high={75}/>
+                  <Temperature name="Mash" sensor='Temp Mash' min={50} max={80} tooLow={55} low={60} ok={70} high={75}/>
                 </Grid>
               </Grid>
               <Grid container>    
@@ -109,7 +109,7 @@ const Devices = (props) => {
                   <h1>Chiller</h1>
                 </Grid>
                 <Grid item xs={6}>
-                  <Temperature name="Ambient" sensor='TempAmbient'/>
+                  <Temperature name="Ambient" sensor='Temp Ambient'/>
                 </Grid>
               </Grid>
 

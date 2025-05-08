@@ -21,16 +21,16 @@ export default function Controls() {
         <Grid container spacing={2}  margin={2}>
           <Grid container xs={12} sx={{ border: 0}}>    
             <Grid xs={3}>
-              <Temperature name="Kettle" sensor='TempKettle' min={10} max={100}/>
+              <Temperature name="Kettle" sensor='Temp Kettle' min={10} max={100}/>
             </Grid>
             <Grid xs={3}>
-              <Temperature name="Mash" sensor='TempMash' min={50} max={80}/>
+              <Temperature name="Mash" sensor='Temp Mash' min={50} max={80}/>
             </Grid>
             <Grid xs={3}>
-              <Temperature name='Ferment' sensor='TempFermenter' min={10} max={30}/>
+              <Temperature name='Ferment' sensor='Temp Fermenter' min={10} max={30}/>
             </Grid>
             <Grid xs={3}>
-              <Temperature name='Glycol' sensor='TempGlycol' min={-10} max={40}/>
+              <Temperature name='Glycol' sensor='Temp Glycol' min={-10} max={40}/>
             </Grid>
           </Grid>
           
