@@ -199,7 +199,7 @@ const CombinedGraph = memo((props) => {
       localStorage.setItem('prevTimestamp', latestTimestamp);
       const energySensors = sensors.filter(({ name }) => sensorNames.includes(name));
 
-      const tempSensorNames = ['Temp Glycol' Ambient', 'Temp Kettle', 'Temp Mash', 'Temp Fermenter', 'Temp Glycol'];
+      const tempSensorNames = ['Temp Glycol', 'Temp Ambient', 'Temp Kettle', 'Temp Mash', 'Temp Fermenter', 'Temp Glycol'];
       const tempSensors = sensors.filter(({ name }) => tempSensorNames.includes(name));
 
       if (energySensors.length > 0) {
