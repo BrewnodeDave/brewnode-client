@@ -8,15 +8,15 @@ import { memo } from 'react';
 
 const sensorNames = [
   "Heater",
-  "ValveFermentIn",
-  "ValveChillWortIn",
-  "ValveKettleIn",
-  "ValveMashIn",
-  "PumpMash",
-  "PumpKettle",
-  "PumpGlycol",
-  "GlycolHeater",
-  "GlycolChiller",
+  "Valve Ferment-in",
+  "Valve Chill Wort-in",
+  "Valve Kettle-in",
+  "Valve Mash-in",
+  "Pump Mash",
+  "Pump Kettle",
+  "Pump Glycol",
+  "Glycol Heater",
+  "Glycol Chiller",
   "Fan",
 ];
 
