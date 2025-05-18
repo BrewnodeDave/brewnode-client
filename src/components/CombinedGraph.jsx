@@ -7,7 +7,7 @@ import { memo } from 'react';
 
 
 const sensorNames = [
-  "Heater",
+  "Kettle Heater",
   "Valve Chill Wort-out",
   "Valve Chill Wort-in",
   "Valve Kettle-in",
