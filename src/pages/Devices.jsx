@@ -36,7 +36,7 @@ const Devices = (props) => {
                   <Toggle sensorName="Pump Kettle" displayName="Pump"/>
                 </Grid>
                 <Grid item xs={6}>    
-                  <Toggle sensorName="Heater" displayName="Heater"/>
+                  <Toggle sensorName="Kettle Heater" displayName="Heater"/>
                 </Grid>
               </Grid>
             </Box> 

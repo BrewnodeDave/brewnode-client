@@ -7,13 +7,14 @@ import { addSocketListener, removeSocketListener } from "./socketListener.js";
 import Sensor from '../common/Sensor.jsx';
 
 const server = require("../common/server-api");
+const sensorName = "Kettle Heater";
 
 function Heater() {
   const [selected, setOn] = useState(false);  
 
   async function toggle() {
     try {
-      await server['Heater'](!selected);
+      await server[sensorName](!selected);
     } catch (error) {
       console.error(error);
     }
@@ -21,11 +22,11 @@ function Heater() {
 
   useEffect(() => {
     const handleHeaterStatus = (x) => setOn(x.value);
-    addSocketListener("Heater", handleHeaterStatus);
+    addSocketListener(sensorName, handleHeaterStatus);
 
     // Cleanup function to remove the listener
     return () => {
-      removeSocketListener('Heater', handleHeaterStatus);
+      removeSocketListener(sensorName, handleHeaterStatus);
     };  
   });
 
