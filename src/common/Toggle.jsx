@@ -11,6 +11,30 @@ import { sensorStatus } from "../brewnode/server-api.js";
 // Import server-api functions (assumed to handle communication with the brewery control system)
 const server = require("../brewnode/server-api.js");
 
+const sensorApi = sensorName => {
+  switch (sensorName) {
+    case "Pump Kettle":
+      return server.PumpKettle;
+    case "Pump Mash":
+      return server.PumpMash;
+    case "Pump Glycol":
+      return server.PumpGlycol;
+    case "Glycol Heater":
+      return server.GlycolHeater;
+    case "Glycol Chiller":
+      return server.GlycolChiller;
+    case "Valve Mash-in":
+      return server.ValveMashIn;
+    case "Valve Chiller wort-in":
+      return server.ValveChillWortIn;
+    case "Valve Chiller wort-out":
+      return server.ValveChillWortOut;
+    case "Kettle Heater":
+      return server.Heater;
+    default:
+      return server[sensorName];
+  }
+}
 /**
  * A toggle button component that controls a device in the brewery system.
  * @param {object} props - Component properties.
@@ -29,7 +53,7 @@ function Toggle(props) {
    */
   async function toggle() {
     try {
-      await server[sensorName](!selected); // Call the dynamic function from server-api.js
+      await sensorApi(sensorName)(!selected); // Call the dynamic function from server-api.js
     } catch (error) {
       console.error(error);
     }

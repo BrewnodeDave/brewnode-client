@@ -136,13 +136,13 @@ export async function ValveMashIn(open) {
 
 export async function ValveChillWortIn(open) {
     const state = open ? 'Open' : 'Close';
-    const response = await axios.put(`http://${host}:${port}/valve/chillWortIn?onOff=${state}`, {});
+    const response = await axios.put(`http://${host}:${port}/valve/chillwortin?onOff=${state}`, {});
     return response.data;
 }
 
 export async function ValveFermentIn(open) {
     const state = open ? 'Open' : 'Close';
-    const response = await axios.put(`http://${host}:${port}/valve/fermentIn?onOff=${state}`, {});
+    const response = await axios.put(`http://${host}:${port}/valve/fermentin?onOff=${state}`, {});
     return response.data;
 }
 
