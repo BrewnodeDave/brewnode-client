@@ -24,7 +24,7 @@ const Devices = (props) => {
               
               <Grid container>
                 <Grid item xs={6}>    
-                  <Toggle sensorName="ValveKettleIn" displayName="Valve"/>
+                  <Toggle sensorName="Valve Kettle-in" displayName="Valve"/>
                 </Grid>
                 <Grid item xs={6}>    
                   <Toggle sensorName="Fan" displayName="Fan"/>
@@ -33,7 +33,7 @@ const Devices = (props) => {
 
               <Grid container>    
                 <Grid item xs={6}>    
-                  <Toggle sensorName="PumpKettle" displayName="Pump"/>
+                  <Toggle sensorName="Pump Kettle" displayName="Pump"/>
                 </Grid>
                 <Grid item xs={6}>    
                   <Toggle sensorName="Heater" displayName="Heater"/>
@@ -50,7 +50,7 @@ const Devices = (props) => {
                   <h1>Fermenter</h1>
                 </Grid>
                 <Grid item xs={6}>
-                  <Temperature name='Ferment' sensor='Temp Fermenter' min={5} max={40} tooLow={10} low={15} ok={21} high={25}/>
+                  <Temperature  sensor='Temp Fermenter' name='Ferment' min={5} max={40} tooLow={10} low={15} ok={21} high={25}/>
                 </Grid>
               </Grid>
             </Box>
@@ -61,22 +61,22 @@ const Devices = (props) => {
                   <h1>Glycol</h1>
                 </Grid>
                 <Grid item xs={6}>
-                  <Temperature name='Glycol' sensor='Temp Glycol' min={-10} max={40} tooLow={-10} low={0} ok={10} high={30}/>
+                  <Temperature sensor='Temp Glycol' name='Glycol' min={-10} max={40} tooLow={-10} low={0} ok={10} high={30}/>
                 </Grid>
               </Grid>
 
               <Grid container >    
                 <Grid item xs={6}>
-                  <Toggle sensorName="PumpGlycol" displayName="Pump"/>
+                  <Toggle sensorName="Pump Glycol" displayName="Pump"/>
                 </Grid>
                 <Grid item xs={6}>
-                  <Toggle sensorName="GlycolHeater" displayName="Heat"/>
+                  <Toggle sensorName="Glycol Heater" displayName="Heat"/>
                 </Grid>
               </Grid>
               
               <Grid container>    
                 <Grid item xs={12}>
-                  <Toggle sensorName="GlycolChiller" displayName="Chill"/>
+                  <Toggle sensorName="Glycol Chiller" displayName="Chill"/>
                 </Grid>
               </Grid>
             </Box>
@@ -90,15 +90,15 @@ const Devices = (props) => {
                   <h1>Mash Tun</h1>
                 </Grid>
                 <Grid item xs={6}>
-                  <Temperature name="Mash" sensor='Temp Mash' min={50} max={80} tooLow={55} low={60} ok={70} high={75}/>
+                  <Temperature sensor='Temp Mash' name="Mash" min={50} max={80} tooLow={55} low={60} ok={70} high={75}/>
                 </Grid>
               </Grid>
               <Grid container>    
                 <Grid item xs={6}>
-                  <Toggle sensorName="ValveMashIn" displayName="Valve"/>
+                  <Toggle sensorName="Valve Mash-in" displayName="Valve"/>
                 </Grid>
                 <Grid item xs={6}>
-                  <Toggle sensorName="PumpMash" displayName="Pump"/>
+                  <Toggle sensorName="Pump Mash" displayName="Pump"/>
                 </Grid>
               </Grid>
             </Box>
@@ -109,16 +109,16 @@ const Devices = (props) => {
                   <h1>Chiller</h1>
                 </Grid>
                 <Grid item xs={6}>
-                  <Temperature name="Ambient" sensor='Temp Ambient'/>
+                  <Temperature sensor='Temp Ambient' name="Ambient"/>
                 </Grid>
               </Grid>
 
               <Grid container>    
                 <Grid item xs={6}>
-                  <Toggle sensorName="ValveChillWortIn" displayName="Input Valve"/>
+                  <Toggle sensorName="Valve Chiller wort-in" displayName="Input Valve"/>
                 </Grid>
                 <Grid item xs={6}>
-                  <Toggle sensorName="ValveFermentIn" displayName="Output Valve"/>
+                  <Toggle sensorName="Valve Chiller wort-out" displayName="Output Valve"/>
                 </Grid>
               </Grid>
             </Box>
