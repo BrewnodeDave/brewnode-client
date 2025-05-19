@@ -25,6 +25,8 @@ const sensorApi = sensorName => {
       return server.GlycolChiller;
     case "Valve Mash-in":
       return server.ValveMashIn;
+    case "Valve Kettle-in":
+      return server.ValveKettleIn;
     case "Valve Chiller wort-in":
       return server.ValveChillWortIn;
     case "Valve Chiller wort-out":
