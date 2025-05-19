@@ -140,9 +140,9 @@ export async function ValveChillWortIn(open) {
     return response.data;
 }
 
-export async function ValveFermentIn(open) {
+export async function ValveChillWortOut(open) {
     const state = open ? 'Open' : 'Close';
-    const response = await axios.put(`http://${host}:${port}/valve/fermentin?onOff=${state}`, {});
+    const response = await axios.put(`http://${host}:${port}/valve/chillwortout?onOff=${state}`, {});
     return response.data;
 }
 
