@@ -164,7 +164,7 @@ const CombinedGraph = memo((props) => {
     if (typeof brew !== 'string') return null;
 
     const addBasePowerSeries = (series) => {
-      const BASE_POWER = 50; // Watts
+      const BASE_POWER = 10; // Watts
       const basePowerSeries = (start, end) => ({
         name: "Base Power",
         data: [
