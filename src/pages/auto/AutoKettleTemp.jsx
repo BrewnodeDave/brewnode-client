@@ -12,10 +12,10 @@ import {MyContext } from '../../App';
 function AutoKettleTemp(props) {
     const {inProgress, setInProgress} = useContext(MyContext);
     
-    async function setKettleTemp(temp) {
+    async function setKettleTemp(tempC) {
       try {
-        setInProgress(`Heating Kettle to ${temp}`);   
-        const response = await server.kettleTemp({temp, mins:0});  
+        setInProgress(`Heating Kettle to ${tempC}C`);   
+        const response = await server.kettleTemp(tempC, 0);  
         setInProgress('');   
   
         return response.data;
