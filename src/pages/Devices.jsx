@@ -7,12 +7,12 @@ import Toggle from '../common/Toggle.jsx';
 
 const Devices = (props) => {  
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
-      <Container sx={{ height: '100%' }}>
+    <div style={{ width: '100%', height: '100%', margin: 0, padding: 0 }}>
+      <Container sx={{ height: '100%', width: '100%', maxWidth: '100vw !important', padding: 0 }}>
         <Grid container sx={{ height: '100%', alignItems: 'stretch' }}>
           {/* column 1 */}
-          <Grid item xs={12} md={4} sx={{ padding: 1 }}>
-            <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 0, height: '55%' }}>
+          <Grid item xs={12} md={4} sx={{ padding: 1, height: '100%' }}>
+            <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 0, height: '100%' }}>
               <Grid container>    
                 <Grid item xs={6}>
                   <h1>Kettle</h1>
@@ -43,7 +43,7 @@ const Devices = (props) => {
           </Grid>  
 
           {/* column 2 */}
-          <Grid item xs={12} md={4} sx={{ padding: 1}}>
+          <Grid item xs={12} md={4} sx={{ padding: 1, height: '100%' }}>
             <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 2, height: '10%' }}>
               <Grid container>    
                 <Grid item xs={6}>
@@ -55,7 +55,7 @@ const Devices = (props) => {
               </Grid>
             </Box>
 
-            <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 0, height: '55%' }}>
+            <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 0, height: '88%' }}>
               <Grid container>    
                 <Grid item xs={6}>
                   <h1>Glycol</h1>
@@ -83,8 +83,8 @@ const Devices = (props) => {
           </Grid>
 
           {/* column 3 */}
-          <Grid item xs={12} md={4} sx={{ padding: 1}}>
-            <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 2, height: '35%' }}>
+          <Grid item xs={12} md={4} sx={{ padding: 1, height: '100%' }}>
+            <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 2, height: '48%' }}>
               <Grid container>    
                 <Grid item xs={6}>
                   <h1>Mash Tun</h1>
@@ -103,7 +103,7 @@ const Devices = (props) => {
               </Grid>
             </Box>
 
-            <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 0, height: '35%' }}>
+            <Box sx={{ border: 2, bgcolor: '#8bb34a', marginBottom: 0, height: '48%' }}>
               <Grid container>    
                 <Grid item xs={6}>
                   <h1>Chiller</h1>
