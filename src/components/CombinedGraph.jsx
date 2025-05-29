@@ -23,7 +23,7 @@ const sensorNames = [
 const CombinedGraph = memo((props) => {
   const shownNames = useRef(new Set());
 
-  const [chartSubtitle, setChartSubtitle] = useState('');
+  const [chartSubtitle, setChartSubtitle] = useState();
   const [loading/*, setLoading*/] = useState(false);
 
   const inView = useRef([]);
