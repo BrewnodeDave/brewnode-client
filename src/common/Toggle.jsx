@@ -108,20 +108,29 @@ function Toggle(props) {
               border: selected ? "5px solid red" : "5px solid blue",
               backgroundColor: selected ? "#080808" : "#484848",
               color: "#FFFFFF",
-              fontSize: "25px",
+              fontSize: "2vw", // Scales text with viewport width
               fontWeight: "bold",
-              width: "130px",
-              height: "130px",
+              width: "10vw",
+              height: "10vw",
+              minWidth: "60px",
+              minHeight: "60px",
+              maxWidth: "130px",
+              maxHeight: "130px",
               backgroundImage: `url(${selected ? props.imageOn : props.imageOff})`,
-              backgroundSize: "contain", // Ensure the image covers the button.
+              backgroundSize: "contain",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
             value="check"
             selected={selected}
             onChange={toggle}
           >
-            {props.displayName}
+            <span style={{ fontSize: "2.2vw", fontWeight: "bold" }}>
+              {props.displayName}
+            </span>
           </ToggleButton>
         </div>
       </div>

@@ -45,20 +45,20 @@ export default function MyAppBar() {
   }, []);
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ height: '100%', flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
           <PowerMenu/>
 
-          <Typography variant="h4" component="div" sx={{ flexGrow: 2}}>
+          <Typography variant="h4" component="div" sx={{ fontSize: '5vw' }}>
             {time}
           </Typography>
 
-          <Typography variant="h4" component="div" sx={{ flexGrow: 2}}>
+          <Typography variant="h4" component="div" sx={{ fontSize: '5vw', flexGrow: 2 }}>
             {inProgress}
           </Typography>
           
-          <Button variant="contained" onClick={restart}>
+          <Button variant="contained" onClick={restart} sx={{ fontSize: '2vw', marginRight: '10px' }}>
               Restart
           </Button>
 

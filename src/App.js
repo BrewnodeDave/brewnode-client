@@ -31,11 +31,14 @@ function App() {
   }, []); // Empty dependency array ensures this runs only once
   
   return (
-    <div className="App">
+    <div className="App" style={{ padding: 0 }}>
+      <style>
+        {`.css-19kzrtu { padding: 0 !important; }`}
+      </style>
       <ThemeProvider theme={theme}> 
         <MyContext.Provider value={{inProgress, setInProgress}}> 
-        <MyAppBar/>
-        <BasicTabs/>
+          <MyAppBar/>
+          <BasicTabs/>
         </MyContext.Provider>
       </ThemeProvider> 
     </div>
