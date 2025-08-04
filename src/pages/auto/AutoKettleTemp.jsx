@@ -26,13 +26,20 @@ function AutoKettleTemp(props) {
 
 
   return (
-    <Box sx={{ border: 1, padding:2}}>
+    <Box sx={{
+        height: '100%',
+        border: 2,
+        padding: 2,
+        display: 'flex',
+        flexDirection: 'column',
+        boxSizing: 'border-box',
+      }}>
       <Table>
         <TableHead sx={{fontSize:24}}>{props.temp}°C</TableHead>
       </Table>
       <Button 
           variant="contained"
-          style={{ fontSize:"30px", width: "100%", height: "100%" }}
+          style={{ fontSize:"6vh", width: "100%", height: "10vh" }}
           size='large'
           disabled={inProgress!==''}
           onClick={() => {

@@ -8,9 +8,7 @@ import './common/App.css';
 import './common/global.css';
 
 import MyAppBar from './AppBar';
-
 import BasicTabs from './pages/BasicTabs';
-
 import {addSocketListener} from './brewnode/socketListener.js';
 
 const MyContext = createContext({defaultValue:{}});
@@ -31,10 +29,7 @@ function App() {
   }, []); // Empty dependency array ensures this runs only once
   
   return (
-    <div className="App" style={{ padding: 0 }}>
-      <style>
-        {`.css-19kzrtu { padding: 0 !important; }`}
-      </style>
+    <div className="App" style={{ padding: 0, width: '100%', height: '100%', minHeight: '100vh', minWidth: '100vw', boxSizing: 'border-box', overflow: 'hidden' }}>
       <ThemeProvider theme={theme}> 
         <MyContext.Provider value={{inProgress, setInProgress}}> 
           <MyAppBar/>
@@ -45,4 +40,4 @@ function App() {
   )
 }
 
-export{ App, MyContext};
+export { App, MyContext };

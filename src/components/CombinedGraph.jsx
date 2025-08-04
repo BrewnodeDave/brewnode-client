@@ -84,7 +84,7 @@ const CombinedGraph = memo((props) => {
       rules: [
         {
           condition: {
-            maxWidth: 768, // Apply this rule for screens smaller than 768px
+            // maxWidth: 768, // Apply this rule for screens smaller than 768px
           },
           chartOptions: {
             legend: {
@@ -105,7 +105,7 @@ const CombinedGraph = memo((props) => {
       rules: [
         {
           condition: {
-            maxWidth: 768, // Apply this rule for screens smaller than 768px
+            // maxWidth: 768, // Apply this rule for screens smaller than 768px
           },
           chartOptions: {
             legend: {

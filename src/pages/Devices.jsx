@@ -9,12 +9,12 @@ const Devices = (props) => {
     <Grid container>
       {/* Kettle */}
       <Grid item xs={4}>
-        <Box sx={{ margin: 1, border: 2, bgcolor: '#8bb34a', marginBottom: 0, height: '100%' }}>
+        <Box sx={{ border: 2, bgcolor: '#8bb34a', height: '72vh' }}>
           <Grid container>
-            <Grid item xs={6}>
-              <h1 style={{ fontSize: '4vw' }}>Kettle</h1>
+            <Grid item xs={9}>
+              <h1 style={{ marginLeft: '10px', fontSize: '4vw' }}>Kettle</h1>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={3}>
               <Temperature name='Kettle' sensor='Temp Kettle' min={0} max={100} tooLow={30} low={40} ok={75}/>
             </Grid>
           </Grid>
@@ -36,24 +36,25 @@ const Devices = (props) => {
           </Grid>
         </Box>
       </Grid>
+
       {/* Fermenter and Glycol */}
       <Grid item xs={4}>
-        <Box sx={{margin: 1, border: 2, bgcolor: '#8bb34a', marginBottom: 0, height: '20%' }}>
+        <Box sx={{marginBottom:'5vh',marginLeft:'5vh', border: 2, bgcolor: '#8bb34a', height: '18vh' }}>
           <Grid container>
-            <Grid item xs={6}>
-              <h1 style={{ fontSize: '4vw' }}>Fermenter</h1>
+            <Grid item xs={9}>
+              <h1 style={{ marginLeft: '10px',fontSize: '4vw' }}>Fermenter</h1>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={3}>
               <Temperature  sensor='Temp Fermenter' name='Ferment' min={5} max={40} tooLow={10} low={15} ok={21} high={25}/>
             </Grid>
           </Grid>
         </Box>
-        <Box sx={{ margin: 1, border: 2, bgcolor: '#8bb34a', marginBottom: 0, height: '77%' }}>
+        <Box sx={{ marginLeft:'5vh', border: 2, bgcolor: '#8bb34a', height: '49vh' }}>
           <Grid container>
-            <Grid item xs={6}>
-              <h1 style={{ fontSize: '4vw' }}>Glycol</h1>
+            <Grid item xs={9}>
+              <h1 style={{ marginLeft: '10px',fontSize: '4vw' }}>Glycol</h1>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={3}>
               <Temperature sensor='Temp Glycol' name='Glycol' min={-10} max={40} tooLow={-10} low={0} ok={10} high={30}/>
             </Grid>
           </Grid>
@@ -72,35 +73,39 @@ const Devices = (props) => {
           </Grid>
         </Box>
       </Grid>
+
       {/* Mash Tun and Chiller */}
       <Grid item xs={4}>
-        <Box sx={{ margin: 1, border: 2, bgcolor: '#8bb34a', marginBottom: 2, height: '50%' }}>
-          <Grid container>
-            <Grid item xs={6}>
-              <h1 style={{ fontSize: '4vw' }}>Mash Tun</h1>
+        <Box sx={{ marginBottom:'5vh',marginLeft: '5vh', border: 2, bgcolor: '#8bb34a', height: '33vh' }}>
+          <div><Grid container>
+            <Grid item xs={9}>
+              <h1 style={{ marginLeft: '10px',fontSize: '4vw' }}>Mash Tun</h1>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={3}>
               <Temperature sensor='Temp Mash' name="Mash" min={50} max={80} tooLow={55} low={60} ok={70} high={75}/>
             </Grid>
           </Grid>
-          <Grid container>
-            <Grid item xs={6}>
-              <Toggle sensorName="Valve Mash-in" displayName="Valve"/>
-            </Grid>
-            <Grid item xs={6}>
-              <Toggle sensorName="Pump Mash" displayName="Pump"/>
-            </Grid>
-          </Grid>
+         
+            <Grid container>
+              <Grid item xs={6}>
+                <Toggle sensorName="Valve Mash-in" displayName="Valve"/>
+              </Grid>
+              <Grid item xs={6}>
+                <Toggle sensorName="Pump Mash" displayName="Pump"/>
+              </Grid>
+            </Grid></div>
         </Box>
-        <Box sx={{ margin: 1, border: 2, bgcolor: '#8bb34a', marginBottom: 0, height: '46%' }}>
-          <Grid container>
-            <Grid item xs={6}>
-              <h1 style={{ fontSize: '4vw' }}>Chiller</h1>
+        
+        <Box sx={{ marginLeft:'5vh', border: 2, bgcolor: '#8bb34a', height: '34vh' }}>
+          <div><Grid container>
+            <Grid item xs={9}>
+              <h1 style={{ marginLeft: '10px',fontSize: '4vw' }}>Chiller</h1>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={3}>
               <Temperature sensor='Temp Ambient' name="Ambient"/>
             </Grid>
           </Grid>
+
           <Grid container>
             <Grid item xs={6}>
               <Toggle sensorName="Valve Chiller wort-in" displayName="Input Valve"/>
@@ -108,7 +113,7 @@ const Devices = (props) => {
             <Grid item xs={6}>
               <Toggle sensorName="Valve Chiller wort-out" displayName="Output Valve"/>
             </Grid>
-          </Grid>
+          </Grid></div>
         </Box>
       </Grid>
     </Grid>

@@ -29,10 +29,11 @@ function TabPanel(props) {
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
       {...other}
+      style={{ height: '100vh' }}
     >
       {value === index && (
-        <Box p = {3}>
-          <Typography>{children}</Typography>
+        <Box p={3} sx={{ height: '100%' }}>
+          <Typography sx={{ height: '100%' }}>{children}</Typography>
         </Box>
       )}
     </div>
@@ -77,13 +78,11 @@ export default function BasicTabs(props) {
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{height: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Box sx={{ borderBottom: 0, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" variant="fullWidth">
           <Tab label="Manual" {...a11yProps(0)} sx={{ fontSize: "3vw" }} />
           <Tab label="Automatic" {...a11yProps(1)} sx={{ fontSize: "3vw" }} />
-          {/* <Tab label="Ingredients" {...a11yProps(2)} sx={{fontSize: 28}}/> */}
-          {/* <Tab label="Inventory" {...a11yProps(3)} sx={{fontSize: 28}}/> */}
           <Tab label="Devices" {...a11yProps(2)} sx={{ fontSize: "3vw" }} />
           <Tab label="Graphs" {...a11yProps(3)} sx={{ fontSize: "3vw" }} />
           <Tab label="Log" {...a11yProps(4)} sx={{ fontSize: "3vw" }} />

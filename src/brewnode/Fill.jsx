@@ -5,7 +5,6 @@ import Button from '@mui/material/Button';
 
 import {MyContext } from '../App';
 import * as server from './server-api.js';
-
 import {addSocketListener} from './socketListener.js';
 
 const marks = [
@@ -17,17 +16,14 @@ const marks = [
   {value: 50,label: '50L'},
 ];
 
-
 function Fill() {
   const {inProgress, setInProgress } = useContext(MyContext);
   const defaults = {litres:19}
   const [litres, setLitres] = useState(defaults.litres);
 
-  addSocketListener('remainingFillLitres', ({value}) => 
-    {
-      setLitres(value);
-    });
-
+  addSocketListener('remainingFillLitres', ({value}) => {
+    setLitres(value);
+  });
 
   /**
    * @param {number} litres
@@ -44,9 +40,18 @@ function Fill() {
   }
   
   return (
-    <Box sx={{ border: 1, padding:2 }}>
+    <Box
+      sx={{
+        border: 2,
+        padding: 2,
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between'
+      }}
+    >
       <Slider
-        style={{ width: "100%", height: "50px" }}
+        style={{ width: "100%" }}
         defaultValue={defaults.litres}
         disabled={inProgress!==''}
         valueLabelDisplay="on"
@@ -56,14 +61,19 @@ function Fill() {
         max={50}
         value={litres}
       />
-      <Button variant="contained"
-        style={{ fontSize:"30px",width: "100%", height: "100%" }}
-        size='large'
-        disabled={inProgress!==''}
-        onClick={() => {
-          fill(litres);
-        }}>Fill
-      </Button>
+      <Box>
+        <Button
+          variant="contained"
+          style={{ fontSize:"2vw", width: "100%" }}
+          size='large'
+          disabled={inProgress!==''}
+          onClick={() => {
+            fill(litres);
+          }}
+        >
+          Fill
+        </Button>
+      </Box>
     </Box>
   );
 }

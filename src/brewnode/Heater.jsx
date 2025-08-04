@@ -36,9 +36,9 @@ function Heater() {
         style={{
           backgroundColor: selected ? "#ff2020" : "#8bc34a",
           color: "#000000",
-          fontSize: "30px",
-          width: "100%",
-          height: "100%",
+          fontSize: "30vw",
+          width: "100vw",
+          height: "100vh",
         }}
         size="large"
         value="check"

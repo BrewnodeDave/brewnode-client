@@ -79,7 +79,7 @@ function PowerMenu() {
   };
 
   return (
-    <div>
+    <div style={{ display: 'flex', alignItems: 'center' }}>
       <IconButton
         size="large"
         edge="start"
@@ -95,10 +95,10 @@ function PowerMenu() {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={() => handleMenuItemClick('Server')}>Server</MenuItem>
-        <MenuItem onClick={() => handleMenuItemClick('Login')}>Login</MenuItem>
-        <MenuItem onClick={() => handleMenuItemClick('Logout')}>Logout</MenuItem>
-        <MenuItem onClick={() => window.location.href = 'http://localhost:8080/docs'}>Docs</MenuItem>
+        <MenuItem sx={{ fontSize: '1.5rem' }} onClick={() => handleMenuItemClick('Server')}>Server</MenuItem>
+        <MenuItem sx={{ fontSize: '1.5rem' }} onClick={() => handleMenuItemClick('Login')}>Login</MenuItem>
+        <MenuItem sx={{ fontSize: '1.5rem' }} onClick={() => handleMenuItemClick('Logout')}>Logout</MenuItem>
+        <MenuItem sx={{ fontSize: '1.5rem' }} onClick={() => window.location.href = 'http://localhost:8080/docs'}>Docs</MenuItem>
       </Menu>
       <Dialog open={dialogOpen} onClose={handleDialogClose}>
         <DialogTitle>

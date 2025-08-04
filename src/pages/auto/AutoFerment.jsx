@@ -16,8 +16,9 @@ function fermentStep(_prevTemp, step){
     return [step];
   }else{
     let prevTemp = _prevTemp;
-    const deltaTemp = step.stepTemp - prevTemp;
-    
+    const deltaTemp = step.stepTemp? step?.stepTemp - prevTemp : 0;
+    if (deltaTemp === 0) return [step]; // no ramp needed
+
     const degreesPerStep = 1;
     const numSteps = Math.trunc(Math.abs(deltaTemp/degreesPerStep));
         
@@ -50,9 +51,9 @@ function AutoFerment(props) {
     
     let xxxx = [];  
     
-    const prevStepTemp = steps.length===1 ? 19  : steps[0].stepTemp;
+    const prevStepTemp = steps.length===1 ? 19  : steps[0]?.stepTemp;
     steps.reduce((prev, curr) => {
-      const rampedSteps = fermentStep(prev.stepTemp, curr);
+      const rampedSteps = fermentStep(prev?.stepTemp, curr);
       xxxx = xxxx.concat(rampedSteps);
       return rampedSteps[rampedSteps.length-1];
     }, steps[0] ? {stepTemp: prevStepTemp} : [] );
@@ -76,27 +77,40 @@ function AutoFerment(props) {
   }
 
   return (
-    <Box sx={{ border: 1, padding:2 }}>
-      <Table>
-        <TableHead>
-        </TableHead>
-        <TableBody>
-          {props.recipe?.fermentation?.steps.map((step,i) => 
-          <TableRow >
-            <TableCell  sx={{fontSize:24}}>{step.name}</TableCell>
-            <TableCell  sx={{fontSize:24}}>{step2string(step)}</TableCell>
-          </TableRow>        
-          )}
-        </TableBody > 
-      </Table>
-
-      <Button variant="contained"
-        style={{ fontSize:"30px",width: "100%", height: "100%" }}
-        size='large'
+    <Box
+      sx={{
+        height: '100%',
+        border: 2,
+        padding: 2,
+        display: 'flex',
+        flexDirection: 'column',
+        boxSizing: 'border-box',
+      }}
+    >
+      <Box sx={{ flex: 1, overflowY: 'auto' }}>
+        <Table>
+          <TableHead>
+          </TableHead>
+          <TableBody>
+            {props.recipe?.fermentation?.steps.map((step, i) => (
+              <TableRow key={i}>
+                <TableCell sx={{ fontSize: '3vh' }}>{step.name}</TableCell>
+                <TableCell sx={{ fontSize: '3vh' }}>{step2string(step)}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+              <Button
+        variant="contained"
+        style={{ fontSize: "4vh", width: "100%", height: "8vh" }}
+        size="large"
         onClick={ferment}
-        disabled={inProgress!==''}
-          >Ferment
+        disabled={inProgress !== ''}
+      >
+        Ferment
       </Button>
+
+      </Box>
     </Box>
   );
 }

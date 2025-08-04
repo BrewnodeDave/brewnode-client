@@ -108,14 +108,10 @@ function Toggle(props) {
               border: selected ? "5px solid red" : "5px solid blue",
               backgroundColor: selected ? "#080808" : "#484848",
               color: "#FFFFFF",
-              fontSize: "2vw", // Scales text with viewport width
+              fontSize: "vw", // Scales text with viewport width
               fontWeight: "bold",
-              width: "10vw",
-              height: "10vw",
-              minWidth: "60px",
-              minHeight: "60px",
-              maxWidth: "130px",
-              maxHeight: "130px",
+              width: "12vw",
+              height: "12vh",
               backgroundImage: `url(${selected ? props.imageOn : props.imageOff})`,
               backgroundSize: "contain",
               backgroundRepeat: "no-repeat",

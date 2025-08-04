@@ -33,62 +33,73 @@ function Ferment() {
     stepTime:7
   }
 
-  const [stepTemp, setTemp] = useState(defaults.stepTemp);
-  const [stepTime, setTime] = useState(defaults.stepTime);
-  
-  addSocketListener('remainingFermentDays', ({value}) => {
-    return setTime(value);
-  });
+  const [stepTemp, setTemp] = useState(defaults?.stepTemp);
+  const [stepTime, setTime] = useState(defaults?.stepTime);
+
+  addSocketListener('remainingFermentDays', ({value}) => setTime(value));
 
   return (
-    <Box sx={{ border: 1, padding:2}}>
-        <Slider
-            aria-label="Always visible"
-            style={{ width: "100%", height: "50px"  }}
-            defaultValue={defaults.stepTemp}
-            valueLabelDisplay="on"
-            disabled={inProgress!==''}
-            onChange={v=>setTemp(v.target.value)}
-            marks={tempMarks}
-            step={1}
-            min={0}
-            max={30}
-        />
-        <Slider
-            aria-label="Always visible"
-            style={{ width: "100%", height: "50px"  }}
-            defaultValue={defaults.stepTime}
-            valueLabelDisplay="on"
-            onChange={v=>setTime(v.target.value)}
-            marks={dayMarks}
-            disabled={inProgress!==''}
-            step={1}
-            min={0}
-            max={15}
-            value={stepTime}
-        />
-        <Box>
-          <Button variant="contained"
-              style={{ marginRight: "10px", fontSize:"30px",width: "100%", height: "100%" }}
-              disabled={inProgress!==''}
-              size='large'
-              onClick={() => {
-                ferment(stepTemp, stepTime);
-          }}>Ferment</Button>
-        </Box>
+    <Box
+      sx={{
+        border: 2,
+        padding: 2,
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between'
+      }}
+    >
+      <Slider
+        aria-label="Always visible"
+        style={{ width: "100%" }}
+        defaultValue={defaults?.stepTemp}
+        valueLabelDisplay="on"
+        disabled={inProgress!==''}
+        onChange={v=>setTemp(v.target.value)}
+        marks={tempMarks}
+        step={1}
+        min={0}
+        max={30}
+      />
+      <Slider
+        aria-label="Always visible"
+        style={{ width: "100%" }}
+        defaultValue={defaults.stepTime}
+        valueLabelDisplay="on"
+        onChange={v=>setTime(v.target.value)}
+        marks={dayMarks}
+        disabled={inProgress!==''}
+        step={1}
+        min={0}
+        max={15}
+        value={stepTime}
+      />
+      <Box>
+        <Button
+          variant="contained"
+          style={{ fontSize: "2vw", width: "100%" }}
+          disabled={inProgress!==''}
+          size='large'
+          onClick={() => {
+            ferment(stepTemp, stepTime);
+          }}
+        >
+          Ferment
+        </Button>
+      </Box>
     </Box>
   );
 
   async function ferment(stepTemp, stepTime) {
     try {
-        const steps = [{stepTemp, stepTime}];
-        const response = await server.ferment(steps);
-        return response.data;
+      const steps = [{stepTemp, stepTime}];
+      const response = await server.ferment(steps);
+      return response.data;
     } catch (error) {
-      setInProgress(error);   
+      setInProgress(error);
       console.error(error);
-      return error;    
-    } 
+      return error;
+    }
   }
 }
 

@@ -14,26 +14,33 @@ import TableRow from '@mui/material/TableRow';
 function Process(props) {
   const trunc = x => Math.trunc(x * 1000) / 1000;
   return (
-    <Box sx={{ border: 1, padding:2 }}>
+    <Box sx={{
+        height: '70vh',
+        border: 2,
+        padding: 2,
+        display: 'flex',
+        flexDirection: 'column',
+        boxSizing: 'border-box',
+      }}>
       <Table>
-        <TableHead>
+        <TableHead sx={{fontSize:'5vh', fontWeight:'bold'}}>
         </TableHead>
         <TableBody>
           <TableRow>
-              <TableCell sx={{fontSize:24}}>Boil</TableCell>
-              <TableCell sx={{fontSize:24}} align="right">{props.recipe?.boilTime}m</TableCell>
+              <TableCell sx={{fontSize:'5vh'}}>Boil</TableCell>
+              <TableCell sx={{fontSize:'5vh'}} >{props?.recipe?.boilTime}mins</TableCell>
           </TableRow>
           <TableRow>
-              <TableCell sx={{fontSize:24}} >OG</TableCell>
-              <TableCell sx={{fontSize:24}} align="right">{trunc(props.recipe?.og)}</TableCell>
+              <TableCell sx={{fontSize:'5vh'}} >OG</TableCell>
+              <TableCell sx={{fontSize:'5vh'}} >{trunc(props?.recipe?.og)}</TableCell>
           </TableRow>
           <TableRow>
-              <TableCell sx={{fontSize:24}}>FG</TableCell>
-              <TableCell sx={{fontSize:24}} align="right">{trunc(props.recipe?.fg)}</TableCell>
+              <TableCell sx={{fontSize:'5vh'}}>FG</TableCell>
+              <TableCell sx={{fontSize:'5vh'}} >{trunc(props?.recipe?.fg)}</TableCell>
           </TableRow>
           <TableRow>
-              <TableCell sx={{fontSize:24}}>ABV</TableCell>
-              <TableCell sx={{fontSize:24}} align="right">{props.recipe?.abv}%</TableCell>
+              <TableCell sx={{fontSize:'5vh'}}>ABV</TableCell>
+              <TableCell sx={{fontSize:'5vh'}} >{props?.recipe?.abv}%</TableCell>
           </TableRow>
         </TableBody > 
       </Table>

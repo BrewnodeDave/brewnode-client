@@ -1,6 +1,5 @@
 import {React, useContext, useState, useEffect} from 'react';
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -45,27 +44,26 @@ export default function MyAppBar() {
   }, []);
 
   return (
-    <Box sx={{ height: '100%', flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
+      <AppBar position="static" sx={{ height: { xs: '8vh', sm: '10vh', md: '12vh' } }}>
+        <Toolbar sx={{ minHeight: { xs: '8vh', sm: '10vh', md: '12vh' } }}>
           <PowerMenu/>
 
-          <Typography variant="h4" component="div" sx={{ fontSize: '5vw' }}>
+          <Typography component="div" sx={{ fontSize: { xs: '6vh', sm: '8vh', md: '6vh' } }}>
             {time}
           </Typography>
 
-          <Typography variant="h4" component="div" sx={{ fontSize: '5vw', flexGrow: 2 }}>
+          <Typography component="div" sx={{ fontSize: { xs: '6vh', sm: '8vh', md: '8vh' }, flexGrow: 2 }}>
             {inProgress}
           </Typography>
           
-          <Button variant="contained" onClick={restart} sx={{ fontSize: '2vw', marginRight: '10px' }}>
+          <Button variant="contained" onClick={restart} sx={{ fontSize: { xs: '1.5vh', sm: '2vh' }, marginRight: '5vw' }}>
               Restart
           </Button>
 
           <div
             style={{
-              width: '20px',
-              height: '20px',
+              width: '5vh',
+              height: '5vh',
               borderRadius: '50%',
               backgroundColor: colour,
               marginLeft: '10px',
@@ -77,6 +75,5 @@ export default function MyAppBar() {
 
         </Toolbar>
       </AppBar>
-    </Box>
   );
 }
