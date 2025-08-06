@@ -71,9 +71,11 @@ function PowerMenu() {
       localStorage.removeItem('username');
       localStorage.removeItem('password');
       console.log('User logged out');
-    } else if (dialogType === 'Reboot') {
-      console.log('Executing command: sudo reboot');
-      // Add your command execution logic here
+     } else if (dialogType === 'Exit') {
+      // Attempt to close the window, or redirect if not allowed
+      // if (window.confirm('Cannot close the window automatically. Would you like to leave this page?')) {
+        window.location.href = 'about:blank';
+      // }
     }
     setDialogOpen(false);
   };
@@ -99,14 +101,31 @@ function PowerMenu() {
         <MenuItem sx={{ fontSize: '1.5rem' }} onClick={() => handleMenuItemClick('Login')}>Login</MenuItem>
         <MenuItem sx={{ fontSize: '1.5rem' }} onClick={() => handleMenuItemClick('Logout')}>Logout</MenuItem>
         <MenuItem sx={{ fontSize: '1.5rem' }} onClick={() => window.location.href = 'http://localhost:8080/docs'}>Docs</MenuItem>
+        <MenuItem sx={{ fontSize: '1.5rem' }} onClick={() => handleMenuItemClick('Exit')}>Exit</MenuItem>
       </Menu>
       <Dialog open={dialogOpen} onClose={handleDialogClose}>
         <DialogTitle>
-          {dialogType === 'Server' ? 'Enter Server' : dialogType === 'Login' ? 'Login' : dialogType === 'Logout' ? 'Logout' : 'Reboot'}
+          {dialogType === 'Server' 
+            ? 'Enter Server' 
+            : dialogType === 'Login' 
+              ? 'Login' 
+              : dialogType === 'Logout' 
+                ? 'Logout' 
+                : dialogType === 'Exit' 
+                  ? 'Exit Application' 
+                  : 'Error'}
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            {dialogType === 'Server' ? 'Please enter the IP address and port of the server.\n This will require a refresh.' : dialogType === 'Login' ? 'Please enter your username and password.' : dialogType === 'Logout' ? 'Are you sure you want to logout?' : 'Are you sure you want to reboot?'}
+            {dialogType === 'Server' 
+              ? 'Please enter the IP address and port of the server.\n This will require a refresh.' 
+              : dialogType === 'Login' 
+                ? 'Please enter your username and password.' 
+                :  dialogType === 'Logout' 
+                  ? 'Are you sure you want to logout?' 
+                  : dialogType === 'Exit' 
+                    ? 'Are you sure you want to exit the application?' 
+                    : 'Error'}
           </DialogContentText>
           {dialogType === 'Server' ? (
             <>
