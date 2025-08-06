@@ -71,11 +71,14 @@ function PowerMenu() {
       localStorage.removeItem('username');
       localStorage.removeItem('password');
       console.log('User logged out');
-     } else if (dialogType === 'Exit') {
-      // Attempt to close the window, or redirect if not allowed
-      // if (window.confirm('Cannot close the window automatically. Would you like to leave this page?')) {
-        window.location.href = 'about:blank';
-      // }
+    } else if (dialogType === 'Exit') {
+      // Close the browser window/tab
+      window.close();
+      // Fallback if window.close() doesn't work (some browsers restrict this)
+      if (!window.closed) {
+        window.open('', '_self', '');
+        window.close();
+      }
     }
     setDialogOpen(false);
   };
