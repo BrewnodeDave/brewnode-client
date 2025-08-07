@@ -110,8 +110,8 @@ function Toggle(props) {
               color: "#FFFFFF",
               fontSize: "vw", // Scales text with viewport width
               fontWeight: "bold",
-              width: "20vh",
-              height: "20vh",
+              width: "18vh",
+              height: "18vh",
               backgroundImage: `url(${selected ? props.imageOn : props.imageOff})`,
               backgroundSize: "contain",
               backgroundRepeat: "no-repeat",
