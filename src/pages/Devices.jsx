@@ -79,7 +79,7 @@ const Devices = (props) => {
         <Box sx={{ marginBottom:'5vh',marginLeft: '5vh', border: 2, bgcolor: '#8bb34a', height: '33vh' }}>
           <div><Grid container>
             <Grid item xs={6}>
-              <h1 style={{marginTop:'-1vh', marginLeft: '10px',fontSize: '4vw' }}>Mash Tun</h1>
+              <h1 style={{marginTop:'-1vh', marginLeft: '10px',fontSize: '4vw' }}>Mash</h1>
             </Grid>
             <Grid item xs={6}>
               <Temperature sensor='Temp Mash' name="Mash" min={50} max={80} tooLow={55} low={60} ok={70} high={75}/>

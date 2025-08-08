@@ -66,7 +66,7 @@ export default function BasicTabs(props) {
       setBatch(batch);
     },handleError);
     return () => {};
-  }, []);
+  }, [props.fetchBatch]);
 
   const handleChange = (event, newValue) => setValue(newValue);
   const handleError = (error) => {
@@ -103,13 +103,6 @@ export default function BasicTabs(props) {
         <AutomaticTab batch={batch} />
       </TabPanel>
 
-      {/* <TabPanel value={value} index={2}>
-        <Ingredients fermentables={batch.fermentables} hops={batch.hops} yeasts={batch.yeasts}/>
-      </TabPanel>
-      
-      <TabPanel value={value} index={3}>
-        <Ingredients fermentables={inventory.fermentables} hops={inventory.hops} yeasts={inventory.yeasts}/>
-      </TabPanel> */}
 
       <TabPanel value={value} index={2}>
         <Box sx={{ height: '100%', width: '100%' }}>

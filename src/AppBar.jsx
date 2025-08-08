@@ -12,18 +12,17 @@ import {MyContext } from './App';
 
 import * as server from './brewnode/server-api';
 
-export default function MyAppBar() {
+export default function MyAppBar({ actionButton }) {
+  const {inProgress} = useContext(MyContext);
+  const [colour, setColour] = useState('red');
+  const [time, setTime] = useState(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
 
-  const {inProgress, setInProgress} = useContext(MyContext);
-
-  const [colour, setColour] = useState('#ffffff');
-  
   async function restart() {
       try {
           const response = await server.restart(); 
           return response.data;
       } catch (error) {
-        setInProgress(error);   
+        // setInProgress(error);   
         console.error(error);
         return error;
       } 
@@ -32,8 +31,6 @@ export default function MyAppBar() {
   function toggleWdogColour(value) {
     setColour(value ? "#00FF00" : "#007f00");
   }
-
-  const [time, setTime] = useState(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -55,6 +52,8 @@ export default function MyAppBar() {
           <Typography component="div" sx={{ fontSize: { xs: '6vh', sm: '8vh', md: '8vh' }, flexGrow: 2 }}>
             {inProgress}
           </Typography>
+          
+          {actionButton}
           
           <Button variant="contained" onClick={restart} sx={{ fontSize: { xs: '1.5vh', sm: '2vh' }, marginRight: '5vw' }}>
               Restart
