@@ -1,10 +1,8 @@
 import {React, useContext} from 'react';
 
 import Box from '@mui/material/Box';
-import Table from '@mui/material/Table';
-import TableHead from '@mui/material/TableHead';
 
-import Button from '@mui/material/Button';
+import Toggle from '../../common/Toggle.jsx';
 
 import * as server from '../../brewnode/server-api';
 import {MyContext } from '../../App';
@@ -27,25 +25,23 @@ function AutoKettleTemp(props) {
 
   return (
     <Box sx={{
-        height: '100%',
+        height: '35vh',
         border: 2,
         padding: 2,
         display: 'flex',
         flexDirection: 'column',
         boxSizing: 'border-box',
       }}>
-      <Table>
-        <TableHead sx={{fontSize:24}}>{props.temp}°C</TableHead>
-      </Table>
-      <Button 
-          variant="contained"
-          style={{ fontSize:"6vh", width: "100%", height: "10vh" }}
-          size='large'
+        <h1 style={{marginTop: "-2vh"}}>{props.temp}°C</h1>
+      <Toggle 
+          displayName="Strike"
           disabled={inProgress!==''}
           onClick={() => {
-            setKettleTemp(props.temp);
-          }}>Strike
-      </Button>
+              setKettleTemp(props.temp);
+          }}
+            >Strike
+      </Toggle>
+
     </Box>
   );
 

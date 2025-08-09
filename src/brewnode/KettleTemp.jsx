@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import Button from '@mui/material/Button';
+import Toggle from '../common/Toggle.jsx';
 
 import * as server from './server-api.js';
 import { addSocketListener } from './socketListener.js';
@@ -50,6 +50,7 @@ function KettleTemp() {
       }}
     >
       <Slider
+        color="secondary"
         aria-label="Kettle Temperature"
         style={{ width: '100%' }}
         defaultValue={defaultKettle.temp}
@@ -64,6 +65,7 @@ function KettleTemp() {
         value={temp}
       />
       <Slider
+        color="secondary"
         aria-label="Kettle Minutes"
         style={{ width: '100%' }}
         defaultValue={defaultKettle.mins}
@@ -77,17 +79,12 @@ function KettleTemp() {
         value={mins}
       />
       <Box>
-        <Button
-          variant="contained"
-          style={{ fontSize: '2vw', width: '100%' }}
-          disabled={inProgress !== ''}
-          size="large"
+        <Toggle 
+          displayName="Kettle"
+          disabled={inProgress!==''}
           onClick={async () => {
             await server.kettleTemp(temp, mins);
-          }}
-        >
-          Kettle
-        </Button>
+          }}/>
       </Box>
     </Box>
   );

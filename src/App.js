@@ -46,6 +46,7 @@ function App() {
                 onClick={toggleFetchRecipe}
                 style={{ 
                   marginLeft: 16,
+                  marginRight : 16,
                   display: 'flex',
                   alignItems: 'center'
                 }}
@@ -53,7 +54,7 @@ function App() {
                   <img
                     src="/static/images/brewfather.png"
                     alt="Brewfather"
-                    style={{ width: '10vw', height: '5vh' }}
+                    style={{ width: '5vh', height: '5vh' }}
                   />
                 }
               >

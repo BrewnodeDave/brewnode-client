@@ -1,6 +1,6 @@
 import {React, useContext, useEffect, useState} from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import Toggle from '../../common/Toggle.jsx';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -94,21 +94,17 @@ function AutoFerment(props) {
           <TableBody>
             {props.recipe?.fermentation?.steps.map((step, i) => (
               <TableRow key={i}>
-                <TableCell sx={{ fontSize: '3vh' }}>{step.name}</TableCell>
-                <TableCell sx={{ fontSize: '3vh' }}>{step2string(step)}</TableCell>
+                <TableCell sx={{"fontSize":"2vw"}}>{step.name}</TableCell>
+                <TableCell sx={{"fontSize":"2vw"}}>{step2string(step)}</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
-              <Button
-        variant="contained"
-        style={{ fontSize: "4vh", width: "100%", height: "8vh" }}
-        size="large"
-        onClick={ferment}
-        disabled={inProgress !== ''}
-      >
-        Ferment
-      </Button>
+
+         <Toggle 
+          displayName="Ferment"
+          disabled={inProgress!==''}
+          onClick={ferment}/>
 
       </Box>
     </Box>

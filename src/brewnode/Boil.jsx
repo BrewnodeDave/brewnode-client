@@ -1,8 +1,7 @@
 import React, { useState, useContext } from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import Button from '@mui/material/Button';
-
+import Toggle from '../common/Toggle.jsx';
 import { MyContext } from '../App';
 import { addSocketListener } from './socketListener.js';
 import * as server from './server-api.js';
@@ -49,6 +48,7 @@ function Boil() {
       <Slider
         size="medium"
         style={{ width: "100%" }}
+        color="secondary"
         valueLabelDisplay="on"
         aria-label="Boil Minutes"
         defaultValue={defaults.mins}
@@ -60,15 +60,12 @@ function Boil() {
         value={mins}
       />
       <Box>
-        <Button
-          variant="contained"
-          style={{ fontSize: "2vw", width: "100%" }}
-          size="large"
-          disabled={inProgress !== ''}
-          onClick={() => boil(mins)}
-        >
-          Boil
-        </Button>
+
+        <Toggle 
+          displayName="Boil"
+          disabled={inProgress!==''}
+          onClick={() => boil(mins)}/>
+      
       </Box>
     </Box>
   );

@@ -1,9 +1,7 @@
 import {React, useContext, useEffect} from 'react';
 
 import Box from '@mui/material/Box';
-import Table from '@mui/material/Table';
-import TableHead from '@mui/material/TableHead';
-import Button from '@mui/material/Button';
+import Toggle from '../../common/Toggle.jsx';
 
 import {MyContext } from '../../App';
 
@@ -30,24 +28,21 @@ function AutoFill(props) {
   
   return (
     <Box sx={{
-        height: '100%',
+        height: '35vh',
         border: 2,
         padding: 2,
         display: 'flex',
         flexDirection: 'column',
         boxSizing: 'border-box',
       }}>
-      <Table>
-      <TableHead sx={{fontSize:'5vh'}}>{props.strikeLitres} L</TableHead>
-      </Table>
-      <Button 
-          variant="contained"
-          style={{ fontSize:"5vh", width: "100%", height: "10vh" }}
-          size='large'
+      <h1 style={{marginTop: "-2vh"}}>{props.strikeLitres} L</h1>
+
+      <Toggle
+          displayName="Fill"
           disabled={inProgress!==''}
           onClick={fill}
             >Fill
-      </Button>
+      </Toggle>
     </Box>
   );
 }

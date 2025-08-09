@@ -7,8 +7,7 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Button from '@mui/material/Button';
-
+import Toggle from '../../common/Toggle.jsx'; 
 import {MyContext } from '../../App';
 
 import * as server from '../../brewnode/server-api';
@@ -53,21 +52,16 @@ function AutoMash(props) {
           <TableBody>
             { steps.map(step => 
             <TableRow >
-              <TableCell sx={{fontSize:'5vh'}}>{step.name}</TableCell>
-              <TableCell sx={{fontSize:'5vh'}}>{step2string(step)}</TableCell>
+              <TableCell sx={{"fontSize":"4vh"}}>{step.name}</TableCell>
+              <TableCell sx={{"fontSize":"4vh"}}>{step2string(step)}</TableCell>
             </TableRow>        
             )}
           </TableBody > 
         </Table>
-   
-        <Button 
-            variant="contained"
-            style={{ fontSize:"5vh", width: "100%", height: "100%" }}
-            size='large'
-            disabled={inProgress!==''}
-            onClick={mash}
-              >Mash
-        </Button>
+        <Toggle 
+          displayName="Mash"
+          disabled={inProgress!==''}
+          onClick={mash}/>
         </Box>
     );
 }

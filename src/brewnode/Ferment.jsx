@@ -2,8 +2,7 @@ import {React, useState, useContext} from 'react';
 
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import Button from '@mui/material/Button';
-
+import Toggle from '../common/Toggle.jsx';
 import * as server from './server-api.js';
 
 import {MyContext } from '../App';
@@ -50,6 +49,7 @@ function Ferment() {
       }}
     >
       <Slider
+        color="secondary"
         aria-label="Always visible"
         style={{ width: "100%" }}
         defaultValue={defaults?.stepTemp}
@@ -62,6 +62,7 @@ function Ferment() {
         max={30}
       />
       <Slider
+        color="secondary"
         aria-label="Always visible"
         style={{ width: "100%" }}
         defaultValue={defaults.stepTime}
@@ -75,17 +76,12 @@ function Ferment() {
         value={stepTime}
       />
       <Box>
-        <Button
-          variant="contained"
-          style={{ fontSize: "2vw", width: "100%" }}
+        <Toggle 
+          displayName="Ferment"
           disabled={inProgress!==''}
-          size='large'
           onClick={() => {
             ferment(stepTemp, stepTime);
-          }}
-        >
-          Ferment
-        </Button>
+          }}/>
       </Box>
     </Box>
   );

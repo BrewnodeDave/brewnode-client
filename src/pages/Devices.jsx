@@ -12,9 +12,9 @@ const Devices = (props) => {
         <Box sx={{ border: 2, bgcolor: '#8bb34a', height: '72vh' }}>
           <Grid container>
             <Grid item xs={6}>
-              <h1 style={{ marginLeft: '10px', fontSize: '4vw' }}>Kettle</h1>
+              <h1 style={{  marginTop:'-1vh', marginLeft: '10px', fontSize: '4vw' }}>Kettle</h1>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={6} style={{  marginTop:'-5vh'}}>                  
               <Temperature name='Kettle' sensor='Temp Kettle' min={0} max={100} tooLow={30} low={40} ok={75}/>
             </Grid>
           </Grid>
@@ -39,7 +39,7 @@ const Devices = (props) => {
 
       {/* Fermenter and Glycol */}
       <Grid item xs={4}>
-        <Box sx={{ marginBottom: '5vh', marginLeft: '5vh', border: 2, bgcolor: '#8bb34a', height: '18vh' }}>
+        <Box sx={{ marginBottom: '5vh', marginLeft: '3vh', border: 2, bgcolor: '#8bb34a', height: '18vh' }}>
           <Grid container>
             <Grid item xs={6}>
               <h1 style={{ marginTop:'-1vh',marginLeft: '10px',fontSize: '4vw' }}>Fermenter</h1>
@@ -49,20 +49,20 @@ const Devices = (props) => {
             </Grid>
           </Grid>
         </Box>
-        <Box sx={{ marginLeft:'5vh', border: 2, bgcolor: '#8bb34a', height: '49vh' }}>
+        <Box sx={{ marginLeft:'3vh', border: 2, bgcolor: '#8bb34a', height: '49vh' }}>
           <Grid container>
             <Grid item xs={6}>
               <h1 style={{ marginTop:'-1vh', marginLeft: '10px',fontSize: '4vw' }}>Glycol</h1>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={6} style={{  marginTop:'-5vh'}}>
               <Temperature sensor='Temp Glycol' name='Glycol' min={-10} max={40} tooLow={-10} low={0} ok={10} high={30}/>
             </Grid>
           </Grid>
           <Grid container>
-            <Grid item xs={6} sx={{marginTop: '-8vh'}}>
+            <Grid item xs={6} sx={{marginTop: '-5vh'}}>
               <Toggle sensorName="Pump Glycol" displayName="Pump"/>
             </Grid>
-            <Grid item xs={6} sx={{marginTop: '-8vh'}}>
+            <Grid item xs={6} sx={{marginTop: '-5vh'}}>
               <Toggle sensorName="Glycol Heater" displayName="Heat"/>
             </Grid>
           </Grid>
@@ -76,41 +76,41 @@ const Devices = (props) => {
 
       {/* Mash Tun and Chiller */}
       <Grid item xs={4}>
-        <Box sx={{ marginBottom:'5vh',marginLeft: '5vh', border: 2, bgcolor: '#8bb34a', height: '33vh' }}>
+        <Box sx={{ marginBottom:'5vh',marginLeft: '3vh', border: 2, bgcolor: '#8bb34a', height: '33vh' }}>
           <div><Grid container>
             <Grid item xs={6}>
               <h1 style={{marginTop:'-1vh', marginLeft: '10px',fontSize: '4vw' }}>Mash</h1>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={6} style={{  marginTop:'-5vh'}}>
               <Temperature sensor='Temp Mash' name="Mash" min={50} max={80} tooLow={55} low={60} ok={70} high={75}/>
             </Grid>
           </Grid>
          
             <Grid container>
-              <Grid item xs={6} sx={{marginTop: '-8vh'}}>
+              <Grid item xs={6} sx={{marginTop: '-5vh'}}>
                 <Toggle sensorName="Valve Mash-in" displayName="Valve"/>
               </Grid>
-              <Grid item xs={6} sx={{marginTop: '-8vh'}}>
+              <Grid item xs={6} sx={{marginTop: '-5vh'}}>
                 <Toggle sensorName="Pump Mash" displayName="Pump"/>
               </Grid>
             </Grid></div>
         </Box>
         
-        <Box sx={{ marginLeft:'5vh', border: 2, bgcolor: '#8bb34a', height: '34vh' }}>
+        <Box sx={{ marginLeft:'3vh', border: 2, bgcolor: '#8bb34a', height: '34vh' }}>
           <div><Grid container>
             <Grid item xs={6}>
               <h1 style={{ marginTop:'-1vh', marginLeft: '10px',fontSize: '4vw' }}>Chiller</h1>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={6}                                                                                           style={{  marginTop:'-5vh'}}>
               <Temperature sensor='Temp Ambient' name="Ambient"/>
             </Grid>
-          </Grid>
+          </Grid>             
 
           <Grid container>
-            <Grid item xs={6} sx={{marginTop: '-8vh'}}>
+            <Grid item xs={6} sx={{marginTop: '-5vh'}}>
               <Toggle sensorName="Valve Chiller wort-in" displayName="Input Valve"/>
             </Grid>
-            <Grid item xs={6} sx={{marginTop: '-8vh'}}>
+            <Grid item xs={6} sx={{marginTop: '-5vh'}}>
               <Toggle sensorName="Valve Chiller wort-out" displayName="Output Valve"/>
             </Grid>
           </Grid></div>

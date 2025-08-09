@@ -1,14 +1,14 @@
 import {React, useState, useContext} from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import Button from '@mui/material/Button';
+import Toggle from '../common/Toggle.jsx';
 
 import {MyContext } from '../App';
 import * as server from './server-api.js';
 import {addSocketListener} from './socketListener.js';
 
 const marks = [
-  {value: 0,label: '0L'},
+  {value: 0,label                         : '0L'},
   {value: 10,label: '10L'},
   {value: 20,label: '20L'},
   {value: 30,label: '30L'},
@@ -50,8 +50,9 @@ function Fill() {
         justifyContent: 'space-between'
       }}
     >
-      <Slider
-        style={{ width: "100%" }}
+      <Slider    
+        color="secondary"                                                                                                             
+        style={{ width: "100%" }}           
         defaultValue={defaults.litres}
         disabled={inProgress!==''}
         valueLabelDisplay="on"
@@ -62,17 +63,12 @@ function Fill() {
         value={litres}
       />
       <Box>
-        <Button
-          variant="contained"
-          style={{ fontSize:"2vw", width: "100%" }}
-          size='large'
+         <Toggle 
+          displayName="Fill"
           disabled={inProgress!==''}
           onClick={() => {
             fill(litres);
-          }}
-        >
-          Fill
-        </Button>
+          }}/>
       </Box>
     </Box>
   );

@@ -27,20 +27,20 @@ function Process(props) {
         </TableHead>
         <TableBody>
           <TableRow>
-              <TableCell sx={{fontSize:'5vh'}}>Boil</TableCell>
-              <TableCell sx={{fontSize:'5vh'}} >{props?.recipe?.boilTime}mins</TableCell>
+              <TableCell sx={{"fontSize":"4vh"}}>Boil</TableCell>
+              <TableCell sx={{"fontSize":"4vh"}}>{props?.recipe?.boilTime}mins</TableCell>
           </TableRow>
           <TableRow>
-              <TableCell sx={{fontSize:'5vh'}} >OG</TableCell>
-              <TableCell sx={{fontSize:'5vh'}} >{trunc(props?.recipe?.og)}</TableCell>
+              <TableCell sx={{"fontSize":"4vh"}}>OG</TableCell>
+              <TableCell sx={{"fontSize":"4vh"}}>{trunc(props?.recipe?.og)}</TableCell>
           </TableRow>
           <TableRow>
-              <TableCell sx={{fontSize:'5vh'}}>FG</TableCell>
-              <TableCell sx={{fontSize:'5vh'}} >{trunc(props?.recipe?.fg)}</TableCell>
+              <TableCell sx={{"fontSize":"4vh"}}>FG</TableCell>
+              <TableCell sx={{"fontSize":"4vh"}}>{trunc(props?.recipe?.fg)}</TableCell>
           </TableRow>
           <TableRow>
-              <TableCell sx={{fontSize:'5vh'}}>ABV</TableCell>
-              <TableCell sx={{fontSize:'5vh'}} >{props?.recipe?.abv}%</TableCell>
+              <TableCell sx={{"fontSize":"4vh"}}>ABV</TableCell>
+              <TableCell sx={{"fontSize":"4vh"}}>{props?.recipe?.abv}%</TableCell>
           </TableRow>
         </TableBody > 
       </Table>
