@@ -48,12 +48,19 @@ const sensorApi = sensorName => {
  */
 function Toggle(props) {
   const [selected, setSelected] = useState(false); // State for the toggle button (on/off).
-  const { sensorName } = props;
+  const { sensorName, onClick } = props;
 
   /**
    * Toggles the device state by calling the corresponding server-api function.
    */
   async function toggle() {
+    if (onClick) {
+      setSelected(true);
+      onClick().then(() => {
+        setSelected(false);
+      });
+      return;
+    }
     try {
       await sensorApi(sensorName)(!selected); // Call the dynamic function from server-api.js
     } catch (error) {

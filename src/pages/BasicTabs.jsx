@@ -1,4 +1,6 @@
-import {React, useEffect, useState} from 'react';
+import {React, useEffect, useState, useContext} from 'react';
+
+import { MyContext } from '../App.js';
 
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
@@ -53,20 +55,26 @@ function a11yProps(index) {
   };
 }
 
+
 export default function BasicTabs(props) {
   const [batch, setBatch] = useState({});
   const [value, setValue] = useState(0);
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
   const [brewname, setBrewname] = useState([]);
-  
+  const { inProgress, setInProgress } = useContext(MyContext);
+ 
   useEffect(() => {
-    getBatch().then(batch => {
-      setBrewname(batch.name);
-      setBatch(batch);
-    },handleError);
+    getBatch().then(
+      batch => {
+        setBrewname(batch.name);
+        setBatch(batch);
+        if (setInProgress) setInProgress(batch.name);
+      },
+      handleError
+    );
     return () => {};
-  }, [props.fetchBatch]);
+  }, [props.fetchBatch, setInProgress]);
 
   const handleChange = (event, newValue) => setValue(newValue);
   const handleError = (error) => {
