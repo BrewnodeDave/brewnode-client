@@ -45,11 +45,19 @@ export default function MyAppBar({ actionButton }) {
         <Toolbar sx={{ minHeight: { xs: '8vh', sm: '10vh', md: '12vh' } }}>
           <PowerMenu/>
 
-          <Typography component="div" sx={{ fontSize: { xs: '6vh', sm: '8vh', md: '6vh' } }}>
+          <Typography 
+            component="div" 
+            sx={{ 
+              fontSize: { xs: '6vh', sm: '8vh', md: '6vh' }
+            }}
+          >
             {time}
           </Typography>
 
-          <Typography component="div" sx={{ fontSize: { xs: '6vh', sm: '8vh', md: '8vh' }, flexGrow: 2 }}>
+          <Typography component="div" sx={{               
+            fontWeight: 'bold',
+            color: 'black', 
+            fontSize: { xs: '6vh', sm: '6vh', md: '6vh' }, flexGrow: 2 }}>
             {inProgress}
           </Typography>
           
