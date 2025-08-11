@@ -52,10 +52,17 @@ function KettleTemp() {
       <Slider
         color="secondary"
         aria-label="Kettle Temperature"
-        style={{ width: '100%' }}
         defaultValue={defaultKettle.temp}
         valueLabelDisplay="on"
-        disabled={inProgress !== ''}
+        sx={{
+          marginTop: 5,
+          marginLeft: 1,
+          width: "95%",
+          '& .MuiSlider-track': { height: 30 },
+          '& .MuiSlider-rail': { height: 10 },
+          '& .MuiSlider-markLabel': { fontSize: '1.5rem' }, // Increased label size
+        }}
+        disabled={typeof inProgress === 'number'}
         onChange={v => setTemp(v.target.value)}
         marks={tempMarks}
         getAriaValueText={valuetext}
@@ -67,12 +74,19 @@ function KettleTemp() {
       <Slider
         color="secondary"
         aria-label="Kettle Minutes"
-        style={{ width: '100%' }}
+        sx={{
+          marginLeft: 1,
+          marginTop: 7,
+          width: "95%",
+          '& .MuiSlider-track': { height: 30 },
+          '& .MuiSlider-rail': { height: 10 },
+          '& .MuiSlider-markLabel': { fontSize: '1.5rem' }, // Increased label size
+        }}
         defaultValue={defaultKettle.mins}
         valueLabelDisplay="on"
         onChange={v => setMins(v.target.value)}
         marks={minMarks}
-        disabled={inProgress !== ''}
+        disabled={typeof inProgress === 'number'}
         step={1}
         min={0}
         max={60}
@@ -80,6 +94,9 @@ function KettleTemp() {
       />
       <Box>
         <Toggle 
+          size="12vh" 
+          width="100%"
+          height="100%" 
           displayName="Kettle"
           disabled={inProgress!==''}
           onClick={async () => {

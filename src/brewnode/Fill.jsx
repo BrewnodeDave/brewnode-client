@@ -21,8 +21,8 @@ function Fill() {
   const defaults = {litres:19}
   const [litres, setLitres] = useState(defaults.litres);
 
-  addSocketListener('remainingFillLitres', ({value}) => {
-    setLitres(value);
+  addSocketListener('remainingFillLitres', (x) => {
+    setLitres(x);
   });
 
   /**
@@ -52,9 +52,16 @@ function Fill() {
     >
       <Slider    
         color="secondary"                                                                                                             
-        style={{ width: "100%" }}           
         defaultValue={defaults.litres}
-        disabled={inProgress!==''}
+        sx={{ 
+          marginTop: 5,
+          marginLeft: 1,
+          width: "95%",
+          '& .MuiSlider-track': { height: 30 }, 
+          '& .MuiSlider-rail': { height: 10 },
+          '& .MuiSlider-markLabel': { fontSize: '1.5rem' } // Increase label size
+        }}
+        disabled={typeof inProgress === 'number'}
         valueLabelDisplay="on"
         onChange={v=>setLitres(v.target.value)}
         step={1}
@@ -63,11 +70,13 @@ function Fill() {
         value={litres}
       />
       <Box>
-         <Toggle 
+         <Toggle
+          width="100%"
+          height="100%" 
           displayName="Fill"
-          disabled={inProgress!==''}
-          onClick={() => {
-            fill(litres);
+          disabled={typeof inProgress === 'number'}
+          onClick={async () => {
+            await fill(litres);
           }}/>
       </Box>
     </Box>

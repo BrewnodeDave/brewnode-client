@@ -11,6 +11,7 @@ import {addSocketListener} from './socketListener.js';
 
 const tempMarks = [
   {value: 0, label: '0°C'},
+  {value: 5, label: '5°C'},
   {value: 10,label: '10°C'},
   {value: 15,label: '15°C'},
   {value: 20,label: '20°C'},
@@ -51,10 +52,17 @@ function Ferment() {
       <Slider
         color="secondary"
         aria-label="Always visible"
-        style={{ width: "100%" }}
+        sx={{
+          marginLeft: 1,
+          marginTop: 5,
+          width: "95%",
+          '& .MuiSlider-track': { height: 30 },
+          '& .MuiSlider-rail': { height: 10 },
+          '& .MuiSlider-markLabel': { fontSize: '1.5rem' } // Increase label size
+        }}
         defaultValue={defaults?.stepTemp}
         valueLabelDisplay="on"
-        disabled={inProgress!==''}
+        disabled={typeof inProgress === 'number'}
         onChange={v=>setTemp(v.target.value)}
         marks={tempMarks}
         step={1}
@@ -62,14 +70,21 @@ function Ferment() {
         max={30}
       />
       <Slider
-        color="secondary"
+        color="secondary" 
         aria-label="Always visible"
-        style={{ width: "100%" }}
+        sx={{
+          marginLeft: 1,
+          marginTop: 7,
+          width: "95%",
+          '& .MuiSlider-track': { height: 30 },
+          '& .MuiSlider-rail': { height: 10 },
+          '& .MuiSlider-markLabel': { fontSize: '1.5rem' } // Increase label size
+        }}
         defaultValue={defaults.stepTime}
         valueLabelDisplay="on"
         onChange={v=>setTime(v.target.value)}
         marks={dayMarks}
-        disabled={inProgress!==''}
+        disabled={typeof inProgress === 'number'}
         step={1}
         min={0}
         max={15}
@@ -77,10 +92,12 @@ function Ferment() {
       />
       <Box>
         <Toggle 
+          width="100%"
+          height="100%" 
           displayName="Ferment"
           disabled={inProgress!==''}
-          onClick={() => {
-            ferment(stepTemp, stepTime);
+          onClick={async () => {
+            await ferment(stepTemp, stepTime);
           }}/>
       </Box>
     </Box>

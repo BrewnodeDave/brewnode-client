@@ -47,25 +47,32 @@ function Boil() {
     >
       <Slider
         size="medium"
-        style={{ width: "100%" }}
         color="secondary"
+        sx={{
+          marginTop: 5,
+          marginLeft: 1,
+          width: "90%",
+          '& .MuiSlider-track': { height: 30 },
+          '& .MuiSlider-rail': { height: 10 },
+          '& .MuiSlider-markLabel': { fontSize: '1.5rem' } // Increase label size
+        }}
         valueLabelDisplay="on"
         aria-label="Boil Minutes"
         defaultValue={defaults.mins}
         step={5}
         marks={marks}
-        disabled={inProgress !== ''}
+        disabled={typeof inProgress === 'number'}
         onChange={v => setMins(v.target.value)}
         max={90}
         value={mins}
       />
       <Box>
-
         <Toggle 
+          width="100%"
+          height="100%" 
           displayName="Boil"
           disabled={inProgress!==''}
-          onClick={() => boil(mins)}/>
-      
+          onClick={async () => await boil(mins)}/>
       </Box>
     </Box>
   );
