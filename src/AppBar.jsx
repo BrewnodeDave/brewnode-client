@@ -56,7 +56,8 @@ export default function MyAppBar({ actionButton }) {
 
           <Typography component="div" sx={{               
             fontWeight: 'bold',
-            color: 'black', 
+            color: 'white',
+            marginLeft: '5vw', 
             fontSize: { xs: '6vh', sm: '6vh', md: '6vh' }, flexGrow: 2 }}>
             {inProgress}
           </Typography>
