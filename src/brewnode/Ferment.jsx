@@ -43,7 +43,7 @@ function Ferment() {
       sx={{
         border: 2,
         padding: 2,
-        height: '100%',
+        height: '37vh',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between'
@@ -74,7 +74,8 @@ function Ferment() {
         aria-label="Always visible"
         sx={{
           marginLeft: 1,
-          marginTop: 7,
+          marginTop: 5,
+          marginBottom: 5,
           width: "95%",
           '& .MuiSlider-track': { height: 30 },
           '& .MuiSlider-rail': { height: 10 },
@@ -91,9 +92,10 @@ function Ferment() {
         value={stepTime}
       />
       <Box>
-        <Toggle 
+        <Toggle
+          borderRadius="0%"
           width="100%"
-          height="100%" 
+          height="60%"
           displayName="Ferment"
           disabled={inProgress!==''}
           onClick={async () => {

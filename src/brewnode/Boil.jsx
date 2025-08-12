@@ -38,9 +38,6 @@ function Boil() {
     <Box
       sx={{
         border: 2,
-        padding: 2,
-        height: '100%',
-        display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between'
       }}
@@ -49,9 +46,10 @@ function Boil() {
         size="medium"
         color="secondary"
         sx={{
+          marginBottom: 5,
           marginTop: 5,
-          marginLeft: 1,
-          width: "90%",
+          marginLeft: 5,
+          width: "85%",
           '& .MuiSlider-track': { height: 30 },
           '& .MuiSlider-rail': { height: 10 },
           '& .MuiSlider-markLabel': { fontSize: '1.5rem' } // Increase label size
@@ -67,9 +65,10 @@ function Boil() {
         value={mins}
       />
       <Box>
-        <Toggle 
-          width="100%"
-          height="100%" 
+        <Toggle
+          borderRadius="0%"
+          width="95%"
+          height="60%" 
           displayName="Boil"
           disabled={inProgress!==''}
           onClick={async () => await boil(mins)}/>

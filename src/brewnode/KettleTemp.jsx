@@ -43,7 +43,7 @@ function KettleTemp() {
       sx={{
         border: 2,
         padding: 2,
-        height: '100%',
+        height: '37vh',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -76,7 +76,8 @@ function KettleTemp() {
         aria-label="Kettle Minutes"
         sx={{
           marginLeft: 1,
-          marginTop: 7,
+          marginBottom: 5,
+          marginTop: 5,
           width: "95%",
           '& .MuiSlider-track': { height: 30 },
           '& .MuiSlider-rail': { height: 10 },
@@ -95,8 +96,9 @@ function KettleTemp() {
       <Box>
         <Toggle 
           size="12vh" 
-          width="100%"
-          height="100%" 
+          borderRadius="0%" 
+          width="98%"
+          height="60%" 
           displayName="Kettle"
           disabled={inProgress!==''}
           onClick={async () => {

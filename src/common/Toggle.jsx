@@ -111,7 +111,7 @@ function Toggle(props) {
           <ToggleButton
             style={{
               margin: "10px",
-              borderRadius: "50%", // Circular button.
+              borderRadius: props.borderRadius ? props.borderRadius : "50%", // Circular button.
               border: selected ? "5px solid red" : "5px solid blue",
               backgroundColor: selected ? "#080808" : "#484848",
               color: "#FFFFFF",

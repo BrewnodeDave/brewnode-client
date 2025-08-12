@@ -43,9 +43,6 @@ function Fill() {
     <Box
       sx={{
         border: 2,
-        padding: 2,
-        height: '100%',
-        display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between'
       }}
@@ -55,8 +52,9 @@ function Fill() {
         defaultValue={defaults.litres}
         sx={{ 
           marginTop: 5,
-          marginLeft: 1,
-          width: "95%",
+          marginBottom: 5,
+          marginLeft: 3,
+          width: "90%",
           '& .MuiSlider-track': { height: 30 }, 
           '& .MuiSlider-rail': { height: 10 },
           '& .MuiSlider-markLabel': { fontSize: '1.5rem' } // Increase label size
@@ -71,8 +69,9 @@ function Fill() {
       />
       <Box>
          <Toggle
-          width="100%"
-          height="100%" 
+          borderRadius="0%"
+          width="96%"
+          height="60%" 
           displayName="Fill"
           disabled={typeof inProgress === 'number'}
           onClick={async () => {
