@@ -45,21 +45,21 @@ function AutoFerment(props) {
   const step2string = ({stepTemp, stepTime, ramp}) => `${ramp ? `(ramp ${ramp}d)` : ""} ${stepTemp}°C for ${stepTime}d`;
 
   useEffect(() => {
-    const steps = props.recipe?.fermentation?.steps 
+    const recipeSteps = props.recipe?.fermentation?.steps 
       ? Object.entries(props.recipe.fermentation.steps).map(step => step[1]) 
       : [];
     
-    let xxxx = [];  
+    let steps = [];  
     
-    const prevStepTemp = steps.length===1 ? 19  : steps[0]?.stepTemp;
-    steps.reduce((prev, curr) => {
+    const prevStepTemp = recipeSteps.length===1 ? 19  : recipeSteps[0]?.stepTemp;
+    recipeSteps.reduce((prev, curr) => {
       const rampedSteps = fermentStep(prev?.stepTemp, curr);
-      xxxx = xxxx.concat(rampedSteps);
+      steps = steps.concat(rampedSteps);
       return rampedSteps[rampedSteps.length-1];
-    }, steps[0] ? {stepTemp: prevStepTemp} : [] );
+    }, recipeSteps[0] ? {stepTemp: prevStepTemp} : [] );
 
 
-    setMySteps(xxxx);
+    setMySteps(steps);
   },[props.recipe]);
 
   async function ferment() {
@@ -87,25 +87,52 @@ function AutoFerment(props) {
         boxSizing: 'border-box',
       }}
     >
-      <Box sx={{ flex: 1, overflowY: 'auto' }}>
-        <Table>
-          <TableHead>
-          </TableHead>
-          <TableBody>
-            {props.recipe?.fermentation?.steps.map((step, i) => (
-              <TableRow key={i}>
-                <TableCell sx={{"fontSize":"2vw"}}>{step.name}</TableCell>
-                <TableCell sx={{"fontSize":"2vw"}}>{step2string(step)}</TableCell>
+      <Box sx={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+        <Table
+          sx={{
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 0, // Remove spacing between cells
+            width: '100%',
+            tableLayout: 'fixed',
+            borderSpacing: 0,
+            border: 0,
+            borderCollapse: 'separate',
+            '& .MuiTableCell-root': { borderBottom: 'none' }, // Remove row separators
+          }}
+        >
+          <TableHead />
+          <TableBody
+            sx={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            {props.recipe?.fermentation?.steps.map((step, i, arr) => (
+              <TableRow
+                key={i}
+                sx={{
+                  flex: 1,
+                  display: 'flex',
+                  alignItems: 'center',
+                  minHeight: 0,
+                  '& td': { fontSize: '1.2rem', borderBottom: 'none' }, // Remove row separators
+                }}
+              >
+                <TableCell sx={{flex: 1 }}>{step.name}</TableCell>
+                <TableCell sx={{ flex: 2 }}>{step2string(step)}</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
 
-         <Toggle 
+        <Toggle
           displayName="Ferment"
-          disabled={inProgress!==''}
-          onClick={ferment}/>
-
+          disabled={inProgress !== ''}
+          onClick={ferment}
+        />
       </Box>
     </Box>
   );

@@ -38,31 +38,42 @@ function AutoMash(props) {
     }
 
     return (
-      <Box sx={{
-        height: '100%',
-        border: 2,
-        padding: 2,
-        display: 'flex',
-        flexDirection: 'column',
-        boxSizing: 'border-box',
-      }}>
-        <Table>
-          <TableHead>
-          </TableHead>
+      <Box
+        sx={{
+          height: '100%',
+          border: 2,
+          padding: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          boxSizing: 'border-box',
+        }}
+      >
+        <Table sx={{ flex: 1, height: '100%' }}>
+          <TableHead></TableHead>
           <TableBody>
-            { steps.map(step => 
-            <TableRow >
-              <TableCell sx={{"fontSize":"4vh"}}>{step.name}</TableCell>
-              <TableCell sx={{"fontSize":"4vh"}}>{step2string(step)}</TableCell>
-            </TableRow>        
-            )}
-          </TableBody > 
+            {steps.map((step, i) => (
+              <TableRow
+                key={i}
+                sx={{
+                  flex: 1,
+                  display: 'flex',
+                  alignItems: 'center',
+                  minHeight: 0,
+                  '& td': { fontSize: '1.5rem', borderBottom: 'none' }, // Remove row separators
+                }}
+              >
+                <TableCell >{step.name}</TableCell>
+                <TableCell >{step2string(step)}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
         </Table>
-        <Toggle 
+        <Toggle
           displayName="Mash"
-          disabled={inProgress!==''}
-          onClick={mash}/>
-        </Box>
+          disabled={inProgress !== ''}
+          onClick={mash}
+        />
+      </Box>
     );
 }
 
