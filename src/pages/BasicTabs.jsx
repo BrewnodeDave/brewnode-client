@@ -63,7 +63,6 @@ export default function BasicTabs(props) {
   const [open, setOpen] = useState(false);
   const [brewname, setBrewname] = useState([]);
   const { setInProgress } = useContext(MyContext);
- 
   useEffect(() => {
     getBatch().then(
       batch => {
