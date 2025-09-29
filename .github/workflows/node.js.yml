@@ -8,6 +8,8 @@ on:
     branches: [ "develop" ]
   pull_request:
     branches: [ "develop" ]
+  workflow_dispatch:  # <-- This enables the manual "Run workflow" button
+
 
 jobs:
   build:
