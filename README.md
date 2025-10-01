@@ -1,17 +1,73 @@
-# Autostart
-## Install http-server globally
+# 🍺 BrewNode Client
+
+A comprehensive React-based web application for controlling and monitoring automated brewing processes. This client provides a modern, responsive user interface for the BrewNode brewing automation system.
+
+## 🚀 Features
+
+- **Real-time Brewing Control** - Complete brewing process automation and monitoring
+- **Temperature Management** - Multi-sensor temperature monitoring with PID control
+- **Process Automation** - Recipe-driven automated brewing sequences
+- **Data Visualization** - Real-time charts and historical data trending
+- **Brewfather Integration** - External recipe and batch management system
+- **Mobile-Responsive Design** - Works seamlessly on desktop, tablet, and mobile devices
+- **Real-time Communication** - Live updates via Socket.IO connection
+
+## 🛠️ Technology Stack
+
+- **React 18.2.0** - Modern React with Hooks and Context API
+- **Material-UI v5** - Comprehensive React component library
+- **Socket.IO Client** - Real-time bidirectional communication
+- **React Router v6.28.0** - Client-side routing and navigation
+- **Chart.js & Highcharts** - Advanced data visualization
+- **Axios** - HTTP client for API communication
+- **Jest & React Testing Library** - Comprehensive testing framework
+
+## 📚 Documentation
+
+- **[📄 Complete File Documentation](FILE_DOCUMENTATION.md)** - Comprehensive overview of all files, components, and functionality
+- **[🧪 GUI Testing Guide](GUI_TESTING.md)** - Complete testing documentation and strategies
+- **[🔧 Create React App Docs](#getting-started-with-create-react-app)** - Standard Create React App documentation
+
+## 🏃‍♂️ Quick Start
+
+### Development Mode
+```bash
+npm install
+npm start
+```
+Open [http://localhost:3000](http://localhost:3000) to view the application.
+
+### Production Build
+```bash
+npm run build
+npm install -g serve
+serve -s build
+```
+
+### Testing
+```bash
+npm test              # Interactive test runner
+npm run test:coverage # Generate coverage report
+```
+
+## 🚀 Deployment & Autostart
+
+### Install http-server globally
+```bash
 npm i http-server -g
+```
 
-Start Client automatically by adding
-`/home/dave/.nvm/versions/node/v20.18.3/bin/http-server -p 3000 /home/dave/git/brewnode-client/build &` 
-to
-`/etc/rc.local`
+### Autostart Client
+Add to `/etc/rc.local`:
+```bash
+/home/dave/.nvm/versions/node/v20.18.3/bin/http-server -p 3000 /home/dave/git/brewnode-client/build &
+```
 
-Load Chromium full screen on load by adding
-`@chromium-browser --kiosk http://localhost:3000/` 
-to
-`~/.config/lxsession/LXDE-pi/autostart`
-
+### Autostart Kiosk Mode
+Add to `~/.config/lxsession/LXDE-pi/autostart`:
+```bash
+@chromium-browser --kiosk http://localhost:3000/
+```
 
 # Getting Started with Create React App
 
@@ -60,37 +116,12 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## 🔧 Project Maintenance
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-## Project Maintenance
+### Recent Updates (October 2025)
+- ✅ **Complete File Documentation** - Added comprehensive `FILE_DOCUMENTATION.md` covering all 100+ files
+- ✅ **Enhanced README** - Improved project overview and documentation structure
+- ✅ **Documentation Organization** - Clear documentation index with technical specifications
 
 ### Recent Cleanup (September 2025)
 - ✅ Removed unused backup and duplicate test files
@@ -99,3 +130,10 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 - ✅ Cleaned up unused React components
 - ✅ All tests passing: 47/47 ✓
 - ✅ React Router future flag warnings suppressed
+
+### Project Statistics
+- **Total Files:** ~100+ files documented
+- **Lines of Code:** ~10,000+ lines
+- **Test Coverage:** 47+ comprehensive tests
+- **Components:** 30+ React components
+- **Architecture:** Modern React SPA with real-time integration
