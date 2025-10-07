@@ -261,7 +261,7 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 ### Project Statistics
 - **Total Files:** ~100+ files documented
 - **Lines of Code:** ~10,000+ lines
-- **Test Coverage:** 205 comprehensive tests (435% increase from original 47)
+ - **Test Coverage:** 205 comprehensive tests (435% increase from original 47)
 - **Components:** 30+ React components
 - **Architecture:** Modern React SPA with real-time integration
 - **Quality Assurance:** Detailed coverage metrics for all core components
