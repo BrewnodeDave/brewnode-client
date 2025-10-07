@@ -11,16 +11,30 @@ function AutoFill(props) {
   const {inProgress, setInProgress} = useContext(MyContext);
   
   useEffect(() => {
+    // Debug: Log props on component mount
+    console.log('AutoFill props:', props);
+    console.log('Strike litres:', props.strikeLitres);
     return () => {}; 
-  }, []);
+  }, [props]);
 
   async function fill() {
+    console.log('AutoFill: Starting fill with', props.strikeLitres, 'litres');
+    
+    // Validation: Check if strikeLitres is valid
+    if (!props.strikeLitres || props.strikeLitres <= 0) {
+      const errorMsg = 'Invalid strike litres value: ' + props.strikeLitres;
+      console.error(errorMsg);
+      setInProgress(errorMsg);
+      return;
+    }
+
     try {
       const response = await server.fill(props.strikeLitres);
+      console.log('AutoFill: Fill response:', response);
       return response.data;
     } catch (error) {
-      setInProgress(error);   
-      console.error(error);
+      console.error('AutoFill: Fill error:', error);
+      setInProgress(error.toString());   
       return error;    
     } 
 

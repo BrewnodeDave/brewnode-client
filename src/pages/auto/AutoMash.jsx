@@ -28,7 +28,7 @@ function AutoMash(props) {
         try {
             setInProgress(`Mashing ...`);   
 
-            const response = server.mash(mySteps);
+            const response = await server.mash(mySteps);
             setInProgress('');   
         
             return response.data;
