@@ -13,14 +13,20 @@ import AutoMash from './auto/AutoMash';
 import Process from './auto/Process';
 
 function AutomaticTab(props) {  
+  console.log('AutomaticTab props:', props);
 
   let strikeLitres = 0;
   let strikeTemp = 0;
   const recipe = props?.batch;
+  
+  console.log('AutomaticTab recipe:', recipe);
+  
   if (recipe?.data !== undefined) {
     strikeLitres = recipe?.data?.mashWaterAmount;
     strikeTemp = recipe?.data?.strikeTemp;
   }
+  
+  console.log('AutomaticTab calculated values:', { strikeLitres, strikeTemp });
 
   return (
           <Grid container  xs={12}>
