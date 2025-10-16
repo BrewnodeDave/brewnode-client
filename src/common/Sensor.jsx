@@ -17,13 +17,17 @@ function Sensor(props) {
   useEffect(() => {
     //get current status on load
     async function fetchData() {
-        const status = await sensorStatus(name);
-        if (status.error) {
-            console.error(status.error);  
-        }else{
-            if (status !== undefined) {
-                setValue(status);
+        try {
+            const status = await sensorStatus(name);
+            if (status && status.error) {
+                console.error(status.error);  
+            }else{
+                if (status !== undefined) {
+                    setValue(status);
+                }
             }
+        } catch (error) {
+            console.error('Failed to fetch sensor status:', error);
         }
     }
     
