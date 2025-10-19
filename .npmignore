@@ -1,0 +1,41 @@
+# Development files
+.git/
+.gitignore
+node_modules/
+coverage/
+*.log
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Development tools
+.eslintrc*
+.prettierrc*
+.vscode/
+.idea/
+
+# Test files (keeping for reference but not in npm package)
+src/tests/
+*.test.js
+*.spec.js
+jest.config.js
+
+# Build artifacts (development only)
+.nyc_output/
+coverage/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Keep these documentation files for npm
+!README.md
+!FILE_DOCUMENTATION.md
+!GUI_TESTING.md

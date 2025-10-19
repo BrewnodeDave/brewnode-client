@@ -1,8 +1,9 @@
 {
-  "name": "brewnode-frontend",
+  "name": "@brewnode/client",
   "version": "1.0.0",
-  "private": true,
-  "homepage": "/",
+  "description": "Comprehensive React-based web application for controlling and monitoring automated brewing processes with BrewNode hardware integration",
+  "main": "build/index.html",
+  "homepage": "https://github.com/BrewnodeDave/brewnode-client#readme",
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
@@ -38,12 +39,61 @@
     "resize-observer-polyfill": "^1.5.1"
   },
   "scripts": {
+    "prestart": "npm install",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --passWithNoTests",
     "test:coverage": "react-scripts test --coverage --watchAll=false --passWithNoTests",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prepare": "npm run build && npm test -- --watchAll=false",
+    "docs": "echo 'Documentation available at https://github.com/BrewnodeDave/brewnode-client#readme'"
   },
+  "keywords": [
+    "brewery",
+    "automation",
+    "brewing",
+    "react",
+    "frontend",
+    "brewnode",
+    "web-app",
+    "brewery-control",
+    "beer",
+    "brewfather",
+    "brewing-software",
+    "material-ui",
+    "socket.io",
+    "real-time",
+    "temperature-monitoring",
+    "brewing-interface",
+    "responsive-design",
+    "spa"
+  ],
+  "author": {
+    "name": "Dave Leitch",
+    "email": "dave@brewnode.com",
+    "url": "https://github.com/BrewnodeDave"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BrewnodeDave/brewnode-client.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BrewnodeDave/brewnode-client/issues"
+  },
+  "license": "Beerware",
+  "engines": {
+    "node": ">=18.20.5",
+    "npm": ">=8.0.0"
+  },
+  "files": [
+    "build/",
+    "public/",
+    "src/",
+    "README.md",
+    "FILE_DOCUMENTATION.md",
+    "GUI_TESTING.md",
+    "package.json"
+  ],
   "eslintConfig": {
     "extends": [
       "react-app",
