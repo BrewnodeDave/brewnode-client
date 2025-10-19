@@ -17,17 +17,45 @@ try {
   if (fs.existsSync(puppeteerPath)) {
     console.log('✓ Puppeteer found');
     
-    // For ARM systems, provide additional guidance
+    // For ARM systems, provide additional guidance and check for browsers
     if (process.arch === 'arm64' || process.arch === 'arm') {
       console.log('🔧 ARM architecture detected');
-      console.log('   If E2E tests fail, consider installing system Chrome/Chromium:');
+      console.log('   Puppeteer bundled Chrome is x64-only and will not work on ARM');
+      console.log('   Checking for system browsers...');
       
-      if (process.platform === 'linux') {
-        console.log('   Ubuntu/Debian: sudo apt-get install chromium-browser');
-        console.log('   Fedora/RHEL: sudo dnf install chromium');
-        console.log('   Arch: sudo pacman -S chromium');
-      } else if (process.platform === 'darwin') {
-        console.log('   macOS: brew install chromium');
+      const possibleBrowsers = [
+        '/usr/bin/chromium-browser',
+        '/usr/bin/chromium',
+        '/usr/bin/google-chrome-stable',
+        '/usr/bin/google-chrome'
+      ];
+      
+      let foundSystemBrowser = false;
+      possibleBrowsers.forEach(browserPath => {
+        try {
+          if (fs.existsSync(browserPath)) {
+            console.log(`   ✓ Found: ${browserPath}`);
+            foundSystemBrowser = true;
+          }
+        } catch (error) {
+          // Continue checking
+        }
+      });
+      
+      if (!foundSystemBrowser) {
+        console.log('   ⚠ No system browsers found');
+        console.log('   E2E tests will be skipped unless you install a browser:');
+        
+        if (process.platform === 'linux') {
+          console.log('   Ubuntu/Debian: sudo apt-get install chromium-browser');
+          console.log('   Raspberry Pi OS: sudo apt-get install chromium-browser');
+          console.log('   Fedora/RHEL: sudo dnf install chromium');
+          console.log('   Arch: sudo pacman -S chromium');
+        } else if (process.platform === 'darwin') {
+          console.log('   macOS: brew install chromium');
+        }
+      } else {
+        console.log('   ✓ System browser available for E2E tests');
       }
     }
     

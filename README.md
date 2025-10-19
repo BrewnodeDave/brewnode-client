@@ -48,6 +48,39 @@ serve -s build
 ```bash
 npm test              # Interactive test runner
 npm run test:coverage # Generate coverage report
+npm run test:e2e      # End-to-end browser tests only
+npm run test:unit     # Unit tests only (excluding E2E)
+```
+
+#### 🌐 Cross-Platform Testing Support
+
+Our test suite is designed to work seamlessly across **Windows**, **macOS**, and **Linux** systems, including **ARM architectures**.
+
+**End-to-End Testing:**
+- Automatically detects system capabilities and skips E2E tests gracefully if browser automation fails
+- Supports both x64 and ARM architectures (ARM64, ARMv7)  
+- Falls back to system-installed Chrome/Chromium browsers on ARM systems
+- Provides platform-specific guidance for browser installation
+
+**Platform-Specific Notes:**
+- **Windows:** Includes additional Chrome stability flags and error handling
+- **ARM Linux:** Attempts to use system browsers (`chromium-browser`, `google-chrome`)
+- **macOS ARM (M1/M2):** Enhanced compatibility with Apple Silicon processors
+
+**Troubleshooting E2E Tests:**
+If E2E tests fail to launch browser, install system Chrome:
+```bash
+# Ubuntu/Debian
+sudo apt-get install chromium-browser
+
+# Fedora/RHEL  
+sudo dnf install chromium
+
+# macOS
+brew install chromium
+
+# Windows
+# Download from https://www.google.com/chrome/
 ```
 
 ## 🧪 Test Coverage

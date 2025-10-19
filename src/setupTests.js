@@ -48,6 +48,40 @@ window.location = {
 // Set up ResizeObserver polyfill for tests
 global.ResizeObserver = ResizeObserver;
 
+// Mock performance.mark for compatibility across different Node.js versions
+if (typeof performance === 'undefined') {
+  global.performance = {
+    mark: jest.fn(),
+    measure: jest.fn(),
+    now: jest.fn(() => Date.now()),
+    getEntriesByName: jest.fn(() => []),
+    getEntriesByType: jest.fn(() => [])
+  };
+} else if (!performance.mark) {
+  performance.mark = jest.fn();
+  performance.measure = jest.fn();
+}
+
+// Mock crypto for environments that don't have it
+if (typeof crypto === 'undefined') {
+  global.crypto = {
+    getRandomValues: jest.fn((arr) => {
+      for (let i = 0; i < arr.length; i++) {
+        arr[i] = Math.floor(Math.random() * 256);
+      }
+      return arr;
+    }),
+    randomUUID: jest.fn(() => 'test-uuid-' + Math.random().toString(36).substr(2, 9))
+  };
+}
+
+// Ensure TextEncoder/TextDecoder are available (needed for some tests)
+if (typeof TextEncoder === 'undefined') {
+  const { TextEncoder, TextDecoder } = require('util');
+  global.TextEncoder = TextEncoder;
+  global.TextDecoder = TextDecoder;
+}
+
 // Mock IntersectionObserver
 global.IntersectionObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),

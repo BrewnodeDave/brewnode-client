@@ -44,9 +44,12 @@
     "build": "react-scripts build",
     "test": "react-scripts test --passWithNoTests",
     "test:coverage": "react-scripts test --coverage --watchAll=false --passWithNoTests",
+    "test:e2e": "npm test -- --testPathPattern=e2e.test.js --watchAll=false",
+    "test:unit": "npm test -- --testPathIgnorePatterns=e2e.test.js --watchAll=false",
     "eject": "react-scripts eject",
     "prepare": "npm run build && npm test -- --watchAll=false",
-    "docs": "echo 'Documentation available at https://github.com/BrewnodeDave/brewnode-client#readme'"
+    "docs": "echo 'Documentation available at https://github.com/BrewnodeDave/brewnode-client#readme'",
+    "postinstall": "node scripts/postinstall.js || scripts/postinstall.bat || echo 'Postinstall script failed, continuing...'"
   },
   "keywords": [
     "brewery",
