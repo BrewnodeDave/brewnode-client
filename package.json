@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Comprehensive React-based web application for controlling and monitoring automated brewing processes with BrewNode hardware integration",
   "main": "build/index.html",
-  "homepage": "https://github.com/BrewnodeDave/brewnode-client#readme",
+  "homepage": ".",
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
