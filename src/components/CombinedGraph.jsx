@@ -28,6 +28,32 @@ const CombinedGraph = memo((props) => {
 
   const inView = useRef([]);
 
+  const ms = useCallback((timestamp) => new Date(timestamp).getTime(), []);
+
+  const calcKWHr = useCallback(() => {
+    let totalE = 0;
+    const shownSeries = inView.current.filter((s) => shownNames.current.has(s.name));
+
+    shownSeries.reduce((prevSeries, currSeries) => {
+      return currSeries.data.reduce(
+        ([prevTimestamp, prevValue], [currTimestamp, currValue]) => {
+          const prevms = new Date(prevTimestamp).getTime();
+          const currms = new Date(currTimestamp).getTime();
+
+          const deltaSecs = (currms - prevms) / 1000;
+          totalE += prevValue * deltaSecs;
+          return [currTimestamp, currValue];
+        },
+        currSeries.data[0]
+      );
+    }, inView.current[0]);
+
+    const KWHr = totalE / 1000 / (60 * 60);
+    const POUNDS_PER_KWHR = 0.2392;
+
+    setChartSubtitle(`Total energy consumption: ${KWHr.toFixed(2)} KWhr (£${(KWHr * POUNDS_PER_KWHR).toFixed(2)})`);
+  }, [setChartSubtitle]);
+
   const setExtremes = useCallback((event) => {
     const start = event.min === undefined ? 0 : event.min;
     const end = event.min === undefined ? Number.MAX_SAFE_INTEGER : event.max;
@@ -47,7 +73,7 @@ const CombinedGraph = memo((props) => {
     inView.current = JSON.parse(localStorage.getItem('series')).map(filteredPoints);
     calcKWHr();
 
-  }, []);
+  }, [calcKWHr, ms]);
 
   const [chartOptions, setChartOptions] = useState({
     chart: {
@@ -160,7 +186,7 @@ const CombinedGraph = memo((props) => {
 
   useEffect(clearLocalStorage, []);
 
-  const fetchData = async (brew) => {
+  const fetchData = useCallback(async (brew) => {
     if (typeof brew !== 'string') return null;
 
     const addBasePowerSeries = (series) => {
@@ -276,38 +302,16 @@ const CombinedGraph = memo((props) => {
     } catch (error) {
       console.error(error);
     }
-  }
+  }, [calcKWHr, setExtremes, ms]);
 
   useEffect(() => {
     const fetch = async () => await fetchData(props.brewname);
     fetch();
-  }); // Empty dependency array ensures this runs only once
+  }, [props.brewname, fetchData]); // Only run when brewname or fetchData changes
 
-  function calcKWHr() {
-    let totalE = 0;
-    const shownSeries = inView.current.filter((s) => shownNames.current.has(s.name));
 
-    shownSeries.reduce((prevSeries, currSeries) => {
-      return currSeries.data.reduce(
-        ([prevTimestamp, prevValue], [currTimestamp, currValue]) => {
-          const prevms = new Date(prevTimestamp).getTime();
-          const currms = new Date(currTimestamp).getTime();
 
-          const deltaSecs = (currms - prevms) / 1000;
-          totalE += prevValue * deltaSecs;
-          return [currTimestamp, currValue];
-        },
-        currSeries.data[0]
-      );
-    }, inView.current[0]);
 
-    const KWHr = totalE / 1000 / (60 * 60);
-    const POUNDS_PER_KWHR = 0.2392;
-
-    setChartSubtitle(`Total energy consumption: ${KWHr.toFixed(2)} KWhr (£${(KWHr * POUNDS_PER_KWHR).toFixed(2)})`);
-  }
-
-  const ms = (timestamp) => new Date(timestamp).getTime();
 
   return (
     <div style={{ width: "100%", height: "100vh", display: "flex", flexDirection: "column" }}>

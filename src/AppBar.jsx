@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
 import PowerMenu from './brewnode/PowerMenu';
+import BrewNodeLogo from './components/BrewNodeLogo';
 
 import Sensor from './common/Sensor'; // Import the Sensor component
 
@@ -44,6 +45,15 @@ export default function MyAppBar({ actionButton }) {
       <AppBar position="static" sx={{ height: { xs: '8vh', sm: '10vh', md: '12vh' } }}>
         <Toolbar sx={{ minHeight: { xs: '8vh', sm: '10vh', md: '12vh' } }}>
           <PowerMenu/>
+
+          <div style={{ marginLeft: '2vw', marginRight: '2vw' }}>
+            <BrewNodeLogo 
+              width={48}
+              height={48}
+              showText={false}
+              color="#8bb34a"
+            />
+          </div>
 
           <Typography 
             component="div" 

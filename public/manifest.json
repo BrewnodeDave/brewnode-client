@@ -8,6 +8,11 @@
       "type": "image/x-icon"
     },
     {
+      "src": "brewnode-logo.png",
+      "type": "image/png",
+      "sizes": "any"
+    },
+    {
       "src": "logo192.png",
       "type": "image/png",
       "sizes": "192x192"
@@ -20,6 +25,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#FFD700",
+  "background_color": "#4CAF50"
 }
