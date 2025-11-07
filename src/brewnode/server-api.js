@@ -236,3 +236,12 @@ export async function streamLog() {
         return {error: error.message || error};
     }
 }
+
+export async function deleteLog() {
+    try {  
+        const response = await axios.delete(`http://${host}:${port}/logs`);
+        return response.data;
+    }catch(error){
+        return {error: error.message || error};
+    }
+}

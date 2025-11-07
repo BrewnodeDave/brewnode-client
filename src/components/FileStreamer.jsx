@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { streamLog } from '../brewnode/server-api';
+import { deleteLog, streamLog } from '../brewnode/server-api';
 const { addSocketListener, removeSocketListener } = require('../brewnode/socketListener');
 
 const FileStreamer = () => {
@@ -8,6 +8,7 @@ const FileStreamer = () => {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [debugInfo, setDebugInfo] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
   const [linesPerPage, setLinesPerPage] = useState(20);
   const [jumpToPage, setJumpToPage] = useState('');
   const [logFilter, setLogFilter] = useState({ info: true, warn: true, error: true, debug: true });
@@ -16,14 +17,14 @@ const FileStreamer = () => {
   // Helper function to extract log level from log entry
   const getLogLevel = (logLine) => {
     if (typeof logLine === 'string') {
-      const levelMatch = logLine.match(/\[(INFO|WARN|ERROR|DEBUG)\]/i);
+      const levelMatch = logLine.match(/\[(INFO|WARN|ERROR|CRITICAL)\]/i);
       if (levelMatch) {
         return levelMatch[1].toLowerCase();
       }
       // Check for common patterns without brackets
       if (logLine.toLowerCase().includes('error')) return 'error';
       if (logLine.toLowerCase().includes('warn')) return 'warn'; 
-      if (logLine.toLowerCase().includes('debug')) return 'debug';
+      if (logLine.toLowerCase().includes('critical')) return 'critical';
       return 'info'; // default to info
     }
     return 'info';
@@ -103,6 +104,27 @@ const FileStreamer = () => {
     });
 
     return formattedLine;
+  };
+
+  // Delete log file function
+  const deleteLogFile = async () => {
+    if (!window.confirm('Are you sure you want to delete the log file? This action cannot be undone.')) {
+      return;
+    }
+
+    setIsDeleting(true);
+    const response = await deleteLog();
+
+    if (response.error) {
+      console.error('Error deleting log file:', response.error);
+      alert(`Error deleting log file: ${response.error.message}`);
+    } else {
+      // Clear the current logs and reset pagination
+      setLines([]);
+      setCurrentPage(1);
+      alert('Log file deleted successfully!');
+    }
+    setIsDeleting(false);
   };
 
   // Filter logs based on selected log levels
@@ -185,7 +207,7 @@ const FileStreamer = () => {
             `${new Date().toISOString()} [INFO] Temperature sensor initialized: Mash`,
             `${new Date().toISOString()} [INFO] Temperature sensor initialized: Fermenter`,
             `${new Date().toISOString()} [INFO] Socket server listening on port 3001`,
-            `${new Date().toISOString()} [DEBUG] Client connected from 192.168.1.100`,
+            `${new Date().toISOString()} [CRITICAL] Client connected from 192.168.1.100`,
             `${new Date().toISOString()} [INFO] Starting mash process`,
             `${new Date().toISOString()} [INFO] Kettle temperature: 65.2°C`,
             `${new Date().toISOString()} [INFO] Mash temperature: 63.8°C`,
@@ -332,7 +354,7 @@ const FileStreamer = () => {
             `${new Date().toISOString()} [INFO] Temperature sensor initialized: Mash`,
             `${new Date().toISOString()} [INFO] Temperature sensor initialized: Fermenter`,
             `${new Date().toISOString()} [INFO] Socket server listening on port 3001`,
-            `${new Date().toISOString()} [DEBUG] Client connected from 192.168.1.100`,
+            `${new Date().toISOString()} [CRITICAL] Client connected from 192.168.1.100`,
             `${new Date().toISOString()} [INFO] Starting mash process`,
             `${new Date().toISOString()} [INFO] Kettle temperature: 65.2°C`,
             `${new Date().toISOString()} [INFO] Mash temperature: 63.8°C`,
@@ -468,9 +490,7 @@ const FileStreamer = () => {
         borderBottom: '1px solid #dee2e6',
         flexShrink: 0
       }}>
-        <div style={{ fontSize: '12px', color: '#666', flexGrow: 1 }}>
-          📋 <strong>Logs</strong> ({filteredLines.length}/{lines.length} lines) | Page {currentPage}/{totalPages}
-        </div>
+       
       </div>
 
       {/* Log Level Filter Controls - Prominent Row */}
@@ -499,17 +519,17 @@ const FileStreamer = () => {
             padding: '8px 16px',
             fontSize: '13px',
             fontWeight: '600',
-            border: '2px solid #28a745',
+            border: '2px solid #198754',
             borderRadius: '6px',
-            backgroundColor: logFilter.info ? '#28a745' : 'white',
-            color: logFilter.info ? 'white' : '#28a745',
+            backgroundColor: logFilter.info ? '#198754' : 'white',
+            color: logFilter.info ? 'white' : '#198754',
             cursor: 'pointer',
             transition: 'all 0.2s ease',
             minWidth: '70px'
           }}
           onMouseEnter={(e) => {
             if (!logFilter.info) {
-              e.target.style.backgroundColor = '#28a74520';
+              e.target.style.backgroundColor = '#19875420';
             }
           }}
           onMouseLeave={(e) => {
@@ -602,7 +622,38 @@ const FileStreamer = () => {
             }
           }}
         >
-          DEBUG
+          CRITICAL
+        </button>
+
+        {/* Delete Log Button */}
+        <button
+          onClick={deleteLogFile}
+          disabled={isDeleting}
+          style={{
+            padding: '8px 16px',
+            fontSize: '13px',
+            fontWeight: '600',
+            border: '2px solid #dc3545',
+            borderRadius: '6px',
+            backgroundColor: isDeleting ? '#ccc' : '#dc3545',
+            color: 'white',
+            cursor: isDeleting ? 'not-allowed' : 'pointer',
+            transition: 'all 0.2s ease',
+            minWidth: '100px',
+            marginLeft: '20px'
+          }}
+          onMouseEnter={(e) => {
+            if (!isDeleting) {
+              e.target.style.backgroundColor = '#c82333';
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (!isDeleting) {
+              e.target.style.backgroundColor = '#dc3545';
+            }
+          }}
+        >
+          {isDeleting ? '🗑️ Deleting...' : '🗑️ Delete Logs'}
         </button>
       </div>
 
@@ -636,46 +687,43 @@ const FileStreamer = () => {
         minHeight: '80px',
         boxSizing: 'border-box'
       }}>
-        {/* Enhanced controls in single row */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap', fontSize: '14px' }}>
-          <label style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '14px', fontWeight: '500' }}>
-            Per page:
-            <select 
-              value={linesPerPage} 
-              onChange={(e) => {
-                const newLinesPerPage = parseInt(e.target.value);
-                setLinesPerPage(newLinesPerPage);
-                // Adjust current page if needed
-                const newTotalPages = Math.ceil(lines.length / newLinesPerPage);
-                if (currentPage > newTotalPages) {
-                  setCurrentPage(Math.max(1, newTotalPages));
-                }
-              }}
-              style={{ 
-                padding: '6px 8px', 
-                fontSize: '13px', 
-                borderRadius: '4px',
-                border: '1px solid #ccc'
-              }}
-            >
-              <option value={10}>10</option>
-              <option value={20}>20</option>
-              <option value={50}>50</option>
-              <option value={100}>100</option>
-            </select>
-          </label>
-          
-          <span style={{ color: '#666', fontSize: '11px' }}>
-            ({lines.length === 0 ? 0 : ((currentPage - 1) * linesPerPage + 1)}-{Math.min(currentPage * linesPerPage, lines.length)} of {lines.length})
-          </span>
+        {/* Unified pagination layout */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', fontSize: '14px' }}>
+          {/* Left side: Per page controls */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: '200px' }}>
+            <label style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '14px', fontWeight: '500', whiteSpace: 'nowrap' }}>
+              Per page:
+              <select 
+                value={linesPerPage} 
+                onChange={(e) => {
+                  const newLinesPerPage = parseInt(e.target.value);
+                  setLinesPerPage(newLinesPerPage);
+                  // Adjust current page if needed
+                  const newTotalPages = Math.ceil(lines.length / newLinesPerPage);
+                  if (currentPage > newTotalPages) {
+                    setCurrentPage(Math.max(1, newTotalPages));
+                  }
+                }}
+                style={{ 
+                  fontSize: '18px', 
+                  borderRadius: '4px',
+                  border: '1px solid #ccc'
+                }}
+              >
+                <option value={10}>10</option>
+                <option value={20}>20</option>
+                <option value={50}>50</option>
+                <option value={100}>100</option>
+              </select>
+            </label>
+            
+            <span style={{ color: '#666', fontSize: '18px', whiteSpace: 'nowrap' }}>
+              ({lines.length === 0 ? 0 : ((currentPage - 1) * linesPerPage + 1)}-{Math.min(currentPage * linesPerPage, lines.length)} of {lines.length})
+            </span>
+          </div>
 
-          <span style={{ marginLeft: 'auto', fontSize: '10px', color: '#888' }}>
-            ← → keys to navigate
-          </span>
-        </div>
-
-        {/* Enhanced Navigation controls */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginTop: '8px' }}>
+          {/* Center: Navigation controls */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: '1', justifyContent: 'center' }}>
           {/* Larger navigation buttons */}
           <button 
             onClick={() => setCurrentPage(1)} 
@@ -688,7 +736,7 @@ const FileStreamer = () => {
               border: 'none', 
               borderRadius: '6px', 
               cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
-              fontSize: '14px',
+              fontSize: '18px',
               fontWeight: '600',
               minWidth: '50px'
             }}
@@ -707,7 +755,7 @@ const FileStreamer = () => {
               border: 'none', 
               borderRadius: '6px', 
               cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
-              fontSize: '14px',
+              fontSize: '18px',
               fontWeight: '600',
               minWidth: '60px'
             }}
@@ -754,7 +802,7 @@ const FileStreamer = () => {
               border: 'none', 
               borderRadius: '6px', 
               cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
-              fontSize: '14px',
+              fontSize: '18px',
               fontWeight: '600',
               minWidth: '60px'
             }}
@@ -773,13 +821,16 @@ const FileStreamer = () => {
               border: 'none', 
               borderRadius: '6px', 
               cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
-              fontSize: '14px',
+              fontSize: '18px',
               fontWeight: '600',
               minWidth: '50px'
             }}
           >
             ⏭
           </button>
+          </div>
+
+          
         </div>
       </div>
     </div>
