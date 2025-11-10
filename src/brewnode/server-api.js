@@ -140,9 +140,9 @@ export async function ValveChillWortIn(open) {
     return response.data;
 }
 
-export async function ValveChillWortOut(open) {
+export async function ValveFermentIn(open) {
     const state = open ? 'Open' : 'Close';
-    const response = await axios.put(`http://${host}:${port}/valve/chillwortout?onOff=${state}`, {});
+    const response = await axios.put(`http://${host}:${port}/valve/fermentin?onOff=${state}`, {});
     return response.data;
 }
 
@@ -232,6 +232,15 @@ export async function streamLog() {
     try {  
         const response = await fetch(`http://${host}:${port}/streamLog`);
         return response;
+    }catch(error){
+        return {error: error.message || error};
+    }
+}
+
+export async function deleteLog() {
+    try {  
+        const response = await axios.delete(`http://${host}:${port}/logs`);
+        return response.data;
     }catch(error){
         return {error: error.message || error};
     }
