@@ -185,9 +185,10 @@ export async function kettleTemp(temp, mins) {
     return response.data;
 }
 
-export async function mash(steps) {
+export async function mash(steps, recirculate = true) {
     const stepsParam = encodeURIComponent(JSON.stringify(steps));
-    const response = await axios.put(`http://${host}:${port}/mash?steps=${stepsParam}`, {});
+    const recirculateParam = encodeURIComponent(String(recirculate));
+    const response = await axios.put(`http://${host}:${port}/mash?steps=${stepsParam}&recirculate=${recirculateParam}`, {});
     return response.data;
 }
 
