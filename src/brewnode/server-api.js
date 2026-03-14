@@ -186,9 +186,9 @@ export async function kettleTemp(temp, mins) {
 }
 
 export async function mash(steps) {
-    const string = steps.map(step => `step=${encodeURIComponent(JSON.stringify(step))}`).join('&');
+    const string = steps.map(step => `steps=${encodeURIComponent(JSON.stringify(step))}`).join('&');
 
-    const response = await axios.put(`http://${host}:${port}/mash/${string}`, {});
+    const response = await axios.put(`http://${host}:${port}/mash?${string}`, {});
     return response.data;
 }
 
