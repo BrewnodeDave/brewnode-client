@@ -33,7 +33,7 @@ describe('Toggle Component', () => {
     jest.clearAllMocks();
     mockOnClick = jest.fn().mockResolvedValue();
     serverApi.sensorStatus.mockResolvedValue(0);
-    
+
     // Mock console methods to reduce test output
     jest.spyOn(console, 'log').mockImplementation(() => {});
     jest.spyOn(console, 'error').mockImplementation(() => {});
@@ -64,7 +64,6 @@ describe('Toggle Component', () => {
 
   test('fetches initial sensor status on mount', async () => {
     renderToggle({ sensorName: 'Pump Mash' });
-    
     await waitFor(() => {
       expect(serverApi.sensorStatus).toHaveBeenCalledWith('Pump Mash');
     });
@@ -90,7 +89,6 @@ describe('Toggle Component', () => {
   test('toggle button starts in off state (blue border)', async () => {
     serverApi.sensorStatus.mockResolvedValue(0);
     renderToggle();
-    
     await waitFor(() => {
       const button = screen.getByRole('button');
       expect(button).toHaveStyle('border: 5px solid blue');
@@ -100,7 +98,6 @@ describe('Toggle Component', () => {
   test('toggle button shows on state (red border) when sensor value > 0', async () => {
     serverApi.sensorStatus.mockResolvedValue(1);
     renderToggle();
-    
     await waitFor(() => {
       const button = screen.getByRole('button');
       expect(button).toHaveStyle('border: 5px solid red');
@@ -157,7 +154,6 @@ describe('Toggle Component', () => {
     const errorObject = { error: 'Sensor not found' };
     serverApi.sensorStatus.mockResolvedValue(errorObject);
     renderToggle({ sensorName: 'Missing Sensor' });
-    
     await waitFor(() => {
       expect(console.error).toHaveBeenCalledWith('Sensor not found');
     });
@@ -213,7 +209,6 @@ describe('Toggle Component', () => {
   test('displays background image when on', async () => {
     serverApi.sensorStatus.mockResolvedValue(1);
     renderToggle({ imageOn: '/pump-on.jpg', imageOff: '/pump-off.jpg' });
-    
     await waitFor(() => {
       const button = screen.getByRole('button');
       expect(button).toHaveStyle('background-image: url(/pump-on.jpg)');
@@ -223,7 +218,6 @@ describe('Toggle Component', () => {
   test('displays background image when off', async () => {
     serverApi.sensorStatus.mockResolvedValue(0);
     renderToggle({ imageOn: '/pump-on.jpg', imageOff: '/pump-off.jpg' });
-    
     await waitFor(() => {
       const button = screen.getByRole('button');
       expect(button).toHaveStyle('background-image: url(/pump-off.jpg)');
@@ -233,12 +227,9 @@ describe('Toggle Component', () => {
   test('handles undefined sensor status', async () => {
     serverApi.sensorStatus.mockResolvedValue(undefined);
     renderToggle({ sensorName: 'Unknown Sensor' });
-    
     await waitFor(() => {
       expect(serverApi.sensorStatus).toHaveBeenCalledWith('Unknown Sensor');
     });
-    
-    // Should not crash and maintain off state
     const button = screen.getByRole('button');
     expect(button).toHaveStyle('border: 5px solid blue');
   });
@@ -256,23 +247,15 @@ describe('Toggle Component', () => {
   });
 
   test('toggles from on to off state', async () => {
-    // Mock sensorStatus to return 1 (on state) consistently
     serverApi.sensorStatus.mockResolvedValue(1);
     serverApi.PumpKettle.mockResolvedValue({ success: true });
-    
     renderToggle({ sensorName: 'Pump Kettle' });
-    
-    // Wait for component to load and show on state (red border)
     await waitFor(() => {
       const button = screen.getByRole('button');
       expect(button).toHaveStyle('border: 5px solid red');
     });
-    
-    // Click to toggle off
     const button = screen.getByRole('button');
     fireEvent.click(button);
-    
-    // Verify the API was called with false (toggle to off)
     await waitFor(() => {
       expect(serverApi.PumpKettle).toHaveBeenCalledWith(false);
     });

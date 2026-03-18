@@ -85,10 +85,8 @@ function Toggle(props) {
         const watts = await sensorStatus(sensorName);
         if (watts && watts.error) {
           console.error(watts.error);
-        } else {
-          if (watts !== undefined) {
-            setSelected(watts > 0);
-          }
+        } else if (watts !== undefined) {
+          setSelected(watts > 0);
         }
       } catch (error) {
         console.error('Failed to fetch sensor status:', error);
