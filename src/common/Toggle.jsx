@@ -106,7 +106,7 @@ function Toggle(props) {
       removeSocketListener(sensorName, handler);
     }
 
-  }, [selected, sensorName]);
+  }, [sensorName]);
 
   return (
     <div>
