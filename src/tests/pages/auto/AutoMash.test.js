@@ -132,7 +132,7 @@ describe('AutoMash Component', () => {
         { tempC: 50, mins: 15 },
         { tempC: 65, mins: 60 },
         { tempC: 75, mins: 10 }
-      ]);
+      ], true);
     });
   });
 
@@ -242,7 +242,7 @@ describe('AutoMash Component', () => {
       expect(mash).toHaveBeenCalledWith([
         { tempC: 55, mins: 20 },
         { tempC: 70, mins: 45 }
-      ]);
+      ], true);
     });
   });
 

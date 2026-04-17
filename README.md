@@ -2,6 +2,12 @@
 
 A comprehensive React-based web application for controlling and monitoring automated brewing processes. This client provides a modern, responsive user interface for the BrewNode brewing automation system.
 
+## 📸 Screenshots
+
+![BrewNode Client](Screenshot%202026-04-17%2020.12.03.png)
+
+![BrewNode Client](Screenshot%202026-04-17%2020.12.42.png)
+
 ## 🚀 Features
 
 - **Real-time Brewing Control** - Complete brewing process automation and monitoring
