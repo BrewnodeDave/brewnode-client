@@ -2,12 +2,6 @@
 
 A comprehensive React-based web application for controlling and monitoring automated brewing processes. This client provides a modern, responsive user interface for the BrewNode brewing automation system.
 
-## 📸 Screenshots
-
-![BrewNode Client](Screenshot%202026-04-17%2020.12.03.png)
-
-![BrewNode Client](Screenshot%202026-04-17%2020.12.42.png)
-
 ## 🚀 Features
 
 - **Real-time Brewing Control** - Complete brewing process automation and monitoring
@@ -57,7 +51,7 @@ npm run test:coverage # Generate coverage report
 npm run test:e2e      # End-to-end browser tests only
 npm run test:unit     # Unit tests only (excluding E2E)
 ```
-
+ 
 #### 🌐 Cross-Platform Testing Support
 
 Our test suite is designed to work seamlessly across **Windows**, **macOS**, and **Linux** systems, including **ARM architectures**.
