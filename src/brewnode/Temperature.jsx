@@ -29,7 +29,8 @@ function Temperature(props) {
           console.error(status.error);  
       }else{
           if (status !== undefined) {
-            setTemp(status);
+            const value = (typeof status === 'object' && status !== null) ? status.value ?? status : status;
+            setTemp(value);
           }
       }
     }
@@ -37,9 +38,10 @@ function Temperature(props) {
 
     const interval = setInterval(fetchData, 5000);
 
-    addSocketListener(props.sensor, setTemp);
+    const handleTemp = (data) => setTemp(typeof data === 'object' && data !== null ? data.value ?? data : data);
+    addSocketListener(props.sensor, handleTemp);
     return () => {
-      removeSocketListener(props.sensor, setTemp);
+      removeSocketListener(props.sensor, handleTemp);
       clearInterval(interval);
     };
   }, [props.sensor, sensor]); 
